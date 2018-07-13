@@ -57,19 +57,17 @@ public class Classe implements Serializable {
     @Column(name = "code", nullable = false, length = 45)
     private String code;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "created", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "modified", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classeIdclasse", fetch = FetchType.EAGER)
     private List<Evaluation> evaluationList;
 
@@ -80,7 +78,7 @@ public class Classe implements Serializable {
         this.idclasse = idclasse;
     }
 
-    public Classe(Integer idclasse, String code, Date created, Date modified, short deleted) {
+    public Classe(Integer idclasse, String code, Date created, Date modified, boolean deleted) {
         this.idclasse = idclasse;
         this.code = code;
         this.created = created;
@@ -120,11 +118,11 @@ public class Classe implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
