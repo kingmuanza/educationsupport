@@ -10,6 +10,7 @@ import edu.support.entities.Classe;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -96,6 +98,12 @@ public class ClasseController {
         ModelAndView mv = new ModelAndView(VUE_LIST);
         mv.addObject("classes", cfl.findAll());
         return mv;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value="/rest/list", method=RequestMethod.GET)
+    public List<Classe> getAllList(){
+        return cfl.findAll();
     }
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)

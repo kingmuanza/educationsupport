@@ -5,10 +5,14 @@
  */
 package edu.support.dao;
 
+import edu.support.entities.Eleve;
 import edu.support.entities.PassageInfirmerie;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +31,20 @@ public class PassageInfirmerieFacade extends AbstractFacade<PassageInfirmerie> i
 
     public PassageInfirmerieFacade() {
         super(PassageInfirmerie.class);
+    }
+
+    @Override
+    public List<PassageInfirmerie> findByEleve(Eleve e) {
+        EntityManager entityManager = getEntityManager();
+        Query q;
+        try{
+            q = em.createNamedQuery("SELECT pi FROM PassageInfirmerie pi WHERE pi.eleveIdeleve.ideleve=:id");
+            q.setParameter("id", e.getIdeleve());
+            return q.getResultList();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return new ArrayList<PassageInfirmerie>();
+        }
     }
     
 }
