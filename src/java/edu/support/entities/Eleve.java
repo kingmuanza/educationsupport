@@ -5,9 +5,10 @@
  */
 package edu.support.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -41,6 +42,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Eleve.findByCreated", query = "SELECT e FROM Eleve e WHERE e.created = :created")
     , @NamedQuery(name = "Eleve.findByModified", query = "SELECT e FROM Eleve e WHERE e.modified = :modified")
     , @NamedQuery(name = "Eleve.findByDeleted", query = "SELECT e FROM Eleve e WHERE e.deleted = :deleted")})
+
+@JsonIgnoreProperties({"noteCollection","paiementCollection","eleveMaladieCollection","sanctionCollection","relanceCollection","passageInfirmerieCollection","convocationCollection","autorisationSortieCollection","elevesTraduitsCollection","moratoireCollection"})
 public class Eleve implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,44 +52,42 @@ public class Eleve implements Serializable {
     @Basic(optional = false)
     @Column(name = "ideleve", nullable = false)
     private Integer ideleve;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.EAGER)
-    private List<Note> noteList;
+    private boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    private Collection<Note> noteCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    private Collection<Paiement> paiementCollection;
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Individu individuIdindividu;
-    @JoinColumn(name = "paiement_idpaiement", referencedColumnName = "idpaiement", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Paiement paiementIdpaiement;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.EAGER)
-    private List<EleveMaladie> eleveMaladieList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.EAGER)
-    private List<Sanction> sanctionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.EAGER)
-    private List<Relance> relanceList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.EAGER)
-    private List<PassageInfirmerie> passageInfirmerieList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.EAGER)
-    private List<Convocation> convocationList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.EAGER)
-    private List<AutorisationSortie> autorisationSortieList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.EAGER)
-    private List<ElevesTraduits> elevesTraduitsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.EAGER)
-    private List<Moratoire> moratoireList;
+    @JoinColumn(name = "classe_idclasse", referencedColumnName = "idclasse", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Classe classeIdclasse;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    private Collection<EleveMaladie> eleveMaladieCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    private Collection<Sanction> sanctionCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    private Collection<Relance> relanceCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    private Collection<PassageInfirmerie> passageInfirmerieCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    private Collection<Convocation> convocationCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    private Collection<AutorisationSortie> autorisationSortieCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    private Collection<ElevesTraduits> elevesTraduitsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    private Collection<Moratoire> moratoireCollection;
 
     public Eleve() {
     }
@@ -95,10 +96,8 @@ public class Eleve implements Serializable {
         this.ideleve = ideleve;
     }
 
-    public Eleve(Integer ideleve, Date created, Date modified, short deleted) {
+    public Eleve(Integer ideleve, boolean deleted) {
         this.ideleve = ideleve;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -126,21 +125,30 @@ public class Eleve implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
     @XmlTransient
-    public List<Note> getNoteList() {
-        return noteList;
+    public Collection<Note> getNoteCollection() {
+        return noteCollection;
     }
 
-    public void setNoteList(List<Note> noteList) {
-        this.noteList = noteList;
+    public void setNoteCollection(Collection<Note> noteCollection) {
+        this.noteCollection = noteCollection;
+    }
+
+    @XmlTransient
+    public Collection<Paiement> getPaiementCollection() {
+        return paiementCollection;
+    }
+
+    public void setPaiementCollection(Collection<Paiement> paiementCollection) {
+        this.paiementCollection = paiementCollection;
     }
 
     public Individu getIndividuIdindividu() {
@@ -151,84 +159,84 @@ public class Eleve implements Serializable {
         this.individuIdindividu = individuIdindividu;
     }
 
-    public Paiement getPaiementIdpaiement() {
-        return paiementIdpaiement;
+    public Classe getClasseIdclasse() {
+        return classeIdclasse;
     }
 
-    public void setPaiementIdpaiement(Paiement paiementIdpaiement) {
-        this.paiementIdpaiement = paiementIdpaiement;
-    }
-
-    @XmlTransient
-    public List<EleveMaladie> getEleveMaladieList() {
-        return eleveMaladieList;
-    }
-
-    public void setEleveMaladieList(List<EleveMaladie> eleveMaladieList) {
-        this.eleveMaladieList = eleveMaladieList;
+    public void setClasseIdclasse(Classe classeIdclasse) {
+        this.classeIdclasse = classeIdclasse;
     }
 
     @XmlTransient
-    public List<Sanction> getSanctionList() {
-        return sanctionList;
+    public Collection<EleveMaladie> getEleveMaladieCollection() {
+        return eleveMaladieCollection;
     }
 
-    public void setSanctionList(List<Sanction> sanctionList) {
-        this.sanctionList = sanctionList;
-    }
-
-    @XmlTransient
-    public List<Relance> getRelanceList() {
-        return relanceList;
-    }
-
-    public void setRelanceList(List<Relance> relanceList) {
-        this.relanceList = relanceList;
+    public void setEleveMaladieCollection(Collection<EleveMaladie> eleveMaladieCollection) {
+        this.eleveMaladieCollection = eleveMaladieCollection;
     }
 
     @XmlTransient
-    public List<PassageInfirmerie> getPassageInfirmerieList() {
-        return passageInfirmerieList;
+    public Collection<Sanction> getSanctionCollection() {
+        return sanctionCollection;
     }
 
-    public void setPassageInfirmerieList(List<PassageInfirmerie> passageInfirmerieList) {
-        this.passageInfirmerieList = passageInfirmerieList;
-    }
-
-    @XmlTransient
-    public List<Convocation> getConvocationList() {
-        return convocationList;
-    }
-
-    public void setConvocationList(List<Convocation> convocationList) {
-        this.convocationList = convocationList;
+    public void setSanctionCollection(Collection<Sanction> sanctionCollection) {
+        this.sanctionCollection = sanctionCollection;
     }
 
     @XmlTransient
-    public List<AutorisationSortie> getAutorisationSortieList() {
-        return autorisationSortieList;
+    public Collection<Relance> getRelanceCollection() {
+        return relanceCollection;
     }
 
-    public void setAutorisationSortieList(List<AutorisationSortie> autorisationSortieList) {
-        this.autorisationSortieList = autorisationSortieList;
-    }
-
-    @XmlTransient
-    public List<ElevesTraduits> getElevesTraduitsList() {
-        return elevesTraduitsList;
-    }
-
-    public void setElevesTraduitsList(List<ElevesTraduits> elevesTraduitsList) {
-        this.elevesTraduitsList = elevesTraduitsList;
+    public void setRelanceCollection(Collection<Relance> relanceCollection) {
+        this.relanceCollection = relanceCollection;
     }
 
     @XmlTransient
-    public List<Moratoire> getMoratoireList() {
-        return moratoireList;
+    public Collection<PassageInfirmerie> getPassageInfirmerieCollection() {
+        return passageInfirmerieCollection;
     }
 
-    public void setMoratoireList(List<Moratoire> moratoireList) {
-        this.moratoireList = moratoireList;
+    public void setPassageInfirmerieCollection(Collection<PassageInfirmerie> passageInfirmerieCollection) {
+        this.passageInfirmerieCollection = passageInfirmerieCollection;
+    }
+
+    @XmlTransient
+    public Collection<Convocation> getConvocationCollection() {
+        return convocationCollection;
+    }
+
+    public void setConvocationCollection(Collection<Convocation> convocationCollection) {
+        this.convocationCollection = convocationCollection;
+    }
+
+    @XmlTransient
+    public Collection<AutorisationSortie> getAutorisationSortieCollection() {
+        return autorisationSortieCollection;
+    }
+
+    public void setAutorisationSortieCollection(Collection<AutorisationSortie> autorisationSortieCollection) {
+        this.autorisationSortieCollection = autorisationSortieCollection;
+    }
+
+    @XmlTransient
+    public Collection<ElevesTraduits> getElevesTraduitsCollection() {
+        return elevesTraduitsCollection;
+    }
+
+    public void setElevesTraduitsCollection(Collection<ElevesTraduits> elevesTraduitsCollection) {
+        this.elevesTraduitsCollection = elevesTraduitsCollection;
+    }
+
+    @XmlTransient
+    public Collection<Moratoire> getMoratoireCollection() {
+        return moratoireCollection;
+    }
+
+    public void setMoratoireCollection(Collection<Moratoire> moratoireCollection) {
+        this.moratoireCollection = moratoireCollection;
     }
 
     @Override

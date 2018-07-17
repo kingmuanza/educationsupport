@@ -41,6 +41,7 @@ public class SanteServiceImpl implements SanteService{
     @Override
     public List<Eleve> getElevesMalades() {
         List<Eleve> le = new ArrayList<>();
+        System.out.println("TAILLE LISTE -------------->   = "+emfl.findAll().size());
         for(EleveMaladie em: emfl.findAll())
             le.add(em.getEleveIdeleve());
         return le;
@@ -67,7 +68,7 @@ public class SanteServiceImpl implements SanteService{
 
     @Override
     public boolean isEleveMalade(Eleve e) {
-        return getElevesMalades().contains(e);
+        return !e.getEleveMaladieCollection().isEmpty();
     }
     
 }

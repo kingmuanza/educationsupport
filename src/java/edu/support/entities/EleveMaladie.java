@@ -45,25 +45,21 @@ public class EleveMaladie implements Serializable {
     @Basic(optional = false)
     @Column(name = "ideleve_maladie", nullable = false)
     private Integer ideleveMaladie;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Eleve eleveIdeleve;
     @JoinColumn(name = "maladie_idmaladie", referencedColumnName = "idmaladie", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Maladie maladieIdmaladie;
 
     public EleveMaladie() {
@@ -73,10 +69,8 @@ public class EleveMaladie implements Serializable {
         this.ideleveMaladie = ideleveMaladie;
     }
 
-    public EleveMaladie(Integer ideleveMaladie, Date created, Date modified, short deleted) {
+    public EleveMaladie(Integer ideleveMaladie, boolean deleted) {
         this.ideleveMaladie = ideleveMaladie;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -104,11 +98,11 @@ public class EleveMaladie implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

@@ -5,9 +5,10 @@
  */
 package edu.support.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -52,6 +53,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Individu.findByCreated", query = "SELECT i FROM Individu i WHERE i.created = :created")
     , @NamedQuery(name = "Individu.findByModified", query = "SELECT i FROM Individu i WHERE i.modified = :modified")
     , @NamedQuery(name = "Individu.findByDeleted", query = "SELECT i FROM Individu i WHERE i.deleted = :deleted")})
+@JsonIgnoreProperties({"eleveCollection"})
 public class Individu implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,8 +62,10 @@ public class Individu implements Serializable {
     @Basic(optional = false)
     @Column(name = "idindividu", nullable = false)
     private Integer idindividu;
-    @Size(max = 254)
-    @Column(name = "matricule", length = 254)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 254)
+    @Column(name = "matricule", nullable = false, length = 254)
     private String matricule;
     @Basic(optional = false)
     @NotNull
@@ -102,32 +106,28 @@ public class Individu implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "residence", nullable = false, length = 65535)
     private String residence;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.EAGER)
-    private List<Absence> absenceList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.EAGER)
-    private List<Eleve> eleveList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.EAGER)
-    private List<Retard> retardList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.EAGER)
-    private List<Employe> employeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.EAGER)
-    private List<IndividuUtilisateur> individuUtilisateurList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.EAGER)
-    private List<Enseignant> enseignantList;
+    private boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.LAZY)
+    private Collection<Absence> absenceCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.LAZY)
+    private Collection<Eleve> eleveCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.LAZY)
+    private Collection<Retard> retardCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.LAZY)
+    private Collection<Employe> employeCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.LAZY)
+    private Collection<IndividuUtilisateur> individuUtilisateurCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.LAZY)
+    private Collection<Enseignant> enseignantCollection;
 
     public Individu() {
     }
@@ -136,16 +136,15 @@ public class Individu implements Serializable {
         this.idindividu = idindividu;
     }
 
-    public Individu(Integer idindividu, String noms, String prenoms, Date dateNaissance, String lieuNaissance, String sexe, String residence, Date created, Date modified, short deleted) {
+    public Individu(Integer idindividu, String matricule, String noms, String prenoms, Date dateNaissance, String lieuNaissance, String sexe, String residence, boolean deleted) {
         this.idindividu = idindividu;
+        this.matricule = matricule;
         this.noms = noms;
         this.prenoms = prenoms;
         this.dateNaissance = dateNaissance;
         this.lieuNaissance = lieuNaissance;
         this.sexe = sexe;
         this.residence = residence;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -245,66 +244,66 @@ public class Individu implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
     @XmlTransient
-    public List<Absence> getAbsenceList() {
-        return absenceList;
+    public Collection<Absence> getAbsenceCollection() {
+        return absenceCollection;
     }
 
-    public void setAbsenceList(List<Absence> absenceList) {
-        this.absenceList = absenceList;
-    }
-
-    @XmlTransient
-    public List<Eleve> getEleveList() {
-        return eleveList;
-    }
-
-    public void setEleveList(List<Eleve> eleveList) {
-        this.eleveList = eleveList;
+    public void setAbsenceCollection(Collection<Absence> absenceCollection) {
+        this.absenceCollection = absenceCollection;
     }
 
     @XmlTransient
-    public List<Retard> getRetardList() {
-        return retardList;
+    public Collection<Eleve> getEleveCollection() {
+        return eleveCollection;
     }
 
-    public void setRetardList(List<Retard> retardList) {
-        this.retardList = retardList;
-    }
-
-    @XmlTransient
-    public List<Employe> getEmployeList() {
-        return employeList;
-    }
-
-    public void setEmployeList(List<Employe> employeList) {
-        this.employeList = employeList;
+    public void setEleveCollection(Collection<Eleve> eleveCollection) {
+        this.eleveCollection = eleveCollection;
     }
 
     @XmlTransient
-    public List<IndividuUtilisateur> getIndividuUtilisateurList() {
-        return individuUtilisateurList;
+    public Collection<Retard> getRetardCollection() {
+        return retardCollection;
     }
 
-    public void setIndividuUtilisateurList(List<IndividuUtilisateur> individuUtilisateurList) {
-        this.individuUtilisateurList = individuUtilisateurList;
+    public void setRetardCollection(Collection<Retard> retardCollection) {
+        this.retardCollection = retardCollection;
     }
 
     @XmlTransient
-    public List<Enseignant> getEnseignantList() {
-        return enseignantList;
+    public Collection<Employe> getEmployeCollection() {
+        return employeCollection;
     }
 
-    public void setEnseignantList(List<Enseignant> enseignantList) {
-        this.enseignantList = enseignantList;
+    public void setEmployeCollection(Collection<Employe> employeCollection) {
+        this.employeCollection = employeCollection;
+    }
+
+    @XmlTransient
+    public Collection<IndividuUtilisateur> getIndividuUtilisateurCollection() {
+        return individuUtilisateurCollection;
+    }
+
+    public void setIndividuUtilisateurCollection(Collection<IndividuUtilisateur> individuUtilisateurCollection) {
+        this.individuUtilisateurCollection = individuUtilisateurCollection;
+    }
+
+    @XmlTransient
+    public Collection<Enseignant> getEnseignantCollection() {
+        return enseignantCollection;
+    }
+
+    public void setEnseignantCollection(Collection<Enseignant> enseignantCollection) {
+        this.enseignantCollection = enseignantCollection;
     }
 
     @Override
