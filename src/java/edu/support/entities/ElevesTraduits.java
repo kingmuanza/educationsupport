@@ -48,10 +48,10 @@ public class ElevesTraduits implements Serializable {
     @Column(name = "motif", nullable = false, length = 65535)
     private String motif;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Eleve eleveIdeleve;
     @JoinColumn(name = "conseil_discipline_idconseil_discipline", referencedColumnName = "idconseil_discipline", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ConseilDiscipline conseilDisciplineIdconseilDiscipline;
 
     public ElevesTraduits() {

@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -42,8 +44,8 @@ public class PassageInfirmerie implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idpassage_infirmerie", nullable = false)
     private Integer idpassageInfirmerie;
     @Basic(optional = false)
@@ -56,22 +58,18 @@ public class PassageInfirmerie implements Serializable {
     @Column(name = "date_jour", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateJour;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Eleve eleveIdeleve;
 
     public PassageInfirmerie() {
@@ -81,12 +79,10 @@ public class PassageInfirmerie implements Serializable {
         this.idpassageInfirmerie = idpassageInfirmerie;
     }
 
-    public PassageInfirmerie(Integer idpassageInfirmerie, String code, Date dateJour, Date created, Date modified, short deleted) {
+    public PassageInfirmerie(Integer idpassageInfirmerie, String code, Date dateJour, boolean deleted) {
         this.idpassageInfirmerie = idpassageInfirmerie;
         this.code = code;
         this.dateJour = dateJour;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -130,11 +126,11 @@ public class PassageInfirmerie implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

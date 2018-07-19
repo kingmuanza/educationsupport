@@ -7,25 +7,23 @@ package edu.support.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -65,22 +63,19 @@ public class Paiement implements Serializable {
     @Column(name = "date_jour", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateJour;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paiementIdpaiement", fetch = FetchType.EAGER)
-    private List<Eleve> eleveList;
+    private boolean deleted;
+    @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Eleve eleveIdeleve;
 
     public Paiement() {
     }
@@ -89,13 +84,11 @@ public class Paiement implements Serializable {
         this.idpaiement = idpaiement;
     }
 
-    public Paiement(Integer idpaiement, String code, double montant, Date dateJour, Date created, Date modified, short deleted) {
+    public Paiement(Integer idpaiement, String code, double montant, Date dateJour, boolean deleted) {
         this.idpaiement = idpaiement;
         this.code = code;
         this.montant = montant;
         this.dateJour = dateJour;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -147,21 +140,20 @@ public class Paiement implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
-    @XmlTransient
-    public List<Eleve> getEleveList() {
-        return eleveList;
+    public Eleve getEleveIdeleve() {
+        return eleveIdeleve;
     }
 
-    public void setEleveList(List<Eleve> eleveList) {
-        this.eleveList = eleveList;
+    public void setEleveIdeleve(Eleve eleveIdeleve) {
+        this.eleveIdeleve = eleveIdeleve;
     }
 
     @Override

@@ -5,14 +5,17 @@
  */
 package edu.support.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
@@ -43,8 +46,8 @@ public class Maladie implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idmaladie", nullable = false)
     private Integer idmaladie;
     @Basic(optional = false)
@@ -65,22 +68,19 @@ public class Maladie implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "type_maladie", nullable = false, length = 65535)
     private String typeMaladie;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "maladieIdmaladie", fetch = FetchType.EAGER)
-    private List<EleveMaladie> eleveMaladieList;
+    private boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "maladieIdmaladie", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Collection<EleveMaladie> eleveMaladieCollection;
 
     public Maladie() {
     }
@@ -89,13 +89,11 @@ public class Maladie implements Serializable {
         this.idmaladie = idmaladie;
     }
 
-    public Maladie(Integer idmaladie, String nom, String description, String typeMaladie, Date created, Date modified, short deleted) {
+    public Maladie(Integer idmaladie, String nom, String description, String typeMaladie, boolean deleted) {
         this.idmaladie = idmaladie;
         this.nom = nom;
         this.description = description;
         this.typeMaladie = typeMaladie;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -147,21 +145,21 @@ public class Maladie implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
     @XmlTransient
-    public List<EleveMaladie> getEleveMaladieList() {
-        return eleveMaladieList;
+    public Collection<EleveMaladie> getEleveMaladieCollection() {
+        return eleveMaladieCollection;
     }
 
-    public void setEleveMaladieList(List<EleveMaladie> eleveMaladieList) {
-        this.eleveMaladieList = eleveMaladieList;
+    public void setEleveMaladieCollection(Collection<EleveMaladie> eleveMaladieCollection) {
+        this.eleveMaladieCollection = eleveMaladieCollection;
     }
 
     @Override

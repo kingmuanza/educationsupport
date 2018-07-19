@@ -6,8 +6,8 @@
 package edu.support.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,24 +48,20 @@ public class Enseignant implements Serializable {
     @Basic(optional = false)
     @Column(name = "idenseignant", nullable = false)
     private Integer idenseignant;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
-    @OneToMany(mappedBy = "enseignantIdenseignant", fetch = FetchType.EAGER)
-    private List<Sanction> sanctionList;
+    private boolean deleted;
+    @OneToMany(mappedBy = "enseignantIdenseignant", fetch = FetchType.LAZY)
+    private Collection<Sanction> sanctionCollection;
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Individu individuIdindividu;
 
     public Enseignant() {
@@ -75,10 +71,8 @@ public class Enseignant implements Serializable {
         this.idenseignant = idenseignant;
     }
 
-    public Enseignant(Integer idenseignant, Date created, Date modified, short deleted) {
+    public Enseignant(Integer idenseignant, boolean deleted) {
         this.idenseignant = idenseignant;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -106,21 +100,21 @@ public class Enseignant implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
     @XmlTransient
-    public List<Sanction> getSanctionList() {
-        return sanctionList;
+    public Collection<Sanction> getSanctionCollection() {
+        return sanctionCollection;
     }
 
-    public void setSanctionList(List<Sanction> sanctionList) {
-        this.sanctionList = sanctionList;
+    public void setSanctionCollection(Collection<Sanction> sanctionCollection) {
+        this.sanctionCollection = sanctionCollection;
     }
 
     public Individu getIndividuIdindividu() {

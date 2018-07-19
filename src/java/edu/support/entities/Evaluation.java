@@ -6,7 +6,7 @@
 package edu.support.entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,16 +42,16 @@ public class Evaluation implements Serializable {
     @Basic(optional = false)
     @Column(name = "idevaluation", nullable = false)
     private Integer idevaluation;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluationIdevaluation", fetch = FetchType.EAGER)
-    private List<Note> noteList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluationIdevaluation", fetch = FetchType.LAZY)
+    private Collection<Note> noteCollection;
     @JoinColumn(name = "classe_idclasse", referencedColumnName = "idclasse", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Classe classeIdclasse;
     @JoinColumn(name = "matiere_idmatiere", referencedColumnName = "idmatiere", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Matiere matiereIdmatiere;
     @JoinColumn(name = "sequence_idsequence", referencedColumnName = "idsequence", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Sequence sequenceIdsequence;
 
     public Evaluation() {
@@ -70,12 +70,12 @@ public class Evaluation implements Serializable {
     }
 
     @XmlTransient
-    public List<Note> getNoteList() {
-        return noteList;
+    public Collection<Note> getNoteCollection() {
+        return noteCollection;
     }
 
-    public void setNoteList(List<Note> noteList) {
-        this.noteList = noteList;
+    public void setNoteCollection(Collection<Note> noteCollection) {
+        this.noteCollection = noteCollection;
     }
 
     public Classe getClasseIdclasse() {

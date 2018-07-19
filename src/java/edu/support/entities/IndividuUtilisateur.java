@@ -45,25 +45,21 @@ public class IndividuUtilisateur implements Serializable {
     @Basic(optional = false)
     @Column(name = "idindividu_utilisateur", nullable = false)
     private Integer idindividuUtilisateur;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "utilisateur_idutilisateur", referencedColumnName = "idutilisateur", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Utilisateur utilisateurIdutilisateur;
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Individu individuIdindividu;
 
     public IndividuUtilisateur() {
@@ -73,10 +69,8 @@ public class IndividuUtilisateur implements Serializable {
         this.idindividuUtilisateur = idindividuUtilisateur;
     }
 
-    public IndividuUtilisateur(Integer idindividuUtilisateur, Date created, Date modified, short deleted) {
+    public IndividuUtilisateur(Integer idindividuUtilisateur, boolean deleted) {
         this.idindividuUtilisateur = idindividuUtilisateur;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -104,11 +98,11 @@ public class IndividuUtilisateur implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

@@ -65,22 +65,18 @@ public class Rapport implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "url", nullable = false, length = 65535)
     private String url;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "reunion_idreunion", referencedColumnName = "idreunion", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Reunion reunionIdreunion;
 
     public Rapport() {
@@ -90,13 +86,11 @@ public class Rapport implements Serializable {
         this.idrapport = idrapport;
     }
 
-    public Rapport(Integer idrapport, String code, String nomFichier, String url, Date created, Date modified, short deleted) {
+    public Rapport(Integer idrapport, String code, String nomFichier, String url, boolean deleted) {
         this.idrapport = idrapport;
         this.code = code;
         this.nomFichier = nomFichier;
         this.url = url;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -148,11 +142,11 @@ public class Rapport implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

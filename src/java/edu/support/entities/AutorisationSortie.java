@@ -60,14 +60,10 @@ public class AutorisationSortie implements Serializable {
     @Column(name = "date_jour", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateJour;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
@@ -76,10 +72,10 @@ public class AutorisationSortie implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Eleve eleveIdeleve;
     @JoinColumn(name = "employe_idemploye", referencedColumnName = "idemploye", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Employe employeIdemploye;
 
     public AutorisationSortie() {
@@ -89,12 +85,10 @@ public class AutorisationSortie implements Serializable {
         this.idautorisationSortie = idautorisationSortie;
     }
 
-    public AutorisationSortie(Integer idautorisationSortie, String code, Date dateJour, Date created, Date modified, Date deleted) {
+    public AutorisationSortie(Integer idautorisationSortie, String code, Date dateJour, Date deleted) {
         this.idautorisationSortie = idautorisationSortie;
         this.code = code;
         this.dateJour = dateJour;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 

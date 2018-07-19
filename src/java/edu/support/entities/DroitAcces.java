@@ -6,8 +6,8 @@
 package edu.support.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -62,22 +62,18 @@ public class DroitAcces implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "description", nullable = false, length = 65535)
     private String description;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "droitAccesIddroitAcces", fetch = FetchType.EAGER)
-    private List<Utilisateur> utilisateurList;
+    private boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "droitAccesIddroitAcces", fetch = FetchType.LAZY)
+    private Collection<Utilisateur> utilisateurCollection;
 
     public DroitAcces() {
     }
@@ -86,12 +82,10 @@ public class DroitAcces implements Serializable {
         this.iddroitAcces = iddroitAcces;
     }
 
-    public DroitAcces(Integer iddroitAcces, int niveau, String description, Date created, Date modified, short deleted) {
+    public DroitAcces(Integer iddroitAcces, int niveau, String description, boolean deleted) {
         this.iddroitAcces = iddroitAcces;
         this.niveau = niveau;
         this.description = description;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -135,21 +129,21 @@ public class DroitAcces implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
     @XmlTransient
-    public List<Utilisateur> getUtilisateurList() {
-        return utilisateurList;
+    public Collection<Utilisateur> getUtilisateurCollection() {
+        return utilisateurCollection;
     }
 
-    public void setUtilisateurList(List<Utilisateur> utilisateurList) {
-        this.utilisateurList = utilisateurList;
+    public void setUtilisateurCollection(Collection<Utilisateur> utilisateurCollection) {
+        this.utilisateurCollection = utilisateurCollection;
     }
 
     @Override

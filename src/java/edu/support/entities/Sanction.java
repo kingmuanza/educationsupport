@@ -57,28 +57,24 @@ public class Sanction implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "motif", nullable = false, length = 65535)
     private String motif;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "employe_idemploye", referencedColumnName = "idemploye")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Employe employeIdemploye;
     @JoinColumn(name = "enseignant_idenseignant", referencedColumnName = "idenseignant")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Enseignant enseignantIdenseignant;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Eleve eleveIdeleve;
 
     public Sanction() {
@@ -88,12 +84,10 @@ public class Sanction implements Serializable {
         this.idsanction = idsanction;
     }
 
-    public Sanction(Integer idsanction, String description, String motif, Date created, Date modified, short deleted) {
+    public Sanction(Integer idsanction, String description, String motif, boolean deleted) {
         this.idsanction = idsanction;
         this.description = description;
         this.motif = motif;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -137,11 +131,11 @@ public class Sanction implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

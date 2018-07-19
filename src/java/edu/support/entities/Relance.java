@@ -62,22 +62,18 @@ public class Relance implements Serializable {
     @Column(name = "echeance", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date echeance;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Eleve eleveIdeleve;
 
     public Relance() {
@@ -87,13 +83,11 @@ public class Relance implements Serializable {
         this.idrelance = idrelance;
     }
 
-    public Relance(Integer idrelance, String motif, double montant, Date echeance, Date created, Date modified, short deleted) {
+    public Relance(Integer idrelance, String motif, double montant, Date echeance, boolean deleted) {
         this.idrelance = idrelance;
         this.motif = motif;
         this.montant = montant;
         this.echeance = echeance;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -145,11 +139,11 @@ public class Relance implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

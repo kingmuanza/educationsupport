@@ -6,8 +6,8 @@
 package edu.support.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -52,22 +52,18 @@ public class Trimestre implements Serializable {
     @NotNull
     @Column(name = "numero", nullable = false)
     private int numero;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trimestreIdtrimestre", fetch = FetchType.EAGER)
-    private List<Sequence> sequenceList;
+    private boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trimestreIdtrimestre", fetch = FetchType.LAZY)
+    private Collection<Sequence> sequenceCollection;
 
     public Trimestre() {
     }
@@ -76,11 +72,9 @@ public class Trimestre implements Serializable {
         this.idtrimestre = idtrimestre;
     }
 
-    public Trimestre(Integer idtrimestre, int numero, Date created, Date modified, short deleted) {
+    public Trimestre(Integer idtrimestre, int numero, boolean deleted) {
         this.idtrimestre = idtrimestre;
         this.numero = numero;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -116,21 +110,21 @@ public class Trimestre implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
     @XmlTransient
-    public List<Sequence> getSequenceList() {
-        return sequenceList;
+    public Collection<Sequence> getSequenceCollection() {
+        return sequenceCollection;
     }
 
-    public void setSequenceList(List<Sequence> sequenceList) {
-        this.sequenceList = sequenceList;
+    public void setSequenceCollection(Collection<Sequence> sequenceCollection) {
+        this.sequenceCollection = sequenceCollection;
     }
 
     @Override

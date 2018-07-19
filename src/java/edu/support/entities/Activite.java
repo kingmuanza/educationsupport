@@ -50,22 +50,18 @@ public class Activite implements Serializable {
     @NotNull
     @Column(name = "action", nullable = false)
     private int action;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "utilisateur_idutilisateur", referencedColumnName = "idutilisateur", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Utilisateur utilisateurIdutilisateur;
 
     public Activite() {
@@ -75,11 +71,9 @@ public class Activite implements Serializable {
         this.idactivite = idactivite;
     }
 
-    public Activite(Integer idactivite, int action, Date created, Date modified, short deleted) {
+    public Activite(Integer idactivite, int action, boolean deleted) {
         this.idactivite = idactivite;
         this.action = action;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -115,11 +109,11 @@ public class Activite implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

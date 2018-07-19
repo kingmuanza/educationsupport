@@ -6,8 +6,8 @@
 package edu.support.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -64,23 +64,19 @@ public class AnneeScolaire implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "en_cours", nullable = false)
-    private short enCours;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    private boolean enCours;
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "anneeScolaireIdanneeScolaire", fetch = FetchType.EAGER)
-    private List<Sequence> sequenceList;
+    private boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "anneeScolaireIdanneeScolaire", fetch = FetchType.LAZY)
+    private Collection<Sequence> sequenceCollection;
 
     public AnneeScolaire() {
     }
@@ -89,13 +85,11 @@ public class AnneeScolaire implements Serializable {
         this.idanneeScolaire = idanneeScolaire;
     }
 
-    public AnneeScolaire(Integer idanneeScolaire, String dateDebut, String dateFin, short enCours, Date created, Date modified, short deleted) {
+    public AnneeScolaire(Integer idanneeScolaire, String dateDebut, String dateFin, boolean enCours, boolean deleted) {
         this.idanneeScolaire = idanneeScolaire;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.enCours = enCours;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -123,11 +117,11 @@ public class AnneeScolaire implements Serializable {
         this.dateFin = dateFin;
     }
 
-    public short getEnCours() {
+    public boolean getEnCours() {
         return enCours;
     }
 
-    public void setEnCours(short enCours) {
+    public void setEnCours(boolean enCours) {
         this.enCours = enCours;
     }
 
@@ -147,21 +141,21 @@ public class AnneeScolaire implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
     @XmlTransient
-    public List<Sequence> getSequenceList() {
-        return sequenceList;
+    public Collection<Sequence> getSequenceCollection() {
+        return sequenceCollection;
     }
 
-    public void setSequenceList(List<Sequence> sequenceList) {
-        this.sequenceList = sequenceList;
+    public void setSequenceCollection(Collection<Sequence> sequenceCollection) {
+        this.sequenceCollection = sequenceCollection;
     }
 
     @Override

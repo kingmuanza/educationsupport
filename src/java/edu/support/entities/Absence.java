@@ -57,27 +57,23 @@ public class Absence implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "justifee", nullable = false)
-    private short justifee;
+    private boolean justifee;
     @Lob
     @Size(max = 65535)
     @Column(name = "motif", length = 65535)
     private String motif;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Individu individuIdindividu;
 
     public Absence() {
@@ -87,12 +83,10 @@ public class Absence implements Serializable {
         this.idabsence = idabsence;
     }
 
-    public Absence(Integer idabsence, Date jourAbsence, short justifee, Date created, Date modified, short deleted) {
+    public Absence(Integer idabsence, Date jourAbsence, boolean justifee, boolean deleted) {
         this.idabsence = idabsence;
         this.jourAbsence = jourAbsence;
         this.justifee = justifee;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -112,11 +106,11 @@ public class Absence implements Serializable {
         this.jourAbsence = jourAbsence;
     }
 
-    public short getJustifee() {
+    public boolean getJustifee() {
         return justifee;
     }
 
-    public void setJustifee(short justifee) {
+    public void setJustifee(boolean justifee) {
         this.justifee = justifee;
     }
 
@@ -144,11 +138,11 @@ public class Absence implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

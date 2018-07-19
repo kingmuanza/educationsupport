@@ -6,8 +6,8 @@
 package edu.support.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -65,22 +65,18 @@ public class Reunion implements Serializable {
     @Column(name = "date_jour", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateJour;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reunionIdreunion", fetch = FetchType.EAGER)
-    private List<Rapport> rapportList;
+    private boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reunionIdreunion", fetch = FetchType.LAZY)
+    private Collection<Rapport> rapportCollection;
 
     public Reunion() {
     }
@@ -89,13 +85,11 @@ public class Reunion implements Serializable {
         this.idreunion = idreunion;
     }
 
-    public Reunion(Integer idreunion, String code, int etat, Date dateJour, Date created, Date modified, short deleted) {
+    public Reunion(Integer idreunion, String code, int etat, Date dateJour, boolean deleted) {
         this.idreunion = idreunion;
         this.code = code;
         this.etat = etat;
         this.dateJour = dateJour;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -147,21 +141,21 @@ public class Reunion implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
     @XmlTransient
-    public List<Rapport> getRapportList() {
-        return rapportList;
+    public Collection<Rapport> getRapportCollection() {
+        return rapportCollection;
     }
 
-    public void setRapportList(List<Rapport> rapportList) {
-        this.rapportList = rapportList;
+    public void setRapportCollection(Collection<Rapport> rapportCollection) {
+        this.rapportCollection = rapportCollection;
     }
 
     @Override

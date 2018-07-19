@@ -53,25 +53,21 @@ public class Convocation implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "motif", nullable = false, length = 65535)
     private String motif;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "employe_idemploye", referencedColumnName = "idemploye", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Employe employeIdemploye;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Eleve eleveIdeleve;
 
     public Convocation() {
@@ -81,11 +77,9 @@ public class Convocation implements Serializable {
         this.idconvocation = idconvocation;
     }
 
-    public Convocation(Integer idconvocation, String motif, Date created, Date modified, short deleted) {
+    public Convocation(Integer idconvocation, String motif, boolean deleted) {
         this.idconvocation = idconvocation;
         this.motif = motif;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -121,11 +115,11 @@ public class Convocation implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

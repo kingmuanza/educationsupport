@@ -62,22 +62,18 @@ public class Moratoire implements Serializable {
     @NotNull
     @Column(name = "etat", nullable = false)
     private int etat;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Eleve eleveIdeleve;
 
     public Moratoire() {
@@ -87,12 +83,10 @@ public class Moratoire implements Serializable {
         this.idmoratoire = idmoratoire;
     }
 
-    public Moratoire(Integer idmoratoire, String code, int etat, Date created, Date modified, short deleted) {
+    public Moratoire(Integer idmoratoire, String code, int etat, boolean deleted) {
         this.idmoratoire = idmoratoire;
         this.code = code;
         this.etat = etat;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -144,11 +138,11 @@ public class Moratoire implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

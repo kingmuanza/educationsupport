@@ -6,8 +6,8 @@
 package edu.support.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -49,29 +49,25 @@ public class Employe implements Serializable {
     @Basic(optional = false)
     @Column(name = "idemploye", nullable = false)
     private Integer idemploye;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
-    @OneToMany(mappedBy = "employeIdemploye", fetch = FetchType.EAGER)
-    private List<Sanction> sanctionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeIdemploye", fetch = FetchType.EAGER)
-    private List<Convocation> convocationList;
+    private boolean deleted;
+    @OneToMany(mappedBy = "employeIdemploye", fetch = FetchType.LAZY)
+    private Collection<Sanction> sanctionCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeIdemploye", fetch = FetchType.LAZY)
+    private Collection<Convocation> convocationCollection;
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Individu individuIdindividu;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeIdemploye", fetch = FetchType.EAGER)
-    private List<AutorisationSortie> autorisationSortieList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeIdemploye", fetch = FetchType.LAZY)
+    private Collection<AutorisationSortie> autorisationSortieCollection;
 
     public Employe() {
     }
@@ -80,10 +76,8 @@ public class Employe implements Serializable {
         this.idemploye = idemploye;
     }
 
-    public Employe(Integer idemploye, Date created, Date modified, short deleted) {
+    public Employe(Integer idemploye, boolean deleted) {
         this.idemploye = idemploye;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -111,30 +105,30 @@ public class Employe implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
     @XmlTransient
-    public List<Sanction> getSanctionList() {
-        return sanctionList;
+    public Collection<Sanction> getSanctionCollection() {
+        return sanctionCollection;
     }
 
-    public void setSanctionList(List<Sanction> sanctionList) {
-        this.sanctionList = sanctionList;
+    public void setSanctionCollection(Collection<Sanction> sanctionCollection) {
+        this.sanctionCollection = sanctionCollection;
     }
 
     @XmlTransient
-    public List<Convocation> getConvocationList() {
-        return convocationList;
+    public Collection<Convocation> getConvocationCollection() {
+        return convocationCollection;
     }
 
-    public void setConvocationList(List<Convocation> convocationList) {
-        this.convocationList = convocationList;
+    public void setConvocationCollection(Collection<Convocation> convocationCollection) {
+        this.convocationCollection = convocationCollection;
     }
 
     public Individu getIndividuIdindividu() {
@@ -146,12 +140,12 @@ public class Employe implements Serializable {
     }
 
     @XmlTransient
-    public List<AutorisationSortie> getAutorisationSortieList() {
-        return autorisationSortieList;
+    public Collection<AutorisationSortie> getAutorisationSortieCollection() {
+        return autorisationSortieCollection;
     }
 
-    public void setAutorisationSortieList(List<AutorisationSortie> autorisationSortieList) {
-        this.autorisationSortieList = autorisationSortieList;
+    public void setAutorisationSortieCollection(Collection<AutorisationSortie> autorisationSortieCollection) {
+        this.autorisationSortieCollection = autorisationSortieCollection;
     }
 
     @Override
