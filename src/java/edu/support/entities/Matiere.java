@@ -6,8 +6,8 @@
 package edu.support.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Matiere.findByIdmatiere", query = "SELECT m FROM Matiere m WHERE m.idmatiere = :idmatiere")
     , @NamedQuery(name = "Matiere.findByCode", query = "SELECT m FROM Matiere m WHERE m.code = :code")
     , @NamedQuery(name = "Matiere.findByLibelle", query = "SELECT m FROM Matiere m WHERE m.libelle = :libelle")
+    , @NamedQuery(name = "Matiere.findByCoefficient", query = "SELECT m FROM Matiere m WHERE m.coefficient = :coefficient")
     , @NamedQuery(name = "Matiere.findByCreated", query = "SELECT m FROM Matiere m WHERE m.created = :created")
     , @NamedQuery(name = "Matiere.findByModified", query = "SELECT m FROM Matiere m WHERE m.modified = :modified")
     , @NamedQuery(name = "Matiere.findByDeleted", query = "SELECT m FROM Matiere m WHERE m.deleted = :deleted")})
@@ -64,20 +65,20 @@ public class Matiere implements Serializable {
     private String libelle;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "coefficient", nullable = false)
+    private int coefficient;
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matiereIdmatiere", fetch = FetchType.EAGER)
-    private List<Evaluation> evaluationList;
+    private boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matiereIdmatiere", fetch = FetchType.LAZY)
+    private Collection<Evaluation> evaluationCollection;
 
     public Matiere() {
     }
@@ -86,12 +87,11 @@ public class Matiere implements Serializable {
         this.idmatiere = idmatiere;
     }
 
-    public Matiere(Integer idmatiere, String code, String libelle, Date created, Date modified, short deleted) {
+    public Matiere(Integer idmatiere, String code, String libelle, int coefficient, boolean deleted) {
         this.idmatiere = idmatiere;
         this.code = code;
         this.libelle = libelle;
-        this.created = created;
-        this.modified = modified;
+        this.coefficient = coefficient;
         this.deleted = deleted;
     }
 
@@ -119,6 +119,14 @@ public class Matiere implements Serializable {
         this.libelle = libelle;
     }
 
+    public int getCoefficient() {
+        return coefficient;
+    }
+
+    public void setCoefficient(int coefficient) {
+        this.coefficient = coefficient;
+    }
+
     public Date getCreated() {
         return created;
     }
@@ -135,21 +143,21 @@ public class Matiere implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
     @XmlTransient
-    public List<Evaluation> getEvaluationList() {
-        return evaluationList;
+    public Collection<Evaluation> getEvaluationCollection() {
+        return evaluationCollection;
     }
 
-    public void setEvaluationList(List<Evaluation> evaluationList) {
-        this.evaluationList = evaluationList;
+    public void setEvaluationCollection(Collection<Evaluation> evaluationCollection) {
+        this.evaluationCollection = evaluationCollection;
     }
 
     @Override

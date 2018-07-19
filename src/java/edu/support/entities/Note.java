@@ -5,6 +5,7 @@
  */
 package edu.support.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -50,25 +51,21 @@ public class Note implements Serializable {
     @NotNull
     @Column(name = "valeur", nullable = false)
     private double valeur;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Eleve eleveIdeleve;
     @JoinColumn(name = "evaluation_idevaluation", referencedColumnName = "idevaluation", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Evaluation evaluationIdevaluation;
 
     public Note() {
@@ -78,11 +75,9 @@ public class Note implements Serializable {
         this.idnote = idnote;
     }
 
-    public Note(Integer idnote, double valeur, Date created, Date modified, short deleted) {
+    public Note(Integer idnote, double valeur, boolean deleted) {
         this.idnote = idnote;
         this.valeur = valeur;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -118,11 +113,11 @@ public class Note implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

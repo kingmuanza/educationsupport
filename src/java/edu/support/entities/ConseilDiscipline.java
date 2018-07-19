@@ -5,9 +5,10 @@
  */
 package edu.support.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -68,22 +69,19 @@ public class ConseilDiscipline implements Serializable {
     @Column(name = "date_fin", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateFin;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "boolean", nullable = false)
-    private short boolean1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conseilDisciplineIdconseilDiscipline", fetch = FetchType.EAGER)
-    private List<ElevesTraduits> elevesTraduitsList;
+    private boolean boolean1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conseilDisciplineIdconseilDiscipline", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Collection<ElevesTraduits> elevesTraduitsCollection;
 
     public ConseilDiscipline() {
     }
@@ -92,13 +90,11 @@ public class ConseilDiscipline implements Serializable {
         this.idconseilDiscipline = idconseilDiscipline;
     }
 
-    public ConseilDiscipline(Integer idconseilDiscipline, String code, Date dateDebut, Date dateFin, Date created, Date modified, short boolean1) {
+    public ConseilDiscipline(Integer idconseilDiscipline, String code, Date dateDebut, Date dateFin, boolean boolean1) {
         this.idconseilDiscipline = idconseilDiscipline;
         this.code = code;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
-        this.created = created;
-        this.modified = modified;
         this.boolean1 = boolean1;
     }
 
@@ -150,21 +146,21 @@ public class ConseilDiscipline implements Serializable {
         this.modified = modified;
     }
 
-    public short getBoolean1() {
+    public boolean getBoolean1() {
         return boolean1;
     }
 
-    public void setBoolean1(short boolean1) {
+    public void setBoolean1(boolean boolean1) {
         this.boolean1 = boolean1;
     }
 
     @XmlTransient
-    public List<ElevesTraduits> getElevesTraduitsList() {
-        return elevesTraduitsList;
+    public Collection<ElevesTraduits> getElevesTraduitsCollection() {
+        return elevesTraduitsCollection;
     }
 
-    public void setElevesTraduitsList(List<ElevesTraduits> elevesTraduitsList) {
-        this.elevesTraduitsList = elevesTraduitsList;
+    public void setElevesTraduitsCollection(Collection<ElevesTraduits> elevesTraduitsCollection) {
+        this.elevesTraduitsCollection = elevesTraduitsCollection;
     }
 
     @Override

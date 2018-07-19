@@ -5,9 +5,10 @@
  */
 package edu.support.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -43,6 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Classe.findByCreated", query = "SELECT c FROM Classe c WHERE c.created = :created")
     , @NamedQuery(name = "Classe.findByModified", query = "SELECT c FROM Classe c WHERE c.modified = :modified")
     , @NamedQuery(name = "Classe.findByDeleted", query = "SELECT c FROM Classe c WHERE c.deleted = :deleted")})
+@JsonIgnoreProperties({"eleveCollection","evaluationCollection"})
 public class Classe implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,20 +58,20 @@ public class Classe implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
-    @Basic(optional = false)
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Basic(optional = false)
-    @Column(name = "modified", nullable = false)
+    @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classeIdclasse", fetch = FetchType.EAGER)
-    private List<Evaluation> evaluationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classeIdclasse", fetch = FetchType.LAZY)
+    private Collection<Eleve> eleveCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classeIdclasse", fetch = FetchType.LAZY)
+    private Collection<Evaluation> evaluationCollection;
 
     public Classe() {
     }
@@ -78,11 +80,9 @@ public class Classe implements Serializable {
         this.idclasse = idclasse;
     }
 
-    public Classe(Integer idclasse, String code, Date created, Date modified, boolean deleted) {
+    public Classe(Integer idclasse, String code, boolean deleted) {
         this.idclasse = idclasse;
         this.code = code;
-        this.created = created;
-        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -127,12 +127,21 @@ public class Classe implements Serializable {
     }
 
     @XmlTransient
-    public List<Evaluation> getEvaluationList() {
-        return evaluationList;
+    public Collection<Eleve> getEleveCollection() {
+        return eleveCollection;
     }
 
-    public void setEvaluationList(List<Evaluation> evaluationList) {
-        this.evaluationList = evaluationList;
+    public void setEleveCollection(Collection<Eleve> eleveCollection) {
+        this.eleveCollection = eleveCollection;
+    }
+
+    @XmlTransient
+    public Collection<Evaluation> getEvaluationCollection() {
+        return evaluationCollection;
+    }
+
+    public void setEvaluationCollection(Collection<Evaluation> evaluationCollection) {
+        this.evaluationCollection = evaluationCollection;
     }
 
     @Override

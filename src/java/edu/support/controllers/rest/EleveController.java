@@ -15,6 +15,7 @@ import edu.support.entities.EleveMaladie;
 import edu.support.entities.ElevesTraduits;
 import edu.support.entities.Maladie;
 import edu.support.entities.Moratoire;
+import edu.support.entities.Note;
 import edu.support.entities.Paiement;
 import edu.support.entities.PassageInfirmerie;
 import edu.support.entities.Retard;
@@ -22,6 +23,7 @@ import edu.support.entities.Sanction;
 import edu.support.services.impl.SanteServiceImpl;
 import edu.support.services.impl.SolvabiliteServiceImpl;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Produces;
@@ -119,6 +121,7 @@ public class EleveController {
     //*******************               *******************//
     //              INFORMATIONS SUR LA DISCIPLINE
     //*******************               *******************//
+    
     @RequestMapping("/discipline/autorisationsorties/{id}")
     public List<AutorisationSortie> getEleveAutorisationSorties(@PathVariable("id") int id){
         Eleve e = efl.find(id);
@@ -129,6 +132,17 @@ public class EleveController {
     public List<Absence> getEleveAbsences(@PathVariable("id") int id){
         Eleve e = efl.find(id);
         return (List)e.getIndividuIdindividu().getAbsenceCollection();
+    }
+    
+    @RequestMapping("/discipline/nombreheureabsences/{id}")
+    public int getEleveHeureAbsences(@PathVariable("id") int id){
+        Eleve e = efl.find(id);
+        int som =0;
+        for(Absence a: e.getIndividuIdindividu().getAbsenceCollection()){
+            if(!a.getJustifee())
+                som += a.getIdabsence();
+        }
+        return som;
     }
     
     @RequestMapping("/discipline/retards/{id}")
@@ -157,4 +171,40 @@ public class EleveController {
             conseilDisciplines.add(et.getConseilDisciplineIdconseilDiscipline());
         return conseilDisciplines;
     }
+    
+    //*******************               *******************//
+    //              INFORMATIONS SUR LES RESULTATS
+    //*******************               *******************//
+    
+    @RequestMapping("/resultat/notes/{id}")
+    public List<Note> getEleveNotes(@PathVariable("id")int id){
+        Eleve e = efl.find(id);
+        return (List)e.getNoteCollection();
+    }
+    
+    @RequestMapping("/resultat/moyenne/{id}")
+    public double getEleveMoyenne(@PathVariable("id")int id){
+        Eleve e = efl.find(id);
+        return calculMoyenne(e);
+    }
+    
+    @RequestMapping("/resultat/rang/{id}")
+    public int getEleveRang(@PathVariable("id")int id){
+        Eleve e = efl.find(id);
+        List<Eleve> leseleves = efl.findAll();
+        Collections.sort(leseleves,(a,b)-> calculMoyenne(a) < calculMoyenne(b) ? - 1 : calculMoyenne(a) == calculMoyenne(b) ? 0 : 1);
+        return leseleves.indexOf(e)+1;
+    }
+    
+    private double calculMoyenne(Eleve e){
+        List<Note> lesnotes = (List)e.getNoteCollection();
+        double som = 0;
+        int somCoef = 0;
+        for(Note n: lesnotes){
+            som += n.getValeur();
+            somCoef += n.getEvaluationIdevaluation().getMatiereIdmatiere().getCoefficient();
+        }
+        return som / somCoef;
+    }
+    
 }
