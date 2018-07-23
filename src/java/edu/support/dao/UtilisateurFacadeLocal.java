@@ -30,4 +30,13 @@ public interface UtilisateurFacadeLocal {
 
     int count();
     
+    //
+    
+    /**
+     * retourne un utilisateur en fonction des ses login et password
+     * @param login
+     * @param motDePasse
+     * @return 
+     */
+    public Utilisateur findByCredentials(String login, String motDePasse);    
 }

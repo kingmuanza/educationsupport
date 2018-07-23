@@ -5,11 +5,12 @@
  */
 package edu.support.controllers;
 
-import edu.support.dao.ClasseFacadeLocal;
-import edu.support.entities.Classe;
+import edu.support.dao.AutorisationSortieFacadeLocal;
+import edu.support.entities.AutorisationSortie;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -30,17 +32,17 @@ import org.springframework.web.servlet.view.RedirectView;
  * @author N9-T
  */
 @Controller
-@RequestMapping("/classe")
-public class ClasseController {
+@RequestMapping("/autorisationsortie")
+public class AutorisationSortieController {
     
-    @EJB(mappedName="java:app/edusupport/ClasseFacade")
-    private ClasseFacadeLocal cfl;
+    @EJB(mappedName="java:app/edusupport/AutorisationSortieFacade")
+    private AutorisationSortieFacadeLocal cfl;
     
-    private final static String VUE_CREATE = "jsp/classe/create";
-    private final static String VUE_EDIT = "jsp/classe/edit";
-    private final static String VUE_LIST = "jsp/classe/list";
-    private final static String VUE_VIEW = "jsp/classe/view";
-    private final static String PATH_LIST = "/classe/list";
+    private final static String VUE_CREATE = "jsp/autorisationsortie/create";
+    private final static String VUE_EDIT = "jsp/autorisationsortie/edit";
+    private final static String VUE_LIST = "jsp/autorisationsortie/list";
+    private final static String VUE_VIEW = "jsp/autorisationsortie/view";
+    private final static String PATH_LIST = "/autorisationsortie/list";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
@@ -56,14 +58,14 @@ public class ClasseController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("classe")Classe classe,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("autorisationsortie")AutorisationSortie autorisationsortie,BindingResult result ,HttpServletRequest request){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-        classe.setCreated(new Date());
-        classe.setModified(new Date());
-        cfl.create(classe);
+        autorisationsortie.setCreated(new Date());
+        autorisationsortie.setModified(new Date());
+        cfl.create(autorisationsortie);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -71,15 +73,15 @@ public class ClasseController {
     @RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("classe", cfl.find(id));
+        mv.addObject("autorisationsortie", cfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("classe")Classe classe ,@RequestParam("idclasse")int id,HttpServletRequest request){
-        classe.setModified(new Date());
-        classe.setCreated(cfl.find(id).getCreated());
-        cfl.edit(classe);
+    public RedirectView postEdit(@Valid @ModelAttribute("autorisationsortie")AutorisationSortie autorisationsortie ,@RequestParam("idautorisationsortie")int id,HttpServletRequest request){
+        autorisationsortie.setModified(new Date());
+        autorisationsortie.setCreated(cfl.find(id).getCreated());
+        cfl.edit(autorisationsortie);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -87,21 +89,21 @@ public class ClasseController {
     @RequestMapping(value="/view/{id}", method=RequestMethod.GET)
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("classe", cfl.find(id));
+        mv.addObject("autorisationsortie", cfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method=RequestMethod.GET)
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("classes", cfl.findAll());
+        mv.addObject("autorisationsorties", cfl.findAll());
         return mv;
     }
     
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
-    public RedirectView delete(@RequestParam("idclasse")int id,HttpServletRequest request){
-        Classe c = cfl.find(id);
+    public RedirectView delete(@RequestParam("idautorisationsortie")int id,HttpServletRequest request){
+        AutorisationSortie c = cfl.find(id);
         cfl.remove(c);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

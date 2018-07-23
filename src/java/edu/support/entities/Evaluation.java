@@ -7,6 +7,7 @@ package edu.support.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,6 +22,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -35,6 +39,20 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Evaluation.findAll", query = "SELECT e FROM Evaluation e")
     , @NamedQuery(name = "Evaluation.findByIdevaluation", query = "SELECT e FROM Evaluation e WHERE e.idevaluation = :idevaluation")})
 public class Evaluation implements Serializable {
+
+    @Column(name = "date_evaluation")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateEvaluation;
+    @Column(name = "created")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
+    @Column(name = "modified")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date modified;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private short deleted;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -125,6 +143,38 @@ public class Evaluation implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Evaluation[ idevaluation=" + idevaluation + " ]";
+    }
+
+    public Date getDateEvaluation() {
+        return dateEvaluation;
+    }
+
+    public void setDateEvaluation(Date dateEvaluation) {
+        this.dateEvaluation = dateEvaluation;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public short getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(short deleted) {
+        this.deleted = deleted;
     }
     
 }

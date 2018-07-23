@@ -9,6 +9,7 @@ import edu.support.entities.Utilisateur;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +28,21 @@ public class UtilisateurFacade extends AbstractFacade<Utilisateur> implements Ut
 
     public UtilisateurFacade() {
         super(Utilisateur.class);
+    }
+
+    @Override
+    public Utilisateur findByCredentials(String login, String motDePasse) {
+        EntityManager entityManager = getEntityManager();
+        Query q;
+        try{
+            q = entityManager.createNamedQuery("SELECT u FROM Utilisateur u WHERE u.login=:login and u.motDePasse=:motDePasse");
+            q.setParameter("login", login);
+            q.setParameter("motDePasse", motDePasse);
+            return (Utilisateur) q.getSingleResult();
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
     
 }

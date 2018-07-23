@@ -5,8 +5,8 @@
  */
 package edu.support.controllers;
 
-import edu.support.dao.ClasseFacadeLocal;
-import edu.support.entities.Classe;
+import edu.support.dao.AnneeScolaireFacadeLocal;
+import edu.support.entities.AnneeScolaire;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,17 +30,17 @@ import org.springframework.web.servlet.view.RedirectView;
  * @author N9-T
  */
 @Controller
-@RequestMapping("/classe")
-public class ClasseController {
+@RequestMapping("/anneescolaire")
+public class AnneeScolaireController {
     
-    @EJB(mappedName="java:app/edusupport/ClasseFacade")
-    private ClasseFacadeLocal cfl;
+    @EJB(mappedName="java:app/edusupport/AnneeScolaireFacade")
+    private AnneeScolaireFacadeLocal cfl;
     
-    private final static String VUE_CREATE = "jsp/classe/create";
-    private final static String VUE_EDIT = "jsp/classe/edit";
-    private final static String VUE_LIST = "jsp/classe/list";
-    private final static String VUE_VIEW = "jsp/classe/view";
-    private final static String PATH_LIST = "/classe/list";
+    private final static String VUE_CREATE = "jsp/anneescolaire/create";
+    private final static String VUE_EDIT = "jsp/anneescolaire/edit";
+    private final static String VUE_LIST = "jsp/anneescolaire/list";
+    private final static String VUE_VIEW = "jsp/anneescolaire/view";
+    private final static String PATH_LIST = "/anneescolaire/list";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
@@ -56,14 +56,14 @@ public class ClasseController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("classe")Classe classe,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("anneescolaire")AnneeScolaire anneescolaire,BindingResult result ,HttpServletRequest request){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-        classe.setCreated(new Date());
-        classe.setModified(new Date());
-        cfl.create(classe);
+        anneescolaire.setCreated(new Date());
+        anneescolaire.setModified(new Date());
+        cfl.create(anneescolaire);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -71,15 +71,15 @@ public class ClasseController {
     @RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("classe", cfl.find(id));
+        mv.addObject("anneescolaire", cfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("classe")Classe classe ,@RequestParam("idclasse")int id,HttpServletRequest request){
-        classe.setModified(new Date());
-        classe.setCreated(cfl.find(id).getCreated());
-        cfl.edit(classe);
+    public RedirectView postEdit(@Valid @ModelAttribute("anneescolaire")AnneeScolaire anneescolaire ,@RequestParam("idanneescolaire")int id,HttpServletRequest request){
+        anneescolaire.setModified(new Date());
+        anneescolaire.setCreated(cfl.find(id).getCreated());
+        cfl.edit(anneescolaire);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -87,21 +87,21 @@ public class ClasseController {
     @RequestMapping(value="/view/{id}", method=RequestMethod.GET)
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("classe", cfl.find(id));
+        mv.addObject("anneescolaire", cfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method=RequestMethod.GET)
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("classes", cfl.findAll());
+        mv.addObject("anneescolaires", cfl.findAll());
         return mv;
     }
     
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
-    public RedirectView delete(@RequestParam("idclasse")int id,HttpServletRequest request){
-        Classe c = cfl.find(id);
+    public RedirectView delete(@RequestParam("idanneescolaire")int id,HttpServletRequest request){
+        AnneeScolaire c = cfl.find(id);
         cfl.remove(c);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
