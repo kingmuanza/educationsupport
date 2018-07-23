@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author N9-T
+ * @author zos hall
  */
 @Stateless
 public class ReunionFacade extends AbstractFacade<Reunion> implements ReunionFacadeLocal {

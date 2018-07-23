@@ -7,12 +7,10 @@ package edu.support.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,15 +20,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author N9-T
+ * @author zos hall
  */
 @Entity
 @Table(name = "evaluation", catalog = "edusupport_db", schema = "")
@@ -40,36 +35,22 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Evaluation.findByIdevaluation", query = "SELECT e FROM Evaluation e WHERE e.idevaluation = :idevaluation")})
 public class Evaluation implements Serializable {
 
-    @Column(name = "date_evaluation")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateEvaluation;
-    @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
-    @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modified;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "deleted", nullable = false)
-    private short deleted;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idevaluation", nullable = false)
     private Integer idevaluation;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluationIdevaluation", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluationIdevaluation")
     private Collection<Note> noteCollection;
     @JoinColumn(name = "classe_idclasse", referencedColumnName = "idclasse", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Classe classeIdclasse;
     @JoinColumn(name = "matiere_idmatiere", referencedColumnName = "idmatiere", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Matiere matiereIdmatiere;
     @JoinColumn(name = "sequence_idsequence", referencedColumnName = "idsequence", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Sequence sequenceIdsequence;
 
     public Evaluation() {
@@ -143,38 +124,6 @@ public class Evaluation implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Evaluation[ idevaluation=" + idevaluation + " ]";
-    }
-
-    public Date getDateEvaluation() {
-        return dateEvaluation;
-    }
-
-    public void setDateEvaluation(Date dateEvaluation) {
-        this.dateEvaluation = dateEvaluation;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getModified() {
-        return modified;
-    }
-
-    public void setModified(Date modified) {
-        this.modified = modified;
-    }
-
-    public short getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(short deleted) {
-        this.deleted = deleted;
     }
     
 }

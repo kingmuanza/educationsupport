@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -13,7 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author N9-T
+ * @author zos hall
  */
 @Entity
 @Table(name = "classe", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -44,7 +42,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Classe.findByCreated", query = "SELECT c FROM Classe c WHERE c.created = :created")
     , @NamedQuery(name = "Classe.findByModified", query = "SELECT c FROM Classe c WHERE c.modified = :modified")
     , @NamedQuery(name = "Classe.findByDeleted", query = "SELECT c FROM Classe c WHERE c.deleted = :deleted")})
-@JsonIgnoreProperties({"eleveCollection","evaluationCollection"})
 public class Classe implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -68,9 +65,9 @@ public class Classe implements Serializable {
     @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classeIdclasse", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classeIdclasse")
     private Collection<Eleve> eleveCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classeIdclasse", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classeIdclasse")
     private Collection<Evaluation> evaluationCollection;
 
     public Classe() {

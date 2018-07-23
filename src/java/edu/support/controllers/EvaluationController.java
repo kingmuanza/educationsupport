@@ -55,34 +55,34 @@ public class EvaluationController {
         return mv;
     }
     
-    @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("evaluation")Evaluation evaluation,BindingResult result ,HttpServletRequest request){
-        if(result.hasErrors()){
-            ModelAndView mv = new ModelAndView(VUE_CREATE);
-            return mv;
-        }
-        evaluation.setCreated(new Date());
-        evaluation.setModified(new Date());
-        cfl.create(evaluation);
-        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
-        return rv;
-    }
-    
-    @RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
-    public ModelAndView getEdit(@PathVariable("id")int id){
-        ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("evaluation", cfl.find(id));
-        return mv;
-    }
-    
-    @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("evaluation")Evaluation evaluation ,@RequestParam("idevaluation")int id,HttpServletRequest request){
-        evaluation.setModified(new Date());
-        evaluation.setCreated(cfl.find(id).getCreated());
-        cfl.edit(evaluation);
-        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
-        return rv;
-    }
+//    @RequestMapping(value="/create", method=RequestMethod.POST)
+//    public Object postCreate(@Valid @ModelAttribute("evaluation")Evaluation evaluation,BindingResult result ,HttpServletRequest request){
+//        if(result.hasErrors()){
+//            ModelAndView mv = new ModelAndView(VUE_CREATE);
+//            return mv;
+//        }
+//        evaluation.setCreated(new Date());
+//        evaluation.setModified(new Date());
+//        cfl.create(evaluation);
+//        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
+//        return rv;
+//    }
+//    
+//    @RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
+//    public ModelAndView getEdit(@PathVariable("id")int id){
+//        ModelAndView mv = new ModelAndView(VUE_EDIT);
+//        mv.addObject("evaluation", cfl.find(id));
+//        return mv;
+//    }
+//    
+//    @RequestMapping(value="/edit", method=RequestMethod.POST)
+//    public RedirectView postEdit(@Valid @ModelAttribute("evaluation")Evaluation evaluation ,@RequestParam("idevaluation")int id,HttpServletRequest request){
+//        evaluation.setModified(new Date());
+//        evaluation.setCreated(cfl.find(id).getCreated());
+//        cfl.edit(evaluation);
+//        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
+//        return rv;
+//    }
     
     @RequestMapping(value="/view/{id}", method=RequestMethod.GET)
     public ModelAndView getView(@PathVariable("id")int id){

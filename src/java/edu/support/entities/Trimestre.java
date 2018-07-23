@@ -12,7 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author N9-T
+ * @author zos hall
  */
 @Entity
 @Table(name = "trimestre", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -44,8 +45,8 @@ public class Trimestre implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idtrimestre", nullable = false)
     private Integer idtrimestre;
     @Basic(optional = false)
@@ -62,7 +63,7 @@ public class Trimestre implements Serializable {
     @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trimestreIdtrimestre", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "trimestreIdtrimestre")
     private Collection<Sequence> sequenceCollection;
 
     public Trimestre() {

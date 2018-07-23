@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -13,7 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author N9-T
+ * @author zos hall
  */
 @Entity
 @Table(name = "conseil_discipline", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -45,7 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "ConseilDiscipline.findByDateFin", query = "SELECT c FROM ConseilDiscipline c WHERE c.dateFin = :dateFin")
     , @NamedQuery(name = "ConseilDiscipline.findByCreated", query = "SELECT c FROM ConseilDiscipline c WHERE c.created = :created")
     , @NamedQuery(name = "ConseilDiscipline.findByModified", query = "SELECT c FROM ConseilDiscipline c WHERE c.modified = :modified")
-    , @NamedQuery(name = "ConseilDiscipline.findByBoolean1", query = "SELECT c FROM ConseilDiscipline c WHERE c.boolean1 = :boolean1")})
+    , @NamedQuery(name = "ConseilDiscipline.findByDeleted", query = "SELECT c FROM ConseilDiscipline c WHERE c.deleted = :deleted")})
 public class ConseilDiscipline implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -77,10 +75,9 @@ public class ConseilDiscipline implements Serializable {
     private Date modified;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "boolean", nullable = false)
-    private boolean boolean1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conseilDisciplineIdconseilDiscipline", fetch = FetchType.LAZY)
-    @JsonIgnore
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conseilDisciplineIdconseilDiscipline")
     private Collection<ElevesTraduits> elevesTraduitsCollection;
 
     public ConseilDiscipline() {
@@ -90,12 +87,12 @@ public class ConseilDiscipline implements Serializable {
         this.idconseilDiscipline = idconseilDiscipline;
     }
 
-    public ConseilDiscipline(Integer idconseilDiscipline, String code, Date dateDebut, Date dateFin, boolean boolean1) {
+    public ConseilDiscipline(Integer idconseilDiscipline, String code, Date dateDebut, Date dateFin, boolean deleted) {
         this.idconseilDiscipline = idconseilDiscipline;
         this.code = code;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
-        this.boolean1 = boolean1;
+        this.deleted = deleted;
     }
 
     public Integer getIdconseilDiscipline() {
@@ -146,12 +143,12 @@ public class ConseilDiscipline implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getBoolean1() {
-        return boolean1;
+    public boolean getDeleted() {
+        return deleted;
     }
 
-    public void setBoolean1(boolean boolean1) {
-        this.boolean1 = boolean1;
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @XmlTransient

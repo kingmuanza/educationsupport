@@ -10,7 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author N9-T
+ * @author zos hall
  */
 @Entity
 @Table(name = "autorisation_sortie", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -39,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "AutorisationSortie.findByIdautorisationSortie", query = "SELECT a FROM AutorisationSortie a WHERE a.idautorisationSortie = :idautorisationSortie")
     , @NamedQuery(name = "AutorisationSortie.findByCode", query = "SELECT a FROM AutorisationSortie a WHERE a.code = :code")
     , @NamedQuery(name = "AutorisationSortie.findByDateJour", query = "SELECT a FROM AutorisationSortie a WHERE a.dateJour = :dateJour")
+    , @NamedQuery(name = "AutorisationSortie.findByDateRetour", query = "SELECT a FROM AutorisationSortie a WHERE a.dateRetour = :dateRetour")
     , @NamedQuery(name = "AutorisationSortie.findByCreated", query = "SELECT a FROM AutorisationSortie a WHERE a.created = :created")
     , @NamedQuery(name = "AutorisationSortie.findByModified", query = "SELECT a FROM AutorisationSortie a WHERE a.modified = :modified")
     , @NamedQuery(name = "AutorisationSortie.findByDeleted", query = "SELECT a FROM AutorisationSortie a WHERE a.deleted = :deleted")})
@@ -60,6 +60,11 @@ public class AutorisationSortie implements Serializable {
     @Column(name = "date_jour", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateJour;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "date_retour", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateRetour;
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -69,13 +74,12 @@ public class AutorisationSortie implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date deleted;
+    private short deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
     @JoinColumn(name = "employe_idemploye", referencedColumnName = "idemploye", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Employe employeIdemploye;
 
     public AutorisationSortie() {
@@ -85,10 +89,11 @@ public class AutorisationSortie implements Serializable {
         this.idautorisationSortie = idautorisationSortie;
     }
 
-    public AutorisationSortie(Integer idautorisationSortie, String code, Date dateJour, Date deleted) {
+    public AutorisationSortie(Integer idautorisationSortie, String code, Date dateJour, Date dateRetour, short deleted) {
         this.idautorisationSortie = idautorisationSortie;
         this.code = code;
         this.dateJour = dateJour;
+        this.dateRetour = dateRetour;
         this.deleted = deleted;
     }
 
@@ -116,6 +121,14 @@ public class AutorisationSortie implements Serializable {
         this.dateJour = dateJour;
     }
 
+    public Date getDateRetour() {
+        return dateRetour;
+    }
+
+    public void setDateRetour(Date dateRetour) {
+        this.dateRetour = dateRetour;
+    }
+
     public Date getCreated() {
         return created;
     }
@@ -132,11 +145,11 @@ public class AutorisationSortie implements Serializable {
         this.modified = modified;
     }
 
-    public Date getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Date deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 

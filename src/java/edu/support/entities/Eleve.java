@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -13,7 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author N9-T
+ * @author zos hall
  */
 @Entity
 @Table(name = "eleve", catalog = "edusupport_db", schema = "")
@@ -42,8 +40,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Eleve.findByCreated", query = "SELECT e FROM Eleve e WHERE e.created = :created")
     , @NamedQuery(name = "Eleve.findByModified", query = "SELECT e FROM Eleve e WHERE e.modified = :modified")
     , @NamedQuery(name = "Eleve.findByDeleted", query = "SELECT e FROM Eleve e WHERE e.deleted = :deleted")})
-
-@JsonIgnoreProperties({"noteCollection","paiementCollection","eleveMaladieCollection","sanctionCollection","relanceCollection","passageInfirmerieCollection","convocationCollection","autorisationSortieCollection","elevesTraduitsCollection","moratoireCollection"})
 public class Eleve implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,31 +58,31 @@ public class Eleve implements Serializable {
     @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     private Collection<Note> noteCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     private Collection<Paiement> paiementCollection;
-    @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Individu individuIdindividu;
     @JoinColumn(name = "classe_idclasse", referencedColumnName = "idclasse", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Classe classeIdclasse;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
+    @ManyToOne(optional = false)
+    private Individu individuIdindividu;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     private Collection<EleveMaladie> eleveMaladieCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     private Collection<Sanction> sanctionCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     private Collection<Relance> relanceCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     private Collection<PassageInfirmerie> passageInfirmerieCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     private Collection<Convocation> convocationCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     private Collection<AutorisationSortie> autorisationSortieCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     private Collection<ElevesTraduits> elevesTraduitsCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     private Collection<Moratoire> moratoireCollection;
 
     public Eleve() {
@@ -151,20 +147,20 @@ public class Eleve implements Serializable {
         this.paiementCollection = paiementCollection;
     }
 
-    public Individu getIndividuIdindividu() {
-        return individuIdindividu;
-    }
-
-    public void setIndividuIdindividu(Individu individuIdindividu) {
-        this.individuIdindividu = individuIdindividu;
-    }
-
     public Classe getClasseIdclasse() {
         return classeIdclasse;
     }
 
     public void setClasseIdclasse(Classe classeIdclasse) {
         this.classeIdclasse = classeIdclasse;
+    }
+
+    public Individu getIndividuIdindividu() {
+        return individuIdindividu;
+    }
+
+    public void setIndividuIdindividu(Individu individuIdindividu) {
+        this.individuIdindividu = individuIdindividu;
     }
 
     @XmlTransient

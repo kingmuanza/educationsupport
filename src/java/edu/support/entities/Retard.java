@@ -10,7 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author N9-T
+ * @author zos hall
  */
 @Entity
 @Table(name = "retard", catalog = "edusupport_db", schema = "")
@@ -67,7 +66,7 @@ public class Retard implements Serializable {
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Individu individuIdindividu;
 
     public Retard() {

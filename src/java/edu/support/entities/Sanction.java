@@ -10,7 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -26,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author N9-T
+ * @author zos hall
  */
 @Entity
 @Table(name = "sanction", catalog = "edusupport_db", schema = "")
@@ -67,15 +66,15 @@ public class Sanction implements Serializable {
     @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
+    @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
+    @ManyToOne(optional = false)
+    private Eleve eleveIdeleve;
     @JoinColumn(name = "employe_idemploye", referencedColumnName = "idemploye")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Employe employeIdemploye;
     @JoinColumn(name = "enseignant_idenseignant", referencedColumnName = "idenseignant")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Enseignant enseignantIdenseignant;
-    @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Eleve eleveIdeleve;
 
     public Sanction() {
     }
@@ -139,6 +138,14 @@ public class Sanction implements Serializable {
         this.deleted = deleted;
     }
 
+    public Eleve getEleveIdeleve() {
+        return eleveIdeleve;
+    }
+
+    public void setEleveIdeleve(Eleve eleveIdeleve) {
+        this.eleveIdeleve = eleveIdeleve;
+    }
+
     public Employe getEmployeIdemploye() {
         return employeIdemploye;
     }
@@ -153,14 +160,6 @@ public class Sanction implements Serializable {
 
     public void setEnseignantIdenseignant(Enseignant enseignantIdenseignant) {
         this.enseignantIdenseignant = enseignantIdenseignant;
-    }
-
-    public Eleve getEleveIdeleve() {
-        return eleveIdeleve;
-    }
-
-    public void setEleveIdeleve(Eleve eleveIdeleve) {
-        this.eleveIdeleve = eleveIdeleve;
     }
 
     @Override

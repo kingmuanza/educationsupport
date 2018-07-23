@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -13,7 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author N9-T
+ * @author zos hall
  */
 @Entity
 @Table(name = "individu", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -53,7 +51,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Individu.findByCreated", query = "SELECT i FROM Individu i WHERE i.created = :created")
     , @NamedQuery(name = "Individu.findByModified", query = "SELECT i FROM Individu i WHERE i.modified = :modified")
     , @NamedQuery(name = "Individu.findByDeleted", query = "SELECT i FROM Individu i WHERE i.deleted = :deleted")})
-@JsonIgnoreProperties({"eleveCollection"})
 public class Individu implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -116,17 +113,17 @@ public class Individu implements Serializable {
     @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
     private Collection<Absence> absenceCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
     private Collection<Eleve> eleveCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
     private Collection<Retard> retardCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
     private Collection<Employe> employeCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
     private Collection<IndividuUtilisateur> individuUtilisateurCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
     private Collection<Enseignant> enseignantCollection;
 
     public Individu() {

@@ -9,7 +9,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author N9-T
+ * @author zos hall
  */
 @Entity
 @Table(name = "eleves_traduits", catalog = "edusupport_db", schema = "")
@@ -47,12 +46,12 @@ public class ElevesTraduits implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "motif", nullable = false, length = 65535)
     private String motif;
-    @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Eleve eleveIdeleve;
     @JoinColumn(name = "conseil_discipline_idconseil_discipline", referencedColumnName = "idconseil_discipline", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private ConseilDiscipline conseilDisciplineIdconseilDiscipline;
+    @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
+    @ManyToOne(optional = false)
+    private Eleve eleveIdeleve;
 
     public ElevesTraduits() {
     }
@@ -82,20 +81,20 @@ public class ElevesTraduits implements Serializable {
         this.motif = motif;
     }
 
-    public Eleve getEleveIdeleve() {
-        return eleveIdeleve;
-    }
-
-    public void setEleveIdeleve(Eleve eleveIdeleve) {
-        this.eleveIdeleve = eleveIdeleve;
-    }
-
     public ConseilDiscipline getConseilDisciplineIdconseilDiscipline() {
         return conseilDisciplineIdconseilDiscipline;
     }
 
     public void setConseilDisciplineIdconseilDiscipline(ConseilDiscipline conseilDisciplineIdconseilDiscipline) {
         this.conseilDisciplineIdconseilDiscipline = conseilDisciplineIdconseilDiscipline;
+    }
+
+    public Eleve getEleveIdeleve() {
+        return eleveIdeleve;
+    }
+
+    public void setEleveIdeleve(Eleve eleveIdeleve) {
+        this.eleveIdeleve = eleveIdeleve;
     }
 
     @Override

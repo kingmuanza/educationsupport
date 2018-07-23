@@ -12,7 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author N9-T
+ * @author zos hall
  */
 @Entity
 @Table(name = "sequence", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -73,14 +72,14 @@ public class Sequence implements Serializable {
     @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sequenceIdsequence", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sequenceIdsequence")
     private Collection<Evaluation> evaluationCollection;
-    @JoinColumn(name = "trimestre_idtrimestre", referencedColumnName = "idtrimestre", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Trimestre trimestreIdtrimestre;
     @JoinColumn(name = "annee_scolaire_idannee_scolaire", referencedColumnName = "idannee_scolaire", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private AnneeScolaire anneeScolaireIdanneeScolaire;
+    @JoinColumn(name = "trimestre_idtrimestre", referencedColumnName = "idtrimestre", nullable = false)
+    @ManyToOne(optional = false)
+    private Trimestre trimestreIdtrimestre;
 
     public Sequence() {
     }
@@ -153,20 +152,20 @@ public class Sequence implements Serializable {
         this.evaluationCollection = evaluationCollection;
     }
 
-    public Trimestre getTrimestreIdtrimestre() {
-        return trimestreIdtrimestre;
-    }
-
-    public void setTrimestreIdtrimestre(Trimestre trimestreIdtrimestre) {
-        this.trimestreIdtrimestre = trimestreIdtrimestre;
-    }
-
     public AnneeScolaire getAnneeScolaireIdanneeScolaire() {
         return anneeScolaireIdanneeScolaire;
     }
 
     public void setAnneeScolaireIdanneeScolaire(AnneeScolaire anneeScolaireIdanneeScolaire) {
         this.anneeScolaireIdanneeScolaire = anneeScolaireIdanneeScolaire;
+    }
+
+    public Trimestre getTrimestreIdtrimestre() {
+        return trimestreIdtrimestre;
+    }
+
+    public void setTrimestreIdtrimestre(Trimestre trimestreIdtrimestre) {
+        this.trimestreIdtrimestre = trimestreIdtrimestre;
     }
 
     @Override

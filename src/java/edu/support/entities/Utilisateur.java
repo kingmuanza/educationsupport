@@ -12,7 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author N9-T
+ * @author zos hall
  */
 @Entity
 @Table(name = "utilisateur", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -75,11 +74,11 @@ public class Utilisateur implements Serializable {
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @JoinColumn(name = "droit_acces_iddroit_acces", referencedColumnName = "iddroit_acces", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private DroitAcces droitAccesIddroitAcces;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur")
     private Collection<Activite> activiteCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur")
     private Collection<IndividuUtilisateur> individuUtilisateurCollection;
 
     public Utilisateur() {

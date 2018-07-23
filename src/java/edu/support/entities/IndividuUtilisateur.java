@@ -10,7 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author N9-T
+ * @author zos hall
  */
 @Entity
 @Table(name = "individu_utilisateur", catalog = "edusupport_db", schema = "")
@@ -55,12 +54,12 @@ public class IndividuUtilisateur implements Serializable {
     @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
-    @JoinColumn(name = "utilisateur_idutilisateur", referencedColumnName = "idutilisateur", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Utilisateur utilisateurIdutilisateur;
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Individu individuIdindividu;
+    @JoinColumn(name = "utilisateur_idutilisateur", referencedColumnName = "idutilisateur", nullable = false)
+    @ManyToOne(optional = false)
+    private Utilisateur utilisateurIdutilisateur;
 
     public IndividuUtilisateur() {
     }
@@ -106,20 +105,20 @@ public class IndividuUtilisateur implements Serializable {
         this.deleted = deleted;
     }
 
-    public Utilisateur getUtilisateurIdutilisateur() {
-        return utilisateurIdutilisateur;
-    }
-
-    public void setUtilisateurIdutilisateur(Utilisateur utilisateurIdutilisateur) {
-        this.utilisateurIdutilisateur = utilisateurIdutilisateur;
-    }
-
     public Individu getIndividuIdindividu() {
         return individuIdindividu;
     }
 
     public void setIndividuIdindividu(Individu individuIdindividu) {
         this.individuIdindividu = individuIdindividu;
+    }
+
+    public Utilisateur getUtilisateurIdutilisateur() {
+        return utilisateurIdutilisateur;
+    }
+
+    public void setUtilisateurIdutilisateur(Utilisateur utilisateurIdutilisateur) {
+        this.utilisateurIdutilisateur = utilisateurIdutilisateur;
     }
 
     @Override
