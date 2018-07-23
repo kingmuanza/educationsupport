@@ -26,7 +26,7 @@
                     </h1>
                     
                     <div style="padding-top: 20px;">
-                        <form class="ui form" method="post" action="ConnexionServlet">
+                        <form class="ui form" method="post" action="/educationsupport/start">
                             <div class="field">
                                 <label class="fg-white">Login</label>
                                 <input type="text" name="login" placeholder="Login">
@@ -35,7 +35,7 @@
                                 <label class="fg-white">Mot de passe</label>
                                 <input type="password" name="passe" >
                             </div>
-                            <button class="ui ${empty sessionScope.connexionError?'teal':'' } button" type="submit">Connexion</button>
+                            <button class="ui ${empty sessionScope.erreur_auth?'teal':'' } button" type="submit">Connexion</button>
                         </form>
                     </div>
 

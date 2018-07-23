@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 /**
@@ -33,7 +32,7 @@ public class LoginController {
     public RedirectView handleFormAuth(@RequestParam Map<String,String>params, HttpServletRequest request){
         RedirectView mv;
         String login = params.get("login");
-        String pwd = params.get("motDePasse");
+        String pwd = params.get("passe");
         Utilisateur u = ufl.findByCredentials(login, pwd);
         if(u != null){
             HttpSession session = request.getSession();
