@@ -5,8 +5,8 @@
  */
 package edu.support.controllers;
 
-import edu.support.dao.EleveFacadeLocal;
-import edu.support.entities.Eleve;
+import edu.support.dao.NoteFacadeLocal;
+import edu.support.entities.Note;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,18 +29,18 @@ import org.springframework.web.servlet.view.RedirectView;
  *
  * @author N9-T
  */
-@Controller()
-@RequestMapping("/eleve")
-public class EleveController {
+@Controller
+@RequestMapping("/note")
+public class NoteController {
     
-    @EJB(mappedName="java:app/edusupport/EleveFacade")
-    private EleveFacadeLocal cfl;
+    @EJB(mappedName="java:app/edusupport/NoteFacade")
+    private NoteFacadeLocal nfl;
     
-    private final static String VUE_CREATE = "jsp/eleve/create";
-    private final static String VUE_EDIT = "jsp/eleve/edit";
-    private final static String VUE_LIST = "jsp/eleve/list";
-    private final static String VUE_VIEW = "jsp/eleve/view";
-    private final static String PATH_LIST = "/eleve/list";
+    private final static String VUE_CREATE = "jsp/note/create";
+    private final static String VUE_EDIT = "jsp/note/edit";
+    private final static String VUE_LIST = "jsp/note/list";
+    private final static String VUE_VIEW = "jsp/note/view";
+    private final static String PATH_LIST = "/note/list";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
@@ -56,14 +56,14 @@ public class EleveController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("eleve")Eleve eleve,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("note")Note note,BindingResult result ,HttpServletRequest request){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-        eleve.setCreated(new Date());
-        eleve.setModified(new Date());
-        cfl.create(eleve);
+        note.setCreated(new Date());
+        note.setModified(new Date());
+        nfl.create(note);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -71,15 +71,15 @@ public class EleveController {
     @RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("eleve", cfl.find(id));
+        mv.addObject("note", nfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("eleve")Eleve eleve ,@RequestParam("ideleve")int id,HttpServletRequest request){
-        eleve.setModified(new Date());
-        eleve.setCreated(cfl.find(id).getCreated());
-        cfl.edit(eleve);
+    public RedirectView postEdit(@Valid @ModelAttribute("note")Note note ,@RequestParam("idnote")int id,HttpServletRequest request){
+        note.setModified(new Date());
+        note.setCreated(nfl.find(id).getCreated());
+        nfl.edit(note);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -87,22 +87,22 @@ public class EleveController {
     @RequestMapping(value="/view/{id}", method=RequestMethod.GET)
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("eleve", cfl.find(id));
+        mv.addObject("note", nfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method=RequestMethod.GET)
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("eleves", cfl.findAll());
+        mv.addObject("notes", nfl.findAll());
         return mv;
     }
     
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
-    public RedirectView delete(@RequestParam("ideleve")int id,HttpServletRequest request){
-        Eleve c = cfl.find(id);
-        cfl.remove(c);
+    public RedirectView delete(@RequestParam("idnote")int id,HttpServletRequest request){
+        Note c = nfl.find(id);
+        nfl.remove(c);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

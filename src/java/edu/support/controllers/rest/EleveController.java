@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author N9-T
  */
-@RestController
+@RestController("EleveControllerREST")
 @RequestMapping("/api/eleves")
 public class EleveController {
     

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  *
@@ -26,27 +27,25 @@ public class LoginController {
     @EJB(mappedName="java:app/edusupport/UtilisateurFacade")
     private UtilisateurFacadeLocal ufl;
     
-    private final static String PATH_START = "url vers la vue start";
-    private final static String PATH_AUTH = "url vers la vue d'authentification";
+    private final static String PATH_START = "/start";
+    private final static String PATH_AUTH = "/";
     @RequestMapping(value = "/start", method = RequestMethod.POST)
-    public ModelAndView handleFromAuth(@RequestParam Map<String,String>params, HttpServletRequest request){
-        ModelAndView mv;
+    public RedirectView handleFormAuth(@RequestParam Map<String,String>params, HttpServletRequest request){
+        RedirectView mv;
         String login = params.get("login");
         String pwd = params.get("motDePasse");
         Utilisateur u = ufl.findByCredentials(login, pwd);
         if(u != null){
             HttpSession session = request.getSession();
             session.setAttribute("utilisateur_courant", u);
-            mv = new ModelAndView(PATH_START);
+            mv = new RedirectView(request.getContextPath()+PATH_START);
             return mv;
         }else{
-            mv = new ModelAndView(PATH_AUTH);
+            HttpSession session = request.getSession();
+            session.setAttribute("erreur_auth", "Login ou mot de passe incorrect");
+            mv = new RedirectView(request.getContextPath()+PATH_AUTH);
             return mv;
         }
     }
-    @RequestMapping(value = "/start", method = RequestMethod.GET)
-    public ModelAndView getViewAuth(){
-        ModelAndView mv = new ModelAndView(PATH_AUTH);
-        return mv;
-    }
+    
 }
