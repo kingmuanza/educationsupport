@@ -31,7 +31,9 @@
         </bean>
 	    
     </mvc:interceptors>
-	
+    
+    <mvc:resources mapping="/resources/**" location="/resources/themes/" />
+        
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">
             <value>/WEB-INF/</value>
