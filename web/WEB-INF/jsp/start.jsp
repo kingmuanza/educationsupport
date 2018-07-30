@@ -279,7 +279,7 @@
         <script src="<c:url value="/resources/js/angular.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/angular-route.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/myapp.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/resources/js/routage.js?id=1881"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/routage.js?id=18"/>" type="text/javascript"></script>
 
         <script>
                         $(document).ready(function () {
