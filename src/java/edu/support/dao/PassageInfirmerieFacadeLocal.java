@@ -39,5 +39,7 @@ public interface PassageInfirmerieFacadeLocal {
      * @return 
      */
     public List<PassageInfirmerie> findByEleve(Eleve e);
+
+    public List<PassageInfirmerie> findByDates(String date1, String date2);
     
 }
