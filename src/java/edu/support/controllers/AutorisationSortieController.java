@@ -49,7 +49,7 @@ public class AutorisationSortieController {
         binder.setDisallowedFields(new String[]{"created","modified"});
     }
     
-    @RequestMapping(value="/create", method=RequestMethod.GET)
+    @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getCreate() throws ParseException{
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -70,7 +70,7 @@ public class AutorisationSortieController {
         return rv;
     }
     
-    @RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
+    @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
         mv.addObject("autorisationsortie", cfl.find(id));
@@ -86,14 +86,14 @@ public class AutorisationSortieController {
         return rv;
     }
     
-    @RequestMapping(value="/view/{id}", method=RequestMethod.GET)
+    @RequestMapping(value="/view/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
         mv.addObject("autorisationsortie", cfl.find(id));
         return mv;
     }
     
-    @RequestMapping(value="/list", method=RequestMethod.GET)
+    @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
         mv.addObject("autorisationsorties", cfl.findAll());

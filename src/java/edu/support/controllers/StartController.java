@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class StartController {
     
     private final static String PATH_START = "jsp/start";
-    @RequestMapping(value = "/start", method = RequestMethod.GET)
+    @RequestMapping(value = "/start", method = {RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getViewStart(){
         ModelAndView mv = new ModelAndView(PATH_START);
         return mv;
