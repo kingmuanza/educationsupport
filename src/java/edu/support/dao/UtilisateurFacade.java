@@ -35,10 +35,10 @@ public class UtilisateurFacade extends AbstractFacade<Utilisateur> implements Ut
         EntityManager entityManager = getEntityManager();
         Query q;
         try{
-            q = entityManager.createQuery("SELECT u FROM Utilisateur u WHERE u.login=:login and u.motDePasse=:motDePasse");
+            q = entityManager.createQuery("FROM Utilisateur u WHERE u.login=:login and u.motDePasse=:motDePasse");
             q.setParameter("login", login);
             q.setParameter("motDePasse", motDePasse);
-            return (Utilisateur) q.getSingleResult();
+            return (Utilisateur) q.getResultList().get(0);
         }catch(Exception e){
             e.printStackTrace();
             return null;
