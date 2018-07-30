@@ -5,6 +5,7 @@
  */
 package edu.support.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -69,20 +70,28 @@ public class Eleve implements Serializable {
     @ManyToOne(optional = false)
     private Individu individuIdindividu;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
+    @JsonIgnore
     private Collection<EleveMaladie> eleveMaladieCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
+    @JsonIgnore
     private Collection<Sanction> sanctionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
+    @JsonIgnore
     private Collection<Relance> relanceCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
+    @JsonIgnore
     private Collection<PassageInfirmerie> passageInfirmerieCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
+    @JsonIgnore
     private Collection<Convocation> convocationCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
+    @JsonIgnore
     private Collection<AutorisationSortie> autorisationSortieCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
+    @JsonIgnore
     private Collection<ElevesTraduits> elevesTraduitsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
+    @JsonIgnore
     private Collection<Moratoire> moratoireCollection;
 
     public Eleve() {

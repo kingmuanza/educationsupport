@@ -7,7 +7,6 @@ package edu.support.dao;
 
 import edu.support.entities.Eleve;
 import edu.support.entities.PassageInfirmerie;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -43,7 +42,20 @@ public class PassageInfirmerieFacade extends AbstractFacade<PassageInfirmerie> i
             return q.getResultList();
         }catch(Exception ex){
             ex.printStackTrace();
-            return new ArrayList<PassageInfirmerie>();
+            return null;
+        }
+    }
+
+    @Override
+    public List<PassageInfirmerie> findByDates(String d1, String d2) {
+        EntityManager entityManager = getEntityManager();
+        Query q;
+        try{
+            q = em.createQuery("SELECT pi FROM PassageInfirmerie pi WHERE pi.dateJour BETWEEN '"+d1+"' AND '"+d2+"'");
+            return q.getResultList();
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return null;
         }
     }
     

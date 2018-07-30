@@ -5,6 +5,7 @@
  */
 package edu.support.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -114,16 +115,21 @@ public class Individu implements Serializable {
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
+    @JsonIgnore
     private Collection<Absence> absenceCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
+    @JsonIgnore
     private Collection<Eleve> eleveCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
     private Collection<Retard> retardCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
+    @JsonIgnore
     private Collection<Employe> employeCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
+    @JsonIgnore
     private Collection<IndividuUtilisateur> individuUtilisateurCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
+    @JsonIgnore
     private Collection<Enseignant> enseignantCollection;
 
     public Individu() {
