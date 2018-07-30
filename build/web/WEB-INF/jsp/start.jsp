@@ -54,21 +54,31 @@
             <div class="gris" style="width: 18vw; height: 110vh; padding-top: 25px;">
 
                 <div style="padding-left: 10px; padding-right : 10px;" id="section_profil"  class="section_muanza">
-                    <h1>Disciplines</h1>
-                    <h3 class="fg-white" style="line-height: 0">
-                        ${empty sessionScope.utilisateur.individu.noms ? sessionScope.utilisateur.login:""}
-                        ${sessionScope.utilisateur.individu.noms}
-                        ${sessionScope.utilisateur.individu.prenoms}
-                    </h3>
-
-                    <img src="img/joe.jpg" alt="" style="width: 100%"/>
-                    <h3 class="fg-white" style="line-height: 0">
-                        ${sessionScope.utilisateur.utilisateurProfil.libelle}
-
-                    </h3>
-                    <a class="fg-white">
-                        @${sessionScope.utilisateur.login}
-                    </a>
+                    <h1>Discipline</h1>
+                    <div class="ui accordion vertical fluid following text menu">
+                        <div class="item">
+                            <a class="title">
+                                <i class="dropdown icon"></i> 
+                                <b>Abscences et retards</b>
+                            </a>
+                            <div class="active content menu">
+                                <a class="item active" href="#!abscences">Absences </a>
+                                <a class="item active" href="#!retards">Retards </a>
+                                <a class="item active" href="#!permissions">Permissions </a>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <a class="title">
+                                <i class="dropdown icon"></i> 
+                                <b>Conduite</b>
+                            </a>
+                            <div class="active content menu">
+                                <a class="item active" href="#!sanctions">Sanctions </a>
+                                <a class="item active" href="#!convocations">Convocations </a>
+                                <a class="item active" href="#!conseils">Conseils de disciplines </a>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
                 <div style="padding-left: 10px;" id="section_pointeuse" class="section_muanza">
@@ -77,33 +87,21 @@
                         <div class="item">
                             <a class="title">
                                 <i class="dropdown icon"></i> 
-                                <b>Historique des pointages</b>
+                                <b>Paiements</b>
                             </a>
-                            <div class="content menu">
-                                <a class="item active" href="#!statistiques/collaborateur">Collaborateurs </a>
-                                <a class="item active" href="#!statistiques/enseignant">Enseignants </a>
-                                <a class="item active" href="#!statistiques/etudiant">Etudiants </a>
-                                <a class="item active" href="#!pointages">Tous </a>
+                            <div class="active content menu">
+                                <a class="item active" href="#!statistiques/collaborateur">Historique </a>
+                                <a class="item active" href="#!statistiques/collaborateur">Statistiques </a>
                             </div>
                         </div>
                         <div class="item">
                             <a class="title">
                                 <i class="dropdown icon"></i> 
-                                <b>Communication</b>
+                                <b>Insolvabilités</b>
                             </a>
                             <div class="active content menu">
-                                <a class="item active" href="#!tempsreel">Suivre en temps réel </a>
-                                <a class="item active" href="#!configuration">Configuration </a>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <a class="title">
-                                <i class="dropdown icon"></i> 
-                                <b>Import / Export</b>
-                            </a>
-                            <div class="active content menu">
-                                <a class="item active" href="#!exporter">Exporter les données </a>
-                                <a class="item active" href="#!importer">Importer des données </a>
+                                <a class="item active" href="#!tempsreel">Liste des insolvables </a>
+                                <a class="item active" href="#!configuration">Moratoires </a>
                             </div>
                         </div>
                     </div>
@@ -114,19 +112,21 @@
                     <div class="ui accordion vertical fluid following text menu">
                         <div class="item active">
                             <a class="active title">
-                                <i class="dropdown icon"></i> <b>Ajourd'hui</b>
+                                <i class="dropdown icon"></i> 
+                                <b>Calendrier</b>
                             </a>
                             <div class="active content menu">
-                                <a class="item" href="#!aujourdhui">Tableau de bord</a>
-                                <a class="item" href="#!tempsreel">Temps réel</a>
+                                <a class="item" href="#!reunions">Réunions des parents</a>
+                                <a class="item" href="#!calendrier">Calendrier des examens</a>
                             </div>
                         </div>
                         <div class="item active">
                             <a class="active title">
-                                <i class="dropdown icon"></i> <b>Suivi </b>
+                                <i class="dropdown icon"></i> 
+                                <b>Urgence </b>
                             </a>
                             <div class="active content menu">
-                                <a class="item" href="#!arrivees">Arrivées</a>
+                                <a class="item" href="#!sante">Santé</a>
                             </div>
                         </div>
                     </div>
@@ -139,63 +139,35 @@
                         <div class="item">
                             <a class="title">
                                 <i class="dropdown icon"></i> 
-                                <b>Classements</b>
+                                <b>Liste des examens</b>
                             </a>
-                            <div class="content menu">
-                                <a class="item" href="#!statistiques">Moyenne d'arrivée par promotion</a>
-                                <a class="item" href="#!statistiques">Etudiants toujours à l'heure </a>
-                                <a class="item" href="#!statistiques">Les premiers à arriver sur le campus</a>
-                                <a class="item" href="#!statistiques">Premiers arrivés par promotion</a>
-                                <a class="item" href="#!statistiques">Derniers arrivés par promotion</a>
-                                <a class="item" href="#!statistiques">Les plus retardataires par promotion</a>
+                            <div class="active content menu">
+                                <a class="item" href="#!statistiques">Examen 1</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div style="padding-left: 10px;" id="section_visites"  class="section_muanza">
-                    <h1>Elèves</h1>
+                    <h1>Suivi</h1>
 
                     <div class="ui accordion vertical fluid following text menu">
                         <div class="item active">
                             <a class="active title">
-                                <i class="dropdown icon"></i> <b>Actuellement dans nos locaux</b>
+                                <i class="dropdown icon"></i> 
+                                <b>Individuel</b>
                             </a>
                             <div class="active content menu">
-                                <c:forEach items="${entrees}" var="entree">
-                                    <c:if test="${empty entree.dateSortie}">
-                                        <a class="item active" href="#!entree/${entree.identree}">
-                                            ${entree.nomComplet}
-                                        </a>
-                                    </c:if>
-                                </c:forEach>
-
-                                <a class="item" href="#!entrees">Tous</a>
+                                <a class="item" href="#!eleves">Liste des élèves</a>
                             </div>
                         </div>
                         <div class="item">
                             <a class="title">
                                 <i class="dropdown icon"></i> 
-                                <b>Personnes attendues</b>
+                                <b>Global</b>
                             </a>
-                            <div class="content menu">
-                                <c:forEach items="${visites}" var="visite">
-                                    <c:if test="${empty visite.entrees || visite.entrees.size()==0}">
-                                        <a class="item active" href="#!visite/${visite.idvisite}">
-                                            ${visite.nomComplet}
-                                            ${visite.entrees}
-                                        </a>
-                                    </c:if>
-                                </c:forEach>
-                                <a class="item" href="#!visites">Tous</a>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <a class="title">
-                                <i class="dropdown icon"></i> 
-                                <b>Statistiques</b>
-                            </a>
-                            <div class="content menu">
-                                <a class="item" href="#!statsentrees">Par personne</a>
+                            <div class="active content menu">
+                                <a class="item" href="#!classes">Statistiques par classe</a>
+                                <a class="item" href="#!classes">Statistiques globales</a>
                             </div>
                         </div>
                     </div>
@@ -222,7 +194,7 @@
                                 <a class="item" href="#!collaborateurs">Collaborateurs</a>
                                 <a class="item" href="#!postes">Postes</a>
                                 <a class="item" href="#!enseignants">Enseignants</a>
-                                <a class="item" href="#!etudiants">Etudiants</a>
+                                <a class="item" href="#!etudiants">Elèves</a>
                             </div>
                         </div>
                         <div class="item">
@@ -231,13 +203,13 @@
                                 <b>Paramètres académiques</b>
                             </a>
                             <div class="content menu">
-                                <a class="item" href="#!anneeacademiques">Années académiques</a>
-                                <a class="item" href="#!filieres">Filières</a>
+                                <a class="item" href="#!anneeacademiques">Années scolaires</a>
+                                <a class="item" href="#!filieres">Series</a>
                                 <a class="item" href="#!matieres">Matières</a>
                                 <a class="item" href="#!coursall">Cours</a>
                                 <a class="item" href="#!classes">Classes</a>
-                                <a class="item" href="#!niveaux">Niveaux d'étude</a>
-                                <a class="item" href="#!periodescreuses">Périodes creuses</a>
+                                <a class="item" href="#!niveaux">Trimestre</a>
+                                <a class="item" href="#!sequences">Séquences</a>
                             </div>
                         </div>
                         <div class="item">
@@ -258,7 +230,7 @@
                 <div class="ui secondary  menu">
                     <a class="item teal">
                         <i class="circle loading icon titre"></i>
-                        Pointeuse biométrique activée
+                        Connecté à internet
                     </a>
                     <a id="chargement" class="item titre active ">
                         <i style="float:right" class="titre spinner loading icon"></i>
@@ -278,12 +250,10 @@
                             </div>
                         </div>
                         <div class="ui item dropdown">
-                            ${empty sessionScope.utilisateur.individu.noms ? sessionScope.utilisateur.login:""}
-                            ${sessionScope.utilisateur.individu.noms}
-                            ${sessionScope.utilisateur.individu.prenoms}
+                            ${sessionScope.utilisateur.login}
                             <i class="dropdown icon"></i>
                             <div class="menu">
-                                <a href="start#!/motPasse/${sessionScope.utilisateur.idutilisateur}" class="item">Modifier Mot de passe</a>
+                                <a href="start#!/motPasse/${sessionScope.utilisateur.idutilisateur}" class="item">Modifier le mot de passe</a>
                                 <a href="DeconnexionServlet" class="item">Déconnexion</a>
                             </div>
                         </div>

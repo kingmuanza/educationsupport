@@ -36,7 +36,7 @@ public class LoginController {
         Utilisateur u = ufl.findByCredentials(login, pwd);
         if(u != null){
             HttpSession session = request.getSession();
-            session.setAttribute("utilisateur_courant", u);
+            session.setAttribute("utilisateur", u);
             mv = new RedirectView(request.getContextPath()+PATH_START);
             return mv;
         }else{
