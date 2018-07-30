@@ -15,7 +15,7 @@
     </head>
     <body>
         <form method="post" action="/edusupport/anneescolaire/edit">
-            <input type="hidden" name="idanneescolaire" value="${anneescolaire.idanneescolaire}"/>
+            <input type="hidden" name="idanneescolaire" value="${anneescolaire.idanneeScolaire}"/>
             <table>
                 <tr>
                     <td><label>Date Début</label></td>

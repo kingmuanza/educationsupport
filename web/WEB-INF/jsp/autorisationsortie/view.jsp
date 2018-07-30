@@ -33,12 +33,12 @@
                     <td></td>
                     <td>
                         <form method="post" action="/edusupport/autorisationsortie/delete">
-                            <input type="hidden" name="idautorisationsortie" value="${autorisationsortie.idautorisationsortie}"/>
+                            <input type="hidden" name="idautorisationsortie" value="${autorisationsortie.idautorisationSortie}"/>
                             <input type="submit" value="Supprimer"/>
                         </form>
                     </td>
                 </tr>
             </table>
-            <a href="/edusupport/autorisationsortie/edit/${autorisationsortie.idautorisationsortie}">Modifier</a> | <a href="/edusupport/autorisationsortie/list">Retour à la liste</a>
+            <a href="/edusupport/autorisationsortie/edit/${autorisationsortie.idautorisationSortie}">Modifier</a> | <a href="/edusupport/autorisationsortie/list">Retour à la liste</a>
     </body>
 </html>

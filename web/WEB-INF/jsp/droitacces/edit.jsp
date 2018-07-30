@@ -11,21 +11,20 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ABSENCE | edit</title>
+        <title>DROIT D'ACCES | edit</title>
     </head>
     <body>
-        <form method="post" action="/edusupport/absence/edit">
-            <input type="hidden" name="idabsence" value="${absence.idabsence}"/>
+        <form method="post" action="/edusupport/droitacces/edit">
+            <input type="hidden" name="iddroitAcces" value="${droitacces.iddroitAcces}"/>
             <table>
                 <tr>
-                    <td><input type="text" name="jourAbsence" value="${absence.jourAbsence}" required="true"/></td>
-                    <td><input type="text" name="justifee" value="${absence.justifee}" required="true"/></td>
-                    <td><input type="text" name="motif" value="${absence.motif}" required="true"/></td>
+                    <td><input type="text" name="jourAbsence" value="${droitacces.nvieau}" required="true"/></td>
+                    <td><input type="text" name="justifee" value="${droitacces.description}" required="true"/></td>
                 </tr>
                 <tr>
-                    <td><input type="hidden" name="created" value="${absence.created}"/></td>
-                    <td><input type="hidden" name="modified" value="${absence.modified}"/></td>
-                    <td><input type="hidden" name="deleted" value="${absence.deleted}"/></td>
+                    <td><input type="hidden" name="created" value="${droitacces.created}"/></td>
+                    <td><input type="hidden" name="modified" value="${droitacces.modified}"/></td>
+                    <td><input type="hidden" name="deleted" value="${droitacces.deleted}"/></td>
                 </tr>
                 <tr>
                     <td></td>

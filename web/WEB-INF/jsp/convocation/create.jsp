@@ -11,15 +11,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>CLASSE | Create</title>
+        <title>CONVOCATION | Create</title>
     </head>
     <body>
-        <form:errors path="classe.*"/>
+        <form:errors path="convocation.*"/>
         <form method="post" action="create">
             <table>
                 <tr>
-                    <td><label>Code</label></td>
-                    <td><input type="text" name="code" required="true"/></td>
+                    <td><label>Motif</label></td>
+                    <td><input type="text" name="motif" required="true"/></td>
                 </tr>
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
                 <tr>

@@ -15,7 +15,7 @@
     </head>
     <body>
         <form method="post" action="/edusupport/conseildiscipline/edit">
-            <input type="hidden" name="idconseildiscipline" value="${conseildiscipline.idconseildiscipline}"/>
+            <input type="hidden" name="idconseildiscipline" value="${conseildiscipline.idconseilDiscipline}"/>
             <table>
                 <tr>
                     <td><label>Code</label></td>

@@ -23,8 +23,8 @@
             <td>DELETED</td>
         </thead>
         <c:forEach items="${anneescolaires}" var="anneescolaire">
-            <a href="view/${anneescolaire.idanneescolaire}">
-                <tr>
+            <tr>
+                <a href="view/${anneescolaire.idanneeScolaire}">
                     <td>${anneescolaire.dateDebut}</td>
                     <td>${anneescolaire.dateFin}</td>
                     <td>${anneescolaire.enCours}</td>
@@ -32,9 +32,10 @@
                     <td>${anneescolaire.created}</td>
                     <td>${anneescolaire.modified}</td>
                     <td>${anneescolaire.deleted}</td>
-                </tr>
-            </a>
-        </c:forEach>
-    </table>
+                </a>
+            </tr>
+
+    </c:forEach>
+</table>
 </body>
 </html>

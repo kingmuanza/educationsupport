@@ -11,24 +11,22 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>AUTORISATION SORTIE | edit</title>
+        <title>CLASSE | edit</title>
     </head>
     <body>
-        <form method="post" action="/edusupport/autorisationsortie/edit">
-            <input type="hidden" name="idautorisationsortie" value="${autorisationsortie.idautorisationSortie}"/>
+        <form method="post" action="/edusupport/absence/edit">
+            <input type="hidden" name="idabsence" value="${absence.idabsence}"/>
             <table>
                 <tr>
                     <td><label>Code</label></td>
-                    <td><input type="text" name="code" value="${autorisationsortie.code}" required="true"/></td>
+                    <td><input type="text" name="jourAbsence" value="${absence.jourAbsence}" required="true"/></td>
+                    <td><input type="text" name="justifee" value="${absence.justifee}" required="true"/></td>
+                    <td><input type="text" name="motif" value="${absence.motif}" required="true"/></td>
                 </tr>
                 <tr>
-                    <td><label>Date Jour</label></td>
-                    <td><input type="text" name="dateJour" value="${autorisationsortie.dateJour}" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><input type="hidden" name="created" value="${autorisationsortie.created}"/></td>
-                    <td><input type="hidden" name="modified" value="${autorisationsortie.modified}"/></td>
-                    <td><input type="hidden" name="deleted" value="${autorisationsortie.deleted}"/></td>
+                    <td><input type="hidden" name="created" value="${absence.created}"/></td>
+                    <td><input type="hidden" name="modified" value="${absence.modified}"/></td>
+                    <td><input type="hidden" name="deleted" value="${absence.deleted}"/></td>
                 </tr>
                 <tr>
                     <td></td>

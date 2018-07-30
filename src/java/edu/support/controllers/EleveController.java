@@ -5,7 +5,9 @@
  */
 package edu.support.controllers;
 
+import edu.support.dao.ClasseFacadeLocal;
 import edu.support.dao.EleveFacadeLocal;
+import edu.support.dao.IndividuFacadeLocal;
 import edu.support.entities.Eleve;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +38,12 @@ public class EleveController {
     @EJB(mappedName="java:app/edusupport/EleveFacade")
     private EleveFacadeLocal cfl;
     
+    @EJB(mappedName="java:app/edusupport/ClasseFacade")
+    private ClasseFacadeLocal classefl;
+    
+    @EJB(mappedName="java:app/edusupport/IndividuFacade")
+    private IndividuFacadeLocal ifl;
+    
     private final static String VUE_CREATE = "jsp/eleve/create";
     private final static String VUE_EDIT = "jsp/eleve/edit";
     private final static String VUE_LIST = "jsp/eleve/list";
@@ -52,6 +60,10 @@ public class EleveController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
+        
+        mv.addObject("individus", ifl.findAll());
+        mv.addObject("classes", classefl.findAll());
+        
         return mv;
     }
     

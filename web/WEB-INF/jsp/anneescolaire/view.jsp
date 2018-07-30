@@ -37,12 +37,12 @@
                     <td></td>
                     <td>
                         <form method="post" action="/edusupport/anneescolaire/delete">
-                            <input type="hidden" name="idanneescolaire" value="${anneescolaire.idanneescolaire}"/>
+                            <input type="hidden" name="idanneescolaire" value="${anneescolaire.idanneeScolaire}"/>
                             <input type="submit" value="Supprimer"/>
                         </form>
                     </td>
                 </tr>
             </table>
-            <a href="/edusupport/anneescolaire/edit/${anneescolaire.idanneescolaire}">Modifier</a> | <a href="/edusupport/anneescolaire/list">Retour à la liste</a>
+            <a href="/edusupport/anneescolaire/edit/${anneescolaire.idanneeScolaire}">Modifier</a> | <a href="/edusupport/anneescolaire/list">Retour à la liste</a>
     </body>
 </html>

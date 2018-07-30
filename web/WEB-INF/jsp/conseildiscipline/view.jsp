@@ -31,12 +31,12 @@
                     <td></td>
                     <td>
                         <form method="post" action="/edusupport/conseildiscipline/delete">
-                            <input type="hidden" name="idconseildiscipline" value="${conseildiscipline.idconseildiscipline}"/>
+                            <input type="hidden" name="idconseildiscipline" value="${conseildiscipline.idconseilDiscipline}"/>
                             <input type="submit" value="Supprimer"/>
                         </form>
                     </td>
                 </tr>
             </table>
-            <a href="/edusupport/conseildiscipline/edit/${conseildiscipline.idconseildiscipline}">Modifier</a> | <a href="/edusupport/conseildiscipline/list">Retour à la liste</a>
+            <a href="/edusupport/conseildiscipline/edit/${conseildiscipline.idconseilDiscipline}">Modifier</a> | <a href="/edusupport/conseildiscipline/list">Retour à la liste</a>
     </body>
 </html>

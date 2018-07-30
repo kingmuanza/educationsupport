@@ -22,7 +22,7 @@
             <td>DELETED</td>
         </thead>
         <c:forEach items="${autorisationsorties}" var="autorisationsortie">
-            <a href="view/${autorisationsortie.idautorisationsortie}">
+            <a href="view/${autorisationsortie.idautorisationSortie}">
                 <tr>
 
                     <td>${autorisationsortie.code}</td>

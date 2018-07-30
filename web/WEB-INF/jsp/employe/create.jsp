@@ -1,6 +1,6 @@
 <%-- 
-    Document   : edit
-    Created on : 13 juil. 2018, 13:04:25
+    Document   : create
+    Created on : 13 juil. 2018, 13:04:11
     Author     : N9-T
 --%>
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
@@ -11,27 +11,31 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>CLASSE | edit</title>
+        <title>ABSENCE | Create</title>
     </head>
     <body>
-        <form method="post" action="/edusupport/classe/edit">
-            <input type="hidden" name="idclasse" value="${classe.idclasse}"/>
+        <form:errors path="absence.*"/>
+        <form method="post" action="create">
             <table>
                 <tr>
-                    <td><label>Code</label></td>
-                    <td><input type="text" name="code" value="${classe.code}" required="true"/></td>
+                    <td><label>Jour Absence</label></td>
+                    <td><input type="text" name="jourAbsence" required="true"/></td>
                 </tr>
                 <tr>
-                    <td><input type="hidden" name="created" value="${classe.created}"/></td>
-                    <td><input type="hidden" name="modified" value="${classe.modified}"/></td>
-                    <td><input type="hidden" name="deleted" value="${classe.deleted}"/></td>
+                    <td><label>Justifier ?</label></td>
+                    <td><input type="text" name="justifee" required="true"/></td>
                 </tr>
+                <tr>
+                    <td><label>Motif</label></td>
+                    <td><input type="text" name="motif" required="true"/></td>
+                </tr>
+                <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
                 <tr>
                     <td></td>
                     <td><input type="submit" value="Enregistrer"/></td>
                 </tr>
             </table>
         </form>
-
+        
     </body>
 </html>

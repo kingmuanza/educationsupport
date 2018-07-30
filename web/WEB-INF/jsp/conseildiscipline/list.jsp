@@ -23,7 +23,7 @@
             <td>DELETED</td>
         </thead>
         <c:forEach items="${conseildisciplines}" var="conseildiscipline">
-            <a href="view/${conseildiscipline.idconseildiscipline}">
+            <a href="view/${conseildiscipline.idconseilDiscipline}">
                 <tr>
 
                     <td>${conseildiscipline.code}</td>
