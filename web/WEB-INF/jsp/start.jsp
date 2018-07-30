@@ -126,7 +126,7 @@
                                 <b>Urgence </b>
                             </a>
                             <div class="active content menu">
-                                <a class="item" href="#!sante">Santé</a>
+                                <a class="item" href="#!maladies">Maladies</a>
                             </div>
                         </div>
                     </div>
