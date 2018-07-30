@@ -108,7 +108,7 @@
                 </div>
                 <div style="padding-left: 10px;" id="section_accueil" class="section_muanza">
                     <h1>Informations</h1>
-                    
+
                     <div class="ui accordion vertical fluid following text menu">
                         <div class="item active">
                             <a class="active title">
@@ -243,6 +243,10 @@
                         Exporter en PDF
                     </a-->
                     <div class="right menu">
+                        <a class="item teal">
+                            <i class="sync large loading icon titre"></i>
+                            
+                        </a>
                         <div class="item">
                             <div class="ui icon input">
                                 <input type="text" placeholder="Rechercher...">
