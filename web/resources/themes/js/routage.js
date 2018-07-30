@@ -102,10 +102,7 @@ app.config(function ($routeProvider) {
                 templateUrl: UrlExists("utilisateur/list ")
             })
             .when("/insolvables", {
-                templateUrl: UrlExists("insolvables/list ")
-            })
-            .when("/statistiquespaiements", {
-                templateUrl: UrlExists("statistiquespaiements/list ")
+                templateUrl: UrlExists("paiement/insolvables/list ")
             })
             .otherwise({
                 redirectTo: '/'

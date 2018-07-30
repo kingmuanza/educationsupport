@@ -5,11 +5,16 @@
  */
 package edu.support.controllers;
 
+import edu.support.dao.EleveFacadeLocal;
 import edu.support.dao.PaiementFacadeLocal;
+import edu.support.entities.Eleve;
 import edu.support.entities.Paiement;
+import edu.support.utils.StaticVars;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -34,7 +39,10 @@ import org.springframework.web.servlet.view.RedirectView;
 public class PaiementController {
     
     @EJB(mappedName="java:app/edusupport/PaiementFacade")
-    private PaiementFacadeLocal cfl;
+    private PaiementFacadeLocal pfl;
+    
+    @EJB(mappedName="java:app/edusupport/EleveFacade")
+    private EleveFacadeLocal efl;
     
     private final static String VUE_CREATE = "jsp/paiement/create";
     private final static String VUE_EDIT = "jsp/paiement/edit";
@@ -63,7 +71,7 @@ public class PaiementController {
         }
         paiement.setCreated(new Date());
         paiement.setModified(new Date());
-        cfl.create(paiement);
+        pfl.create(paiement);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -71,15 +79,15 @@ public class PaiementController {
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("paiement", cfl.find(id));
+        mv.addObject("paiement", pfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
     public RedirectView postEdit(@Valid @ModelAttribute("paiement")Paiement paiement ,@RequestParam("idpaiement")int id,HttpServletRequest request){
         paiement.setModified(new Date());
-        paiement.setCreated(cfl.find(id).getCreated());
-        cfl.edit(paiement);
+        paiement.setCreated(pfl.find(id).getCreated());
+        pfl.edit(paiement);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -87,23 +95,48 @@ public class PaiementController {
     @RequestMapping(value="/view/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("paiement", cfl.find(id));
+        mv.addObject("paiement", pfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("paiements", cfl.findAll());
+        mv.addObject("paiements", pfl.findAll());
         return mv;
     }
     
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
     public RedirectView delete(@RequestParam("idpaiement")int id,HttpServletRequest request){
-        Paiement c = cfl.find(id);
-        cfl.remove(c);
+        Paiement c = pfl.find(id);
+        pfl.remove(c);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
+    }
+    
+    @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
+    public ModelAndView getInsolvables() throws ParseException{
+        ModelAndView mv = new ModelAndView("jsp/paiement/insolvables");
+        mv.addObject("insolvables", efl.findAll().removeAll(getInsolvablesList()));
+        return mv;
+    }
+    
+    // processing methods
+    
+    private boolean isSolvable(Eleve e) {
+        double som = 0.0;
+        for(Paiement p: e.getPaiementCollection())
+            som += p.getMontant();
+        return StaticVars.FRAIS_EXIGIBLES <= som;
+    }
+    
+    private List<Eleve> getInsolvablesList(){
+        List<Eleve> le = new ArrayList<Eleve>();
+        for(Eleve e: efl.findAll()){
+            if(!isSolvable(e))
+                le.add(e);
+        }
+        return le;
     }
 }
