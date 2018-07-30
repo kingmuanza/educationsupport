@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController("EleveControllerREST")
 @RequestMapping("/api/eleves")
-public class EleveController {
+public class EleveControllerRest {
     
     @EJB(mappedName="java:app/edusupport/EleveFacade")
     private EleveFacadeLocal efl;
