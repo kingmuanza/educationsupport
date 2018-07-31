@@ -22,6 +22,10 @@ public class AujourdhuiController {
         ModelAndView mv = new ModelAndView(PATH_START);
         List<Classe> classes = classeFacadeLocal.findAll();
         System.out.println(classes);
+        for(Classe c : classes){
+        System.out.println(c.getEleveCollection().size());
+            
+        }
         mv.addObject("aujourdhui", new Date());
         mv.addObject("classes", classes);
         return mv;
