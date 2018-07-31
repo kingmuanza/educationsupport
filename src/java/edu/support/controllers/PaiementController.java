@@ -115,7 +115,7 @@ public class PaiementController {
         return rv;
     }
     
-    @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
+    @RequestMapping(value="/insolvables/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getInsolvables() throws ParseException{
         ModelAndView mv = new ModelAndView("jsp/paiement/insolvables");
         mv.addObject("insolvables", efl.findAll().removeAll(getInsolvablesList()));

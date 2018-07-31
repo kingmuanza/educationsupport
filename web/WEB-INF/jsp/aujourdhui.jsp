@@ -26,15 +26,17 @@
         <div  style="background-color: #f8f8f8; border-radius: 5px; border: 1px solid #004d6f">
             <div style="padding-top: 25px; padding-bottom : 25px">
                 <div class="ui four statistics">
-                    <div class="statistic">
-                        <div class="value  titre">
-                            0
-                        </div>
-                        <div class="label">
-                            Absences
-                        </div>
+                    <div class="statistic" style="cursor: pointer" onclick="window.location.href = 'start#!/absences'">
+                        
+                            <div class="value  titre">
+                                0
+                            </div>
+                            <div class="label">
+                                Absences
+                            </div>
+                        
                     </div>
-                    <div class="statistic">
+                    <div class="statistic" style="cursor: pointer" onclick="window.location.href = 'start#!/retards'">
                         <div class="value  titre">
                             0
                         </div>
@@ -46,11 +48,11 @@
                         <div class="value  titre">
                             0
                         </div>
-                        <div class="label">
+                        <div class="label" style="cursor: pointer" onclick="window.location.href = 'start#!/sanctions'">
                             Sanctions
                         </div>
                     </div>
-                    <div class="statistic">
+                    <div class="statistic" style="cursor: pointer" onclick="window.location.href = 'start#!/permissions'">
                         <div class="value  titre">
                             0
                         </div>
