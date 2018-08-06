@@ -101,6 +101,9 @@ app.config(function ($routeProvider) {
             .when("/utilisateurs", {
                 templateUrl: UrlExists("utilisateur/list ")
             })
+            .when("/paiements", {
+                templateUrl: UrlExists("paiement/list ")
+            })
             .when("/insolvables", {
                 templateUrl: UrlExists("paiement/insolvables/list ")
             })

@@ -17,29 +17,29 @@
 
     </head>
     <body>
-        <h1 class="titre">Liste des convocations</h1>
+        <h1 class="titre">Liste des rapports</h1>
 
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>CONVOCATION</th>
-                    <th>ELEVE</th>
-                    <th>EMPLOYE</th>                    
-                    <th>Motif</th>      
-                    <th>Supprimé</th>      
+                    <th>RAPPORT</th>
+                    <th>REUNION</th>
+                    <th>Code</th>
+                    <th>Fichier</th>
+                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
-                <c:forEach items="${convocations}" var="convocation">
+                <c:forEach items="${rapports}" var="rapport">
                     
-                <tr class="pointeur" onclick="window.location.href='start#!/convocation/${convocation.idconvocation}'">
+                <tr class="pointeur" onclick="window.location.href='start#!/rapport/${rapport.idrapport}'">
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                Crée le <fmt:formatDate value="${convocation.created}" pattern="yyyy-MM-dd"/>
+                                Crée le <fmt:formatDate value="${rapport.created}" pattern="yyyy-MM-dd"/>
                                 <div class="sub header">
-                                    Modifié le <fmt:formatDate value="${convocation.modified}" pattern="yyyy-MM-dd"/>
+                                    Modifié le <fmt:formatDate value="${rapport.modified}" pattern="yyyy-MM-dd"/>
                                 </div>
                             </div>
                         </h4>
@@ -47,9 +47,9 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.eleveIdeleve.individuIdindividu.noms}
+                                ${rapport.reunionIdreunion.code}
                                 <div class="sub header">
-                                    ${convocation.eleveIdeleve.individuIdindividu.prenoms}
+                                    ${rapport.reunionIdreunion.dateJour}
                                 </div>
                             </div>
                         </h4>
@@ -57,35 +57,29 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.employeIdemploye.individuIdindividu.noms}
-                                <div class="sub header">
-                                    ${convocation.employeIdemploye.individuIdindividu.prenoms}
-                                </div>
+                                ${rapport.code}</div>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.motif}</div>
+                                ${rapport.nomFichier}</div>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.deleted}</div>
+                                ${rapport.deleted}</div>
                             </div>
                         </h4>
                     </td>
                     
                 </tr>
                 </c:forEach>
-
             </tbody>
         </table>
-
-
 
 
         <!-- Datatable -->
@@ -101,7 +95,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                ouvrirMenuCorrespondant("#section_params", "bouton_params", "convocation");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "rapport");
                 
                 $('#dataTableUtilisateur').DataTable({
                     
@@ -113,7 +107,7 @@
                             message: '',
                             className: 'ui gris mini button',
                             action: function (e, dt, node, config) {
-                                window.location.href='start#!/convocation'
+                                window.location.href='start#!/rapport'
                             }
                         },
                         {

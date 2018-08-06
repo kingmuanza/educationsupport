@@ -17,29 +17,28 @@
 
     </head>
     <body>
-        <h1 class="titre">Liste des convocations</h1>
+        <h1 class="titre">Liste des utilisateurs</h1>
 
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>CONVOCATION</th>
-                    <th>ELEVE</th>
-                    <th>EMPLOYE</th>                    
-                    <th>Motif</th>      
-                    <th>Supprimé</th>      
+                    <th>UTILISATEUR</th>
+                    <th>Login</th>
+                    <th>Mot de passe</th>
+                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
-                <c:forEach items="${convocations}" var="convocation">
+                <c:forEach items="${utilisateurs}" var="utilisateur">
                     
-                <tr class="pointeur" onclick="window.location.href='start#!/convocation/${convocation.idconvocation}'">
+                <tr class="pointeur" onclick="window.location.href='start#!/utilisateur/${utilisateur.idutilisateur}'">
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                Crée le <fmt:formatDate value="${convocation.created}" pattern="yyyy-MM-dd"/>
+                                Crée le <fmt:formatDate value="${utilisateur.created}" pattern="yyyy-MM-dd"/>
                                 <div class="sub header">
-                                    Modifié le <fmt:formatDate value="${convocation.modified}" pattern="yyyy-MM-dd"/>
+                                    Modifié le <fmt:formatDate value="${utilisateur.modified}" pattern="yyyy-MM-dd"/>
                                 </div>
                             </div>
                         </h4>
@@ -47,41 +46,27 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.eleveIdeleve.individuIdindividu.noms}
-                                <div class="sub header">
-                                    ${convocation.eleveIdeleve.individuIdindividu.prenoms}
-                                </div>
+                                ${utilisateur.login}</div>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.employeIdemploye.individuIdindividu.noms}
-                                <div class="sub header">
-                                    ${convocation.employeIdemploye.individuIdindividu.prenoms}
-                                </div>
+                                ${utilisateur.motDePasse}</div>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.motif}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${convocation.deleted}</div>
+                                ${utilisateur.deleted}</div>
                             </div>
                         </h4>
                     </td>
                     
                 </tr>
                 </c:forEach>
-
             </tbody>
         </table>
 
@@ -101,7 +86,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                ouvrirMenuCorrespondant("#section_params", "bouton_params", "convocation");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "utilisateur");
                 
                 $('#dataTableUtilisateur').DataTable({
                     
@@ -113,7 +98,7 @@
                             message: '',
                             className: 'ui gris mini button',
                             action: function (e, dt, node, config) {
-                                window.location.href='start#!/convocation'
+                                window.location.href='start#!/utilisateur'
                             }
                         },
                         {

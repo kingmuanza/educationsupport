@@ -17,29 +17,29 @@
 
     </head>
     <body>
-        <h1 class="titre">Liste des convocations</h1>
+        <h1 class="titre">Liste des maladies</h1>
 
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>CONVOCATION</th>
-                    <th>ELEVE</th>
-                    <th>EMPLOYE</th>                    
-                    <th>Motif</th>      
-                    <th>Supprimé</th>      
+                    <th>MALADIES</th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
-                <c:forEach items="${convocations}" var="convocation">
+                <c:forEach items="${maladies}" var="maladie">
                     
-                <tr class="pointeur" onclick="window.location.href='start#!/convocation/${convocation.idconvocation}'">
+                <tr class="pointeur" onclick="window.location.href='start#!/maladie/${maladie.idmaladie}'">
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                Crée le <fmt:formatDate value="${convocation.created}" pattern="yyyy-MM-dd"/>
+                                Crée le <fmt:formatDate value="${maladie.created}" pattern="yyyy-MM-dd"/>
                                 <div class="sub header">
-                                    Modifié le <fmt:formatDate value="${convocation.modified}" pattern="yyyy-MM-dd"/>
+                                    Modifié le <fmt:formatDate value="${maladie.modified}" pattern="yyyy-MM-dd"/>
                                 </div>
                             </div>
                         </h4>
@@ -47,41 +47,34 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.eleveIdeleve.individuIdindividu.noms}
-                                <div class="sub header">
-                                    ${convocation.eleveIdeleve.individuIdindividu.prenoms}
-                                </div>
+                                ${maladie.nom}</div>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.employeIdemploye.individuIdindividu.noms}
-                                <div class="sub header">
-                                    ${convocation.employeIdemploye.individuIdindividu.prenoms}
-                                </div>
+                                ${maladie.description}</div>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.motif}</div>
+                                ${maladie.typeMaladie}</div>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.deleted}</div>
+                                ${maladie.deleted}</div>
                             </div>
                         </h4>
                     </td>
                     
                 </tr>
                 </c:forEach>
-
             </tbody>
         </table>
 
@@ -101,7 +94,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                ouvrirMenuCorrespondant("#section_params", "bouton_params", "convocation");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "maladie");
                 
                 $('#dataTableUtilisateur').DataTable({
                     
@@ -113,7 +106,7 @@
                             message: '',
                             className: 'ui gris mini button',
                             action: function (e, dt, node, config) {
-                                window.location.href='start#!/convocation'
+                                window.location.href='start#!/maladie'
                             }
                         },
                         {

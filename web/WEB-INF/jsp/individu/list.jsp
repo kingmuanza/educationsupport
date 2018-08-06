@@ -17,29 +17,33 @@
 
     </head>
     <body>
-        <h1 class="titre">Liste des convocations</h1>
+        <h1 class="titre">Liste des individus</h1>
 
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>CONVOCATION</th>
-                    <th>ELEVE</th>
-                    <th>EMPLOYE</th>                    
-                    <th>Motif</th>      
-                    <th>Supprimé</th>      
+                    <th>INDIVIDU</th>
+                    <th>Matricule</th>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Naissance</th>
+                    <th>Adresse</th>
+                    <th>Sexe</th>
+                    <th>Résidence</th>
+                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
-                <c:forEach items="${convocations}" var="convocation">
+                <c:forEach items="${individus}" var="individu">
                     
-                <tr class="pointeur" onclick="window.location.href='start#!/convocation/${convocation.idconvocation}'">
+                <tr class="pointeur" onclick="window.location.href='start#!/individu/${individu.idindividu}'">
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                Crée le <fmt:formatDate value="${convocation.created}" pattern="yyyy-MM-dd"/>
+                                Crée le <fmt:formatDate value="${individu.created}" pattern="yyyy-MM-dd"/>
                                 <div class="sub header">
-                                    Modifié le <fmt:formatDate value="${convocation.modified}" pattern="yyyy-MM-dd"/>
+                                    Modifié le <fmt:formatDate value="${individu.modified}" pattern="yyyy-MM-dd"/>
                                 </div>
                             </div>
                         </h4>
@@ -47,9 +51,30 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.eleveIdeleve.individuIdindividu.noms}
+                                ${individu.matricule}</div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                ${individu.noms}</div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                ${individu.prenoms}</div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                ${individu.lieuNaissance}
                                 <div class="sub header">
-                                    ${convocation.eleveIdeleve.individuIdindividu.prenoms}
+                                    ${individu.dateNaissance}
                                 </div>
                             </div>
                         </h4>
@@ -57,9 +82,9 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.employeIdemploye.individuIdindividu.noms}
+                                ${individu.email}
                                 <div class="sub header">
-                                    ${convocation.employeIdemploye.individuIdindividu.prenoms}
+                                    ${individu.telephone}
                                 </div>
                             </div>
                         </h4>
@@ -67,21 +92,27 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.motif}</div>
+                                ${individu.sexe}</div>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.deleted}</div>
+                                ${individu.residence}</div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                ${individu.deleted}</div>
                             </div>
                         </h4>
                     </td>
                     
                 </tr>
                 </c:forEach>
-
             </tbody>
         </table>
 
@@ -101,7 +132,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                ouvrirMenuCorrespondant("#section_params", "bouton_params", "convocation");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "individu");
                 
                 $('#dataTableUtilisateur').DataTable({
                     
@@ -113,7 +144,7 @@
                             message: '',
                             className: 'ui gris mini button',
                             action: function (e, dt, node, config) {
-                                window.location.href='start#!/convocation'
+                                window.location.href='start#!/individu'
                             }
                         },
                         {

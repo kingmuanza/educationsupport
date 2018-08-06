@@ -62,9 +62,9 @@
                                 <b>Abscences et retards</b>
                             </a>
                             <div class="active content menu">
-                                <a class="item active" href="#!abscences">Absences </a>
+                                <a class="item active" href="#!absences">Absences </a>
                                 <a class="item active" href="#!retards">Retards </a>
-                                <a class="item active" href="#!permissions">Permissions </a>
+                                <a class="item active" href="#!autorisationsorties">Permissions </a>
                             </div>
                         </div>
                         <div class="item">
@@ -75,7 +75,7 @@
                             <div class="active content menu">
                                 <a class="item active" href="#!sanctions">Sanctions </a>
                                 <a class="item active" href="#!convocations">Convocations </a>
-                                <a class="item active" href="#!conseils">Conseils de disciplines </a>
+                                <a class="item active" href="#!conseildisciplines">Conseils de disciplines </a>
                             </div>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                                 <b>Paiements</b>
                             </a>
                             <div class="active content menu">
-                                <a class="item active" href="#!statistiques/collaborateur">Historique </a>
+                                <a class="item active" href="#!paiements">Historique </a>
                                 <a class="item active" href="#!statistiques/collaborateur">Statistiques </a>
                             </div>
                         </div>
@@ -100,8 +100,8 @@
                                 <b>Insolvabilités</b>
                             </a>
                             <div class="active content menu">
-                                <a class="item active" href="#!tempsreel">Liste des insolvables </a>
-                                <a class="item active" href="#!configuration">Moratoires </a>
+                                <a class="item active" href="#!insolvables">Liste des insolvables </a>
+                                <a class="item active" href="#!moratoires">Moratoires </a>
                             </div>
                         </div>
                     </div>
@@ -181,7 +181,6 @@
                             </a>
                             <div class="content menu">
                                 <a class="item" href="#!utilisateurs">Utilisateurs</a>
-                                <a class="item" href="#!profils">Profils utilisateurs</a>
                             </div>
                         </div>
                         <div class="item">
@@ -191,10 +190,9 @@
                             </a>
                             <div class="content menu">
                                 <a class="item" href="#!individus">Individus</a>
-                                <a class="item" href="#!collaborateurs">Collaborateurs</a>
-                                <a class="item" href="#!postes">Postes</a>
+                                <a class="item" href="#!employes">Employés</a>
                                 <a class="item" href="#!enseignants">Enseignants</a>
-                                <a class="item" href="#!etudiants">Elèves</a>
+                                <a class="item" href="#!eleves">Elèves</a>
                             </div>
                         </div>
                         <div class="item">
@@ -203,13 +201,11 @@
                                 <b>Paramètres académiques</b>
                             </a>
                             <div class="content menu">
-                                <a class="item" href="#!anneeacademiques">Années scolaires</a>
-                                <a class="item" href="#!filieres">Series</a>
-                                <a class="item" href="#!matieres">Matières</a>
-                                <a class="item" href="#!coursall">Cours</a>
-                                <a class="item" href="#!classes">Classes</a>
-                                <a class="item" href="#!niveaux">Trimestre</a>
+                                <a class="item" href="#!anneescolaires">Années scolaires</a>
+                                <a class="item" href="#!trimestres">Trimestre</a>
                                 <a class="item" href="#!sequences">Séquences</a>
+                                <a class="item" href="#!matieres">Matières</a>
+                                <a class="item" href="#!classes">Classes</a>
                             </div>
                         </div>
                         <div class="item">

@@ -17,29 +17,29 @@
 
     </head>
     <body>
-        <h1 class="titre">Liste des convocations</h1>
+        <h1 class="titre">Liste des reunions</h1>
 
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>CONVOCATION</th>
-                    <th>ELEVE</th>
-                    <th>EMPLOYE</th>                    
-                    <th>Motif</th>      
-                    <th>Supprimé</th>      
+                    <th>REUNION</th>
+                    <th>Code</th>
+                    <th>Etat</th>
+                    <th>Date REUNION</th>
+                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
-                <c:forEach items="${convocations}" var="convocation">
+                <c:forEach items="${reunions}" var="reunion">
                     
-                <tr class="pointeur" onclick="window.location.href='start#!/convocation/${convocation.idconvocation}'">
+                <tr class="pointeur" onclick="window.location.href='start#!/reunion/${reunion.idreunion}'">
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                Crée le <fmt:formatDate value="${convocation.created}" pattern="yyyy-MM-dd"/>
+                                Crée le <fmt:formatDate value="${reunion.created}" pattern="yyyy-MM-dd"/>
                                 <div class="sub header">
-                                    Modifié le <fmt:formatDate value="${convocation.modified}" pattern="yyyy-MM-dd"/>
+                                    Modifié le <fmt:formatDate value="${reunion.modified}" pattern="yyyy-MM-dd"/>
                                 </div>
                             </div>
                         </h4>
@@ -47,9 +47,23 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.eleveIdeleve.individuIdindividu.noms}
+                                ${reunion.code}</div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                ${reunion.etat}</div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                <fmt:formatDate value="${reunion.dateJour}" pattern="HH:mm:ss"/>
                                 <div class="sub header">
-                                    ${convocation.eleveIdeleve.individuIdindividu.prenoms}
+                                    <fmt:formatDate value="${reunion.dateJour}" pattern="yyyy-MM-dd"/>
                                 </div>
                             </div>
                         </h4>
@@ -57,31 +71,13 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.employeIdemploye.individuIdindividu.noms}
-                                <div class="sub header">
-                                    ${convocation.employeIdemploye.individuIdindividu.prenoms}
-                                </div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${convocation.motif}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${convocation.deleted}</div>
+                                ${reunion.deleted}</div>
                             </div>
                         </h4>
                     </td>
                     
                 </tr>
                 </c:forEach>
-
             </tbody>
         </table>
 
@@ -101,7 +97,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                ouvrirMenuCorrespondant("#section_params", "bouton_params", "convocation");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "reunion");
                 
                 $('#dataTableUtilisateur').DataTable({
                     
@@ -113,7 +109,7 @@
                             message: '',
                             className: 'ui gris mini button',
                             action: function (e, dt, node, config) {
-                                window.location.href='start#!/convocation'
+                                window.location.href='start#!/reunion'
                             }
                         },
                         {
