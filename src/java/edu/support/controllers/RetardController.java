@@ -5,11 +5,13 @@
  */
 package edu.support.controllers;
 
+import edu.support.dao.IndividuFacadeLocal;
 import edu.support.dao.RetardFacadeLocal;
 import edu.support.entities.Retard;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -34,7 +36,10 @@ import org.springframework.web.servlet.view.RedirectView;
 public class RetardController {
     
     @EJB(mappedName="java:app/edusupport/RetardFacade")
-    private RetardFacadeLocal cfl;
+    private RetardFacadeLocal rfl;
+    
+    @EJB(mappedName="java:app/edusupport/IndividuFacade")
+    private IndividuFacadeLocal ifl;
     
     private final static String VUE_CREATE = "jsp/retard/create";
     private final static String VUE_EDIT = "jsp/retard/edit";
@@ -52,18 +57,20 @@ public class RetardController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
+        mv.addObject("individus", ifl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("retard")Retard retard,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("retard")Retard retard,BindingResult result ,HttpServletRequest request, @RequestParam Map <String,String> params){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
         retard.setCreated(new Date());
         retard.setModified(new Date());
-        cfl.create(retard);
+        retard.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
+        rfl.create(retard);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -71,15 +78,17 @@ public class RetardController {
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("retard", cfl.find(id));
+        mv.addObject("retard", rfl.find(id));
+        mv.addObject("individus", ifl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("retard")Retard retard ,@RequestParam("idretard")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("retard")Retard retard ,@RequestParam Map<String,String> params,HttpServletRequest request){
         retard.setModified(new Date());
-        retard.setCreated(cfl.find(id).getCreated());
-        cfl.edit(retard);
+        retard.setCreated(rfl.find(params.get("idretard")).getCreated());
+        retard.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
+        rfl.edit(retard);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -87,22 +96,22 @@ public class RetardController {
     @RequestMapping(value="/view/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("retard", cfl.find(id));
+        mv.addObject("retard", rfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("retards", cfl.findAll());
+        mv.addObject("retards", rfl.findAll());
         return mv;
     }
     
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
     public RedirectView delete(@RequestParam("idretard")int id,HttpServletRequest request){
-        Retard c = cfl.find(id);
-        cfl.remove(c);
+        Retard c = rfl.find(id);
+        rfl.remove(c);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

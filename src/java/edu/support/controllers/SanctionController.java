@@ -5,11 +5,13 @@
  */
 package edu.support.controllers;
 
+import edu.support.dao.EleveFacadeLocal;
 import edu.support.dao.SanctionFacadeLocal;
 import edu.support.entities.Sanction;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -34,7 +36,10 @@ import org.springframework.web.servlet.view.RedirectView;
 public class SanctionController {
     
     @EJB(mappedName="java:app/edusupport/SanctionFacade")
-    private SanctionFacadeLocal cfl;
+    private SanctionFacadeLocal sfl;
+    
+    @EJB(mappedName="java:app/edusupport/EleveFacade")
+    private EleveFacadeLocal efl;
     
     private final static String VUE_CREATE = "jsp/sanction/create";
     private final static String VUE_EDIT = "jsp/sanction/edit";
@@ -52,18 +57,20 @@ public class SanctionController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
+        mv.addObject("eleves", efl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("sanction")Sanction sanction,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("sanction")Sanction sanction,BindingResult result ,HttpServletRequest request, @RequestParam Map <String,String> params){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
         sanction.setCreated(new Date());
         sanction.setModified(new Date());
-        cfl.create(sanction);
+        sanction.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        sfl.create(sanction);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -71,15 +78,17 @@ public class SanctionController {
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("sanction", cfl.find(id));
+        mv.addObject("sanction", sfl.find(id));
+        mv.addObject("eleves", efl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("sanction")Sanction sanction ,@RequestParam("idsanction")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("sanction")Sanction sanction ,@RequestParam Map<String,String> params,HttpServletRequest request){
         sanction.setModified(new Date());
-        sanction.setCreated(cfl.find(id).getCreated());
-        cfl.edit(sanction);
+        sanction.setCreated(sfl.find(params.get("iddsanction")).getCreated());
+        sanction.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        sfl.edit(sanction);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -87,22 +96,22 @@ public class SanctionController {
     @RequestMapping(value="/view/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("sanction", cfl.find(id));
+        mv.addObject("sanction", sfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("sanctions", cfl.findAll());
+        mv.addObject("sanctions", sfl.findAll());
         return mv;
     }
     
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
     public RedirectView delete(@RequestParam("idsanction")int id,HttpServletRequest request){
-        Sanction c = cfl.find(id);
-        cfl.remove(c);
+        Sanction c = sfl.find(id);
+        sfl.remove(c);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

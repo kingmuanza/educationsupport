@@ -5,11 +5,13 @@
  */
 package edu.support.controllers;
 
+import edu.support.dao.EleveFacadeLocal;
 import edu.support.dao.RelanceFacadeLocal;
 import edu.support.entities.Relance;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -34,7 +36,10 @@ import org.springframework.web.servlet.view.RedirectView;
 public class RelanceController {
     
     @EJB(mappedName="java:app/edusupport/RelanceFacade")
-    private RelanceFacadeLocal cfl;
+    private RelanceFacadeLocal rfl;
+    
+    @EJB(mappedName="java:app/edusupport/EleveFacade")
+    private EleveFacadeLocal efl;
     
     private final static String VUE_CREATE = "jsp/relance/create";
     private final static String VUE_EDIT = "jsp/relance/edit";
@@ -52,18 +57,20 @@ public class RelanceController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
+        mv.addObject("eleves", efl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("relance")Relance relance,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("relance")Relance relance,BindingResult result ,HttpServletRequest request ,@RequestParam Map <String,String> params){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
         relance.setCreated(new Date());
         relance.setModified(new Date());
-        cfl.create(relance);
+        relance.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        rfl.create(relance);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -71,15 +78,17 @@ public class RelanceController {
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("relance", cfl.find(id));
+        mv.addObject("relance", rfl.find(id));
+        mv.addObject("eleves", efl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("relance")Relance relance ,@RequestParam("idrelance")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("relance")Relance relance ,@RequestParam Map <String,String> params,HttpServletRequest request){
         relance.setModified(new Date());
-        relance.setCreated(cfl.find(id).getCreated());
-        cfl.edit(relance);
+        relance.setCreated(rfl.find(params.get("relance")).getCreated());
+        relance.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        rfl.edit(relance);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -87,22 +96,22 @@ public class RelanceController {
     @RequestMapping(value="/view/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("relance", cfl.find(id));
+        mv.addObject("relance", rfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("relances", cfl.findAll());
+        mv.addObject("relances", rfl.findAll());
         return mv;
     }
     
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
     public RedirectView delete(@RequestParam("idrelance")int id,HttpServletRequest request){
-        Relance c = cfl.find(id);
-        cfl.remove(c);
+        Relance c = rfl.find(id);
+        rfl.remove(c);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

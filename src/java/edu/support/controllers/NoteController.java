@@ -5,14 +5,18 @@
  */
 package edu.support.controllers;
 
+import edu.support.dao.EleveFacadeLocal;
+import edu.support.dao.EvaluationFacadeLocal;
 import edu.support.dao.NoteFacadeLocal;
 import edu.support.entities.Note;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import static jdk.nashorn.internal.runtime.Debug.id;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -36,6 +40,12 @@ public class NoteController {
     @EJB(mappedName="java:app/edusupport/NoteFacade")
     private NoteFacadeLocal nfl;
     
+    @EJB(mappedName="java:app/edusupport/EvaluationFacade")
+    private EvaluationFacadeLocal evalfl;
+    
+    @EJB(mappedName="java:app/edusupport/EleveFacade")
+    private EleveFacadeLocal elevfl;
+    
     private final static String VUE_CREATE = "jsp/note/create";
     private final static String VUE_EDIT = "jsp/note/edit";
     private final static String VUE_LIST = "jsp/note/list";
@@ -52,17 +62,21 @@ public class NoteController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
+        mv.addObject("evaluations", evalfl.findAll());
+        mv.addObject("eleves", elevfl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("note")Note note,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("note")Note note,BindingResult result ,HttpServletRequest request ,@RequestParam Map <String,String> params){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
         note.setCreated(new Date());
         note.setModified(new Date());
+        note.setEleveIdeleve(elevfl.find(params.get("eleveIdeleve")));
+        note.setEvaluationIdevaluation(evalfl.find(params.get("evaluationIdevaluation")));
         nfl.create(note);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -71,14 +85,18 @@ public class NoteController {
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
+        mv.addObject("evaluations", evalfl.findAll());
+        mv.addObject("eleves", elevfl.findAll());
         mv.addObject("note", nfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("note")Note note ,@RequestParam("idnote")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("note")Note note ,@RequestParam Map <String,String> params,HttpServletRequest request){
         note.setModified(new Date());
-        note.setCreated(nfl.find(id).getCreated());
+        note.setEleveIdeleve(elevfl.find(params.get("eleveIdeleve")));
+        note.setEvaluationIdevaluation(evalfl.find(params.get("evaluationIdevaluation")));
+        note.setCreated(nfl.find(params.get("idnote")).getCreated());
         nfl.edit(note);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

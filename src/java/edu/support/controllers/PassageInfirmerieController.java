@@ -5,11 +5,13 @@
  */
 package edu.support.controllers;
 
+import edu.support.dao.EleveFacadeLocal;
 import edu.support.dao.PassageInfirmerieFacadeLocal;
 import edu.support.entities.PassageInfirmerie;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -34,7 +36,10 @@ import org.springframework.web.servlet.view.RedirectView;
 public class PassageInfirmerieController {
     
     @EJB(mappedName="java:app/edusupport/PassageInfirmerieFacade")
-    private PassageInfirmerieFacadeLocal cfl;
+    private PassageInfirmerieFacadeLocal pifl;
+    
+    @EJB(mappedName="java:app/edusupport/EleveFacade")
+    private EleveFacadeLocal efl;
     
     private final static String VUE_CREATE = "jsp/passageinfirmerie/create";
     private final static String VUE_EDIT = "jsp/passageinfirmerie/edit";
@@ -52,18 +57,21 @@ public class PassageInfirmerieController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
+        mv.addObject("eleves", efl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("passageinfirmerie")PassageInfirmerie passageinfirmerie,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("passageinfirmerie")PassageInfirmerie passageinfirmerie,BindingResult result ,HttpServletRequest request ,@RequestParam Map <String,String> params){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
         passageinfirmerie.setCreated(new Date());
         passageinfirmerie.setModified(new Date());
-        cfl.create(passageinfirmerie);
+        passageinfirmerie.setCreated(pifl.find(params.get("idpassageinfirmerie")).getCreated());
+        passageinfirmerie.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        pifl.create(passageinfirmerie);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -71,15 +79,17 @@ public class PassageInfirmerieController {
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("passageinfirmerie", cfl.find(id));
+        mv.addObject("passageinfirmerie", pifl.find(id));
+        mv.addObject("eleves", efl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("passageinfirmerie")PassageInfirmerie passageinfirmerie ,@RequestParam("idpassageinfirmerie")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("passageinfirmerie")PassageInfirmerie passageinfirmerie  ,@RequestParam Map <String,String> params,HttpServletRequest request){
         passageinfirmerie.setModified(new Date());
-        passageinfirmerie.setCreated(cfl.find(id).getCreated());
-        cfl.edit(passageinfirmerie);
+        passageinfirmerie.setCreated(pifl.find(params.get("idpassageinfirmerie")).getCreated());
+        passageinfirmerie.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        pifl.edit(passageinfirmerie);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -87,22 +97,22 @@ public class PassageInfirmerieController {
     @RequestMapping(value="/view/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("passageinfirmerie", cfl.find(id));
+        mv.addObject("passageinfirmerie", pifl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("passageinfirmeries", cfl.findAll());
+        mv.addObject("passageinfirmeries", pifl.findAll());
         return mv;
     }
     
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
     public RedirectView delete(@RequestParam("idpassageinfirmerie")int id,HttpServletRequest request){
-        PassageInfirmerie c = cfl.find(id);
-        cfl.remove(c);
+        PassageInfirmerie c = pifl.find(id);
+        pifl.remove(c);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

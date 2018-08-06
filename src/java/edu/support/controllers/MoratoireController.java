@@ -5,14 +5,17 @@
  */
 package edu.support.controllers;
 
+import edu.support.dao.EleveFacadeLocal;
 import edu.support.dao.MoratoireFacadeLocal;
 import edu.support.entities.Moratoire;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import static jdk.nashorn.internal.runtime.Debug.id;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -34,7 +37,10 @@ import org.springframework.web.servlet.view.RedirectView;
 public class MoratoireController {
     
     @EJB(mappedName="java:app/edusupport/MoratoireFacade")
-    private MoratoireFacadeLocal cfl;
+    private MoratoireFacadeLocal mfl;
+    
+    @EJB(mappedName="java:app/edusupport/EleveFacade")
+    private EleveFacadeLocal efl;
     
     private final static String VUE_CREATE = "jsp/moratoire/create";
     private final static String VUE_EDIT = "jsp/moratoire/edit";
@@ -52,18 +58,20 @@ public class MoratoireController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
+        mv.addObject("eleves", efl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("moratoire")Moratoire moratoire,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("moratoire")Moratoire moratoire,BindingResult result ,HttpServletRequest request ,@RequestParam Map <String,String> params){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
         moratoire.setCreated(new Date());
         moratoire.setModified(new Date());
-        cfl.create(moratoire);
+        moratoire.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        mfl.create(moratoire);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -71,15 +79,17 @@ public class MoratoireController {
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("moratoire", cfl.find(id));
+        mv.addObject("eleves", efl.findAll());
+        mv.addObject("moratoire", mfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("moratoire")Moratoire moratoire ,@RequestParam("idmoratoire")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("moratoire")Moratoire moratoire ,@RequestParam Map <String,String> params,HttpServletRequest request){
         moratoire.setModified(new Date());
-        moratoire.setCreated(cfl.find(id).getCreated());
-        cfl.edit(moratoire);
+        moratoire.setCreated(mfl.find(params.get("idmoratoire")).getCreated());
+        moratoire.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        mfl.edit(moratoire);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -87,22 +97,22 @@ public class MoratoireController {
     @RequestMapping(value="/view/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("moratoire", cfl.find(id));
+        mv.addObject("moratoire", mfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("moratoires", cfl.findAll());
+        mv.addObject("moratoires", mfl.findAll());
         return mv;
     }
     
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
     public RedirectView delete(@RequestParam("idmoratoire")int id,HttpServletRequest request){
-        Moratoire c = cfl.find(id);
-        cfl.remove(c);
+        Moratoire c = mfl.find(id);
+        mfl.remove(c);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

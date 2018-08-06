@@ -6,10 +6,12 @@
 package edu.support.controllers;
 
 import edu.support.dao.EmployeFacadeLocal;
+import edu.support.dao.IndividuFacadeLocal;
 import edu.support.entities.Employe;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -36,6 +38,9 @@ public class EmployeController {
     @EJB(mappedName="java:app/edusupport/EmployeFacade")
     private EmployeFacadeLocal cfl;
     
+    @EJB(mappedName="java:app/edusupport/IndividuFacade")
+    private IndividuFacadeLocal ifl;
+    
     private final static String VUE_CREATE = "jsp/employe/create";
     private final static String VUE_EDIT = "jsp/employe/edit";
     private final static String VUE_LIST = "jsp/employe/list";
@@ -52,17 +57,19 @@ public class EmployeController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
+        mv.addObject("individus", ifl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("employe")Employe employe,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("employe")Employe employe,BindingResult result ,HttpServletRequest request, @RequestParam Map<String,String> params){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
         employe.setCreated(new Date());
         employe.setModified(new Date());
+        employe.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
         cfl.create(employe);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -72,13 +79,15 @@ public class EmployeController {
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
         mv.addObject("employe", cfl.find(id));
+        mv.addObject("individus", ifl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("employe")Employe employe ,@RequestParam("idemploye")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("employe")Employe employe ,@RequestParam("idemploye")int id,HttpServletRequest request, @RequestParam Map<String,String> params){
         employe.setModified(new Date());
         employe.setCreated(cfl.find(id).getCreated());
+        employe.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
         cfl.edit(employe);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

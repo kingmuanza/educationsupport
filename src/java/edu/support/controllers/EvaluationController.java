@@ -5,11 +5,16 @@
  */
 package edu.support.controllers;
 
+import edu.support.dao.ClasseFacadeLocal;
 import edu.support.dao.EvaluationFacadeLocal;
+import edu.support.dao.MatiereFacadeLocal;
+import edu.support.dao.SequenceFacadeLocal;
 import edu.support.entities.Evaluation;
+import static edu.support.entities.Evaluation_.matiereIdmatiere;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -34,7 +39,16 @@ import org.springframework.web.servlet.view.RedirectView;
 public class EvaluationController {
     
     @EJB(mappedName="java:app/edusupport/EvaluationFacade")
-    private EvaluationFacadeLocal cfl;
+    private EvaluationFacadeLocal efl;
+    
+    @EJB(mappedName="java:app/edusupport/ClasseFacade")
+    private ClasseFacadeLocal cfl;
+    
+    @EJB(mappedName="java:app/edusupport/MatiereFacade")
+    private MatiereFacadeLocal mfl;
+    
+    @EJB(mappedName="java:app/edusupport/SequenceFacade")
+    private SequenceFacadeLocal sfl;
     
     private final static String VUE_CREATE = "jsp/evaluation/create";
     private final static String VUE_EDIT = "jsp/evaluation/edit";
@@ -55,54 +69,60 @@ public class EvaluationController {
         return mv;
     }
     
-//    @RequestMapping(value="/create", method=RequestMethod.POST)
-//    public Object postCreate(@Valid @ModelAttribute("evaluation")Evaluation evaluation,BindingResult result ,HttpServletRequest request){
-//        if(result.hasErrors()){
-//            ModelAndView mv = new ModelAndView(VUE_CREATE);
-//            return mv;
-//        }
+    @RequestMapping(value="/create", method=RequestMethod.POST)
+    public Object postCreate(@Valid @ModelAttribute("evaluation")Evaluation evaluation,BindingResult result ,HttpServletRequest request, @RequestParam Map<String,String> params){
+        if(result.hasErrors()){
+            ModelAndView mv = new ModelAndView(VUE_CREATE);
+            return mv;
+        }
 //        evaluation.setCreated(new Date());
 //        evaluation.setModified(new Date());
-//        cfl.create(evaluation);
-//        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
-//        return rv;
-//    }
-//    
-//    @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
-//    public ModelAndView getEdit(@PathVariable("id")int id){
-//        ModelAndView mv = new ModelAndView(VUE_EDIT);
-//        mv.addObject("evaluation", cfl.find(id));
-//        return mv;
-//    }
-//    
-//    @RequestMapping(value="/edit", method=RequestMethod.POST)
-//    public RedirectView postEdit(@Valid @ModelAttribute("evaluation")Evaluation evaluation ,@RequestParam("idevaluation")int id,HttpServletRequest request){
+        evaluation.setClasseIdclasse(cfl.find(params.get("classeIdclasse")));
+        evaluation.setMatiereIdmatiere(mfl.find(params.get("matiereIdmatiere")));
+        evaluation.setSequenceIdsequence(sfl.find(params.get("sequenceIdsequence")));
+        efl.create(evaluation);
+        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
+        return rv;
+    }
+    
+    @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
+    public ModelAndView getEdit(@PathVariable("id")int id){
+        ModelAndView mv = new ModelAndView(VUE_EDIT);
+        mv.addObject("evaluation", efl.find(id));
+        return mv;
+    }
+    
+    @RequestMapping(value="/edit", method=RequestMethod.POST)
+    public RedirectView postEdit(@Valid @ModelAttribute("evaluation")Evaluation evaluation ,@RequestParam Map<String,String> params, HttpServletRequest request){
 //        evaluation.setModified(new Date());
-//        evaluation.setCreated(cfl.find(id).getCreated());
-//        cfl.edit(evaluation);
-//        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
-//        return rv;
-//    }
+//        evaluation.setCreated(cfl.find(params.get("idevaluation").getCreated());
+        evaluation.setClasseIdclasse(cfl.find(params.get("classeIdclasse")));
+        evaluation.setMatiereIdmatiere(mfl.find(params.get("matiereIdmatiere")));
+        evaluation.setSequenceIdsequence(sfl.find(params.get("sequenceIdsequence")));
+        efl.edit(evaluation);
+        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
+        return rv;
+    }
     
     @RequestMapping(value="/view/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("evaluation", cfl.find(id));
+        mv.addObject("evaluation", efl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("evaluations", cfl.findAll());
+        mv.addObject("evaluations", efl.findAll());
         return mv;
     }
     
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
     public RedirectView delete(@RequestParam("idevaluation")int id,HttpServletRequest request){
-        Evaluation c = cfl.find(id);
-        cfl.remove(c);
+        Evaluation c = efl.find(id);
+        efl.remove(c);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

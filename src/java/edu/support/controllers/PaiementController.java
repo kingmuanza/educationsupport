@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -60,17 +61,19 @@ public class PaiementController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
+        mv.addObject("eleves", efl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("paiement")Paiement paiement,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("paiement")Paiement paiement,BindingResult result ,HttpServletRequest request ,@RequestParam Map<String,String> params){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
         paiement.setCreated(new Date());
         paiement.setModified(new Date());
+        paiement.setCreated(pfl.find(params.get("idpaiement")).getCreated());
         pfl.create(paiement);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -79,14 +82,16 @@ public class PaiementController {
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
+        mv.addObject("eleves", efl.findAll());
         mv.addObject("paiement", pfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("paiement")Paiement paiement ,@RequestParam("idpaiement")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("paiement")Paiement paiement ,@RequestParam Map<String,String> params, HttpServletRequest request){
         paiement.setModified(new Date());
-        paiement.setCreated(pfl.find(id).getCreated());
+        paiement.setCreated(pfl.find(params.get("idpaiement")).getCreated());
+        paiement.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
         pfl.edit(paiement);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

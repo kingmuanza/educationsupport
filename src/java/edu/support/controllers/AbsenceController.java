@@ -79,13 +79,14 @@ public class AbsenceController {
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
         mv.addObject("absence", afl.find(id));
+        mv.addObject("individus", ifl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("absence")Absence absence ,@RequestParam("idabsence")int id,HttpServletRequest request, @RequestParam Map<String,String> params) throws ParseException{
+    public RedirectView postEdit(@Valid @ModelAttribute("absence")Absence absence ,HttpServletRequest request, @RequestParam Map<String,String> params) throws ParseException{
         absence.setModified(new Date());
-        absence.setCreated(afl.find(id).getCreated());
+        absence.setCreated(afl.find(params.get("idabsence")).getCreated());
         absence.setJourAbsence(new SimpleDateFormat().parse(params.get("dateJour")));
         absence.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
         afl.edit(absence);

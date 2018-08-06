@@ -12,6 +12,7 @@ import edu.support.entities.Eleve;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -68,13 +69,15 @@ public class EleveController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("eleve")Eleve eleve,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("eleve")Eleve eleve,BindingResult result ,HttpServletRequest request, @RequestParam Map<String,String> params){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
         eleve.setCreated(new Date());
         eleve.setModified(new Date());
+        eleve.setClasseIdclasse(classefl.find(params.get("classeIclasse")));
+        eleve.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
         cfl.create(eleve);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -84,13 +87,17 @@ public class EleveController {
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
         mv.addObject("eleve", cfl.find(id));
+        mv.addObject("individus", ifl.findAll());
+        mv.addObject("classes", classefl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("eleve")Eleve eleve ,@RequestParam("ideleve")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("eleve")Eleve eleve ,@RequestParam Map<String,String>params,HttpServletRequest request){
         eleve.setModified(new Date());
-        eleve.setCreated(cfl.find(id).getCreated());
+        eleve.setCreated(cfl.find(params.get("ideleve")).getCreated());
+        eleve.setClasseIdclasse(classefl.find(params.get("classeIclasse")));
+        eleve.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
         cfl.edit(eleve);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

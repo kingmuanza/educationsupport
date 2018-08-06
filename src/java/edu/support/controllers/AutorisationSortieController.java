@@ -11,6 +11,7 @@ import edu.support.entities.AutorisationSortie;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -61,13 +62,14 @@ public class AutorisationSortieController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("autorisationsortie")AutorisationSortie autorisationsortie,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("autorisationsortie")AutorisationSortie autorisationsortie,BindingResult result ,HttpServletRequest request, @RequestParam Map<String,String> params){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
         autorisationsortie.setCreated(new Date());
         autorisationsortie.setModified(new Date());
+        autorisationsortie.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
         asfl.create(autorisationsortie);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -81,9 +83,10 @@ public class AutorisationSortieController {
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("autorisationsortie")AutorisationSortie autorisationsortie ,@RequestParam("idautorisationsortie")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("autorisationsortie")AutorisationSortie autorisationsortie , @RequestParam Map<String,String> params,HttpServletRequest request){
         autorisationsortie.setModified(new Date());
-        autorisationsortie.setCreated(asfl.find(id).getCreated());
+        autorisationsortie.setCreated(asfl.find(params.get("idautorisationsortie")).getCreated());
+        autorisationsortie.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
         asfl.edit(autorisationsortie);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
