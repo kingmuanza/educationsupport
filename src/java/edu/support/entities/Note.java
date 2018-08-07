@@ -66,7 +66,6 @@ public class Note implements Serializable {
     private Eleve eleveIdeleve;
     @JoinColumn(name = "evaluation_idevaluation", referencedColumnName = "idevaluation", nullable = false)
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Evaluation evaluationIdevaluation;
 
     public Note() {

@@ -5,6 +5,7 @@
  */
 package edu.support.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -42,9 +43,11 @@ public class Evaluation implements Serializable {
     @Column(name = "idevaluation", nullable = false)
     private Integer idevaluation;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluationIdevaluation")
+    @JsonIgnore
     private Collection<Note> noteCollection;
     @JoinColumn(name = "classe_idclasse", referencedColumnName = "idclasse", nullable = false)
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Classe classeIdclasse;
     @JoinColumn(name = "matiere_idmatiere", referencedColumnName = "idmatiere", nullable = false)
     @ManyToOne(optional = false)

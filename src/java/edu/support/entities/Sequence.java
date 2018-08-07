@@ -5,6 +5,7 @@
  */
 package edu.support.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -73,12 +74,15 @@ public class Sequence implements Serializable {
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sequenceIdsequence")
+    @JsonIgnore
     private Collection<Evaluation> evaluationCollection;
     @JoinColumn(name = "annee_scolaire_idannee_scolaire", referencedColumnName = "idannee_scolaire", nullable = false)
     @ManyToOne(optional = false)
+    @JsonIgnore
     private AnneeScolaire anneeScolaireIdanneeScolaire;
     @JoinColumn(name = "trimestre_idtrimestre", referencedColumnName = "idtrimestre", nullable = false)
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Trimestre trimestreIdtrimestre;
 
     public Sequence() {
