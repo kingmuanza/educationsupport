@@ -22,9 +22,8 @@
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>CLASSE</th>
-                    <th>Code</th>
-                    <th>Supprimé</th>      
+                    <th>Créé</th>
+                    <th>Code</th>     
                 </tr>
             </thead>
 
@@ -49,21 +48,6 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${classe.motif}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${classe.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
                 </c:forEach>
 
@@ -86,7 +70,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                ouvrirMenuCorrespondant("#section_params", "bouton_params", "classe");
+                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "classe");
                 
                 $('#dataTableUtilisateur').DataTable({
                     

@@ -8,12 +8,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>PREPA VOGT</title>
 
-        <!-- Fichiers CSS pour le dataTable-->
-        <link href="css/dataTables.semanticui.min.css" rel="stylesheet" type="text/css"/>
-        <link href="css/responsive.semanticui.min.css" rel="stylesheet" type="text/css"/>        
-        <link href="css/buttons.dataTables.min.css" rel="stylesheet" type="text/css"/>
-        <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
-
     </head>
     <body>
         <h1 class="titre" style="font-size: 3.0em">
@@ -29,7 +23,7 @@
                     <div class="statistic" style="cursor: pointer" onclick="window.location.href = 'start#!/absences'">
                         
                             <div class="value  titre">
-                                0
+                                85
                             </div>
                             <div class="label">
                                 Absences
@@ -38,23 +32,23 @@
                     </div>
                     <div class="statistic" style="cursor: pointer" onclick="window.location.href = 'start#!/retards'">
                         <div class="value  titre">
-                            0
+                            318
                         </div>
                         <div class="label">
                             Retards
                         </div>
                     </div>
-                    <div class="statistic">
+                    <div class="statistic" style="cursor: pointer" onclick="window.location.href = 'start#!/sanctions'">
                         <div class="value  titre">
-                            0
+                            5
                         </div>
-                        <div class="label" style="cursor: pointer" onclick="window.location.href = 'start#!/sanctions'">
+                        <div class="label">
                             Sanctions
                         </div>
                     </div>
                     <div class="statistic" style="cursor: pointer" onclick="window.location.href = 'start#!/permissions'">
                         <div class="value  titre">
-                            0
+                            12
                         </div>
                         <div class="label">
                             Permissions
@@ -104,26 +98,6 @@
             </c:forEach>
 
         </div>
-
-
-        <script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
-        <script src="js/jszip.js" type="text/javascript"></script>
-        <script src="js/pdf.js.js" type="text/javascript"></script>
-        <script src="js/dataTables.buttons.min.js" type="text/javascript"></script>
-        <script src="js/buttons.flash.min.js" type="text/javascript"></script>
-        <script src="js/buttons.html5.min.js" type="text/javascript"></script>
-        <script src="js/buttons.print.min.js" type="text/javascript"></script>
-        <script src="js/pdfmake.min.js" type="text/javascript"></script>
-        <script>
-                    var titre = 'Bonjour';
-                    var audio = new Audio('audio/sms-alert-3-daniel_simon.wav');
-
-                    var dernierIndex = 0;
-                    $(document).ready(function () {
-
-
-                    });
-        </script>
 
     </body>
 </html>

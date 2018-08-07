@@ -101,7 +101,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                ouvrirMenuCorrespondant("#section_params", "bouton_params", "convocation");
+                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "convocation");
                 
                 $('#dataTableUtilisateur').DataTable({
                     

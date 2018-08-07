@@ -96,7 +96,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                ouvrirMenuCorrespondant("#section_params", "bouton_params", "anneescolaire");
+                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "anneescolaire");
                 
                 $('#dataTableUtilisateur').DataTable({
                     

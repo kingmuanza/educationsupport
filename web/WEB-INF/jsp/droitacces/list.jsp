@@ -88,7 +88,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                ouvrirMenuCorrespondant("#section_params", "bouton_params", "droitacces");
+                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "droitacces");
                 
                 $('#dataTableUtilisateur').DataTable({
                     

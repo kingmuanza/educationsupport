@@ -94,7 +94,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                ouvrirMenuCorrespondant("#section_params", "bouton_params", "maladie");
+                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "maladie");
                 
                 $('#dataTableUtilisateur').DataTable({
                     

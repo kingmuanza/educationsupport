@@ -97,7 +97,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                ouvrirMenuCorrespondant("#section_params", "bouton_params", "passageinfirmerie");
+                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "passageinfirmerie");
                 
                 $('#dataTableUtilisateur').DataTable({
                     

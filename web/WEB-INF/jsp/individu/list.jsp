@@ -132,7 +132,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                ouvrirMenuCorrespondant("#section_params", "bouton_params", "individu");
+                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "individu");
                 
                 $('#dataTableUtilisateur').DataTable({
                     

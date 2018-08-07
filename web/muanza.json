@@ -1,0 +1,48 @@
+{
+    "absences": [],
+    "retards": [],
+    "sanctions": [{
+            "idsanction": 8,
+            "description": "06 Jours d'exclusion avec corvée",
+            "motif": "Double escalade",
+            "created": 1537570800000,
+            "modified": 1537570800000,
+            "deleted": false
+        }],
+    "paiements": [],
+    "notes": [{
+            "idnote": 22,
+            "valeur": 14.0,
+            "created": 1537743600000,
+            "modified": 1537743600000,
+            "deleted": false
+        }],
+    "eleve": {
+        "ideleve": 85,
+        "created": 1847372400000,
+        "modified": 1847372400000,
+        "deleted": false,
+        "classeIdclasse": {
+            "idclasse": 2,
+            "code": "5M1",
+            "created": 1847372400000,
+            "modified": 1847372400000,
+            "deleted": false
+        },
+        "individuIdindividu": {
+            "idindividu": 117,
+            "matricule": "18A10035",
+            "noms": "BELANDA",
+            "prenoms": "VERNER",
+            "dateNaissance": 537769380000,
+            "lieuNaissance": "GAROUA",
+            "email": "siatech27@gmail.com",
+            "sexe": "1",
+            "telephone": "222330027",
+            "residence": "Yaounde",
+            "created": 1847372400000,
+            "modified": 1847372400000,
+            "deleted": false
+        }
+    }
+}
