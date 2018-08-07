@@ -29,6 +29,8 @@ public class EleveDetails {
     private List<Paiement> paiements;
     @JsonProperty
     private List<Note> notes;
+    @JsonProperty
+    private boolean isSolvable;
     private Eleve eleve;
     
     public EleveDetails(Eleve e) {
@@ -61,6 +63,10 @@ public class EleveDetails {
 
     public Eleve getEleve() {
         return eleve;
+    }
+
+    public void setIsSolvable(boolean isSolvable) {
+        this.isSolvable = isSolvable;
     }
     
     

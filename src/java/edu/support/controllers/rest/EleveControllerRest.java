@@ -233,6 +233,7 @@ public class EleveControllerRest {
         ed.setSanctions((List)ed.getEleve().getSanctionCollection());
         ed.setPaiements((List)ed.getEleve().getPaiementCollection());
         ed.setNotes((List)ed.getEleve().getNoteCollection());
+        ed.setIsSolvable(new SolvabiliteServiceImpl().isSolvable(ed.getEleve()));
         return ed;
     }
 }
