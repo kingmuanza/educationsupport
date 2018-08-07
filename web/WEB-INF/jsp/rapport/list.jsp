@@ -10,10 +10,10 @@
         <title>EDUCATION SUPPORT</title>
 
         <!-- Fichiers CSS pour le dataTable-->
-        <link href="css/dataTables.semanticui.min.css" rel="stylesheet" type="text/css"/>
-        <link href="css/responsive.semanticui.min.css" rel="stylesheet" type="text/css"/>        
-        <link href="css/buttons.dataTables.min.css" rel="stylesheet" type="text/css"/>
-        <link href="css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="css/dataTables.semanticui.min.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="css/responsive.semanticui.min.css"/>" rel="stylesheet" type="text/css"/>        
+        <link href="<c:url value="css/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="css/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css"/>
 
     </head>
     <body>
@@ -83,14 +83,14 @@
 
 
         <!-- Datatable -->
-        <script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
-        <script src="js/jszip.js" type="text/javascript"></script>
-        <script src="js/pdf.js.js" type="text/javascript"></script>
-        <script src="js/dataTables.buttons.min.js" type="text/javascript"></script>
-        <script src="js/buttons.flash.min.js" type="text/javascript"></script>
-        <script src="js/buttons.html5.min.js" type="text/javascript"></script>
-        <script src="js/buttons.print.min.js" type="text/javascript"></script>
-        <script src="js/pdfmake.min.js" type="text/javascript"></script>
+        <script src="<c:url value="js/jquery.dataTables.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="js/jszip.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="js/pdf.js.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="js/dataTables.buttons.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="js/buttons.flash.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="js/buttons.html5.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="js/buttons.print.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="js/pdfmake.min.js"/>" type="text/javascript"></script>
         <script>
             var titre = 'Bonjour';
             $(document).ready(function () {
