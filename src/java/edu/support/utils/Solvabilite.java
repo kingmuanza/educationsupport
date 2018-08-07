@@ -5,10 +5,13 @@
  */
 package edu.support.utils;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 /**
  *
  * @author N9-T
  */
+@JsonPOJOBuilder
 public class Solvabilite {
     private boolean isSolvable;
     private double montantPaye;
