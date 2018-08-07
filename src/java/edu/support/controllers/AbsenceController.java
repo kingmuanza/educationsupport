@@ -44,11 +44,11 @@ public class AbsenceController {
     private final static String VUE_EDIT = "jsp/absence/edit";
     private final static String VUE_LIST = "jsp/absence/list";
     private final static String VUE_VIEW = "jsp/absence/view";
-    private final static String PATH_LIST = "/start#!/absence/list";
+    private final static String PATH_LIST = "/absence/list";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified","jourAbsence","individuIdindividu"});
+        binder.setDisallowedFields(new String[]{"created","modified","dateJour","individuIdindividu"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -66,8 +66,8 @@ public class AbsenceController {
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-        absence.setJourAbsence(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("jourAbsence")));
-        absence.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
+        absence.setJourAbsence(new SimpleDateFormat().parse(params.get("dateJour")));
+        absence.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
         absence.setCreated(new Date());
         absence.setModified(new Date());
         afl.create(absence);

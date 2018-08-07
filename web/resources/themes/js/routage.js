@@ -23,9 +23,6 @@ app.config(function ($routeProvider) {
             .when("/absences", {
                 templateUrl: UrlExists("absence/list ")
             })
-            .when("/absence", {
-                templateUrl: UrlExists("absence/create ")
-            })
             .when("/anneesscolaires", {
                 templateUrl: UrlExists("anneesscolaire/list ")
             })
@@ -85,9 +82,6 @@ app.config(function ($routeProvider) {
             })
             .when("/relances", {
                 templateUrl: UrlExists("relance/list ")
-            })
-            .when("/retard", {
-                templateUrl: UrlExists("retard/create ")
             })
             .when("/retards", {
                 templateUrl: UrlExists("retard/list ")

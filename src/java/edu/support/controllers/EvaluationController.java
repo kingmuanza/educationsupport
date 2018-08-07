@@ -10,6 +10,7 @@ import edu.support.dao.EvaluationFacadeLocal;
 import edu.support.dao.MatiereFacadeLocal;
 import edu.support.dao.SequenceFacadeLocal;
 import edu.support.entities.Evaluation;
+import static edu.support.entities.Evaluation_.matiereIdmatiere;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
