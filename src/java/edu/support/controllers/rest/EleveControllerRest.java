@@ -43,10 +43,10 @@ public class EleveControllerRest {
     @EJB(mappedName="java:app/edusupport/EleveFacade")
     private EleveFacadeLocal efl;
     
-    @RequestMapping("/list")
-    public List<Eleve> getAllEleves(){
-        return efl.findAll();
-    }
+//    @RequestMapping("/list")
+//    public List<Eleve> getAllEleves(){
+//        return efl.findAll();
+//    }
     
     @RequestMapping("/get/{id}")
     @Produces("application/json")
@@ -205,6 +205,15 @@ public class EleveControllerRest {
         Eleve eleve = efl.find(id);
         EleveDetails ed = new EleveDetails(eleve);
         return initializeEleveDetails(ed);
+    }
+    @RequestMapping(value="/list", produces="application/json")
+    public List<EleveDetails> getAllEleveDetails(){
+        List<EleveDetails> led = new ArrayList<>();
+        for(Eleve e: efl.findAll()){
+            EleveDetails ed = new EleveDetails(e);
+            led.add(initializeEleveDetails(ed));
+        }
+        return led;
     }
     
     private double calculMoyenne(Eleve e){
