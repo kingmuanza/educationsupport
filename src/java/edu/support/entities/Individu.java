@@ -121,6 +121,7 @@ public class Individu implements Serializable {
     @JsonIgnore
     private Collection<Eleve> eleveCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
+    @JsonIgnore
     private Collection<Retard> retardCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
     @JsonIgnore

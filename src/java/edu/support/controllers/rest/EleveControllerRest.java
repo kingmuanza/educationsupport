@@ -22,6 +22,7 @@ import edu.support.entities.Retard;
 import edu.support.entities.Sanction;
 import edu.support.services.impl.SanteServiceImpl;
 import edu.support.services.impl.SolvabiliteServiceImpl;
+import edu.support.utils.EleveDetails;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -196,6 +197,16 @@ public class EleveControllerRest {
         return leseleves.indexOf(e)+1;
     }
     
+    //*******************               *******************//
+    //              Détails d'un éleve
+    //*******************               *******************//
+    @RequestMapping(value="/details/{id}", produces="application/json")
+    public EleveDetails getEleveDetails(@PathVariable("id")int id){
+        Eleve eleve = efl.find(id);
+        EleveDetails ed = new EleveDetails(eleve);
+        return initializeEleveDetails(ed);
+    }
+    
     private double calculMoyenne(Eleve e){
         List<Note> lesnotes = (List)e.getNoteCollection();
         double som = 0;
@@ -207,4 +218,12 @@ public class EleveControllerRest {
         return som / somCoef;
     }
     
+    private EleveDetails initializeEleveDetails(EleveDetails ed){
+        ed.setAbsences((List)ed.getEleve().getIndividuIdindividu().getAbsenceCollection());
+        ed.setRetards((List)ed.getEleve().getIndividuIdindividu().getRetardCollection());
+        ed.setSanctions((List)ed.getEleve().getSanctionCollection());
+        ed.setPaiements((List)ed.getEleve().getPaiementCollection());
+        ed.setNotes((List)ed.getEleve().getNoteCollection());
+        return ed;
+    }
 }

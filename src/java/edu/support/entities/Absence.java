@@ -5,6 +5,7 @@
  */
 package edu.support.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -49,7 +50,6 @@ public class Absence implements Serializable {
     @Column(name = "idabsence", nullable = false)
     private Integer idabsence;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "jour_absence", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date jourAbsence;
@@ -73,6 +73,7 @@ public class Absence implements Serializable {
     private boolean deleted;
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Individu individuIdindividu;
 
     public Absence() {

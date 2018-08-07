@@ -5,6 +5,7 @@
  */
 package edu.support.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -68,12 +69,15 @@ public class Sanction implements Serializable {
     private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Eleve eleveIdeleve;
     @JoinColumn(name = "employe_idemploye", referencedColumnName = "idemploye")
     @ManyToOne
+    @JsonIgnore
     private Employe employeIdemploye;
     @JoinColumn(name = "enseignant_idenseignant", referencedColumnName = "idenseignant")
     @ManyToOne
+    @JsonIgnore
     private Enseignant enseignantIdenseignant;
 
     public Sanction() {

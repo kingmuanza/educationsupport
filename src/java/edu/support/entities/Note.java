@@ -5,6 +5,7 @@
  */
 package edu.support.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -61,9 +62,11 @@ public class Note implements Serializable {
     private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Eleve eleveIdeleve;
     @JoinColumn(name = "evaluation_idevaluation", referencedColumnName = "idevaluation", nullable = false)
     @ManyToOne(optional = false)
+    @JsonIgnore
     private Evaluation evaluationIdevaluation;
 
     public Note() {

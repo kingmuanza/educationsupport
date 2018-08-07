@@ -60,8 +60,10 @@ public class Eleve implements Serializable {
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
+    @JsonIgnore
     private Collection<Note> noteCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
+    @JsonIgnore
     private Collection<Paiement> paiementCollection;
     @JoinColumn(name = "classe_idclasse", referencedColumnName = "idclasse", nullable = false)
     @ManyToOne(optional = false)
