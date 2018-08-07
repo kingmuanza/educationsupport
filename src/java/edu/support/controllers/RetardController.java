@@ -45,11 +45,11 @@ public class RetardController {
     private final static String VUE_EDIT = "jsp/retard/edit";
     private final static String VUE_LIST = "jsp/retard/list";
     private final static String VUE_VIEW = "jsp/retard/view";
-    private final static String PATH_LIST = "/retard/list";
+    private final static String PATH_LIST = "/start#!/retard/list";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","jourRetard","individuIdindividu"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -62,14 +62,15 @@ public class RetardController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("retard")Retard retard,BindingResult result ,HttpServletRequest request, @RequestParam Map <String,String> params){
+    public Object postCreate(@Valid @ModelAttribute("retard")Retard retard,BindingResult result ,HttpServletRequest request, @RequestParam Map <String,String> params) throws ParseException{
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
+        retard.setJourRetard(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("jourRetard")));
         retard.setCreated(new Date());
         retard.setModified(new Date());
-        retard.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
+        retard.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
         rfl.create(retard);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
