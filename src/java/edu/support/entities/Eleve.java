@@ -87,13 +87,11 @@ public class Eleve implements Serializable {
     @JsonIgnore
     private Collection<Convocation> convocationCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
-    @JsonIgnore
     private Collection<AutorisationSortie> autorisationSortieCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     @JsonIgnore
     private Collection<ElevesTraduits> elevesTraduitsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
-    @JsonIgnore
     private Collection<Moratoire> moratoireCollection;
 
     public Eleve() {

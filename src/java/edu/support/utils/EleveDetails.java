@@ -30,11 +30,12 @@ public class EleveDetails {
     @JsonProperty
     private List<Note> notes;
     @JsonProperty
-    private boolean isSolvable;
+    private Solvabilite solvabilite;
     private Eleve eleve;
     
     public EleveDetails(Eleve e) {
         eleve = e;
+        solvabilite = new Solvabilite();
     }
 
     public void setAbsences(List<Absence> absences) {
@@ -65,8 +66,12 @@ public class EleveDetails {
         return eleve;
     }
 
-    public void setIsSolvable(boolean isSolvable) {
-        this.isSolvable = isSolvable;
+    public void setSolvabilite(Solvabilite solvabilite) {
+        this.solvabilite = solvabilite;
+    }
+
+    public Solvabilite getSolvabilite(){
+        return this.solvabilite;
     }
     
     

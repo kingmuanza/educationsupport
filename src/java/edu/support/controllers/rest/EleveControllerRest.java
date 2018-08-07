@@ -23,6 +23,7 @@ import edu.support.entities.Sanction;
 import edu.support.services.impl.SanteServiceImpl;
 import edu.support.services.impl.SolvabiliteServiceImpl;
 import edu.support.utils.EleveDetails;
+import edu.support.utils.StaticVars;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -233,7 +234,12 @@ public class EleveControllerRest {
         ed.setSanctions((List)ed.getEleve().getSanctionCollection());
         ed.setPaiements((List)ed.getEleve().getPaiementCollection());
         ed.setNotes((List)ed.getEleve().getNoteCollection());
-        ed.setIsSolvable(new SolvabiliteServiceImpl().isSolvable(ed.getEleve()));
+        ed.getSolvabilite().setIsSolvable(new SolvabiliteServiceImpl().isSolvable(ed.getEleve()));
+        double som = 0.0;
+        for(Paiement p: ed.getEleve().getPaiementCollection())
+            som += p.getMontant();
+        ed.getSolvabilite().setMontantPaye(som);
+        ed.getSolvabilite().setMontantDu(StaticVars.FRAIS_EXIGIBLES - som);
         return ed;
     }
 }
