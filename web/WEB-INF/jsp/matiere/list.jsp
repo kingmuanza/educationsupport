@@ -26,13 +26,12 @@
                     <th>Code</th>
                     <th>Libelle</th>
                     <th>Coefficient</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${matieres}" var="matiere">
-                    
+                <c:if test="${!matiere.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/matiere/${matiere.idmatiere}'">
                     <td>
                         <h4 class="ui image header">
@@ -65,15 +64,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${matiere.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>

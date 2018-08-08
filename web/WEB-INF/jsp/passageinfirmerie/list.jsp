@@ -26,13 +26,12 @@
                     <th>ELEVE</th>
                     <th>Code</th>
                     <th>Date Passage</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${passageinfirmeries}" var="passageinfirmerie">
-                    
+                <c:if test="${!passageinfirmerie.deleted}">    
                 <tr class="pointeur" onclick="window.location.href='start#!/passageinfirmerie/${passageinfirmerie.idpassageinfirmerie}'">
                     <td>
                         <h4 class="ui image header">
@@ -68,15 +67,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${passageinfirmerie.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>

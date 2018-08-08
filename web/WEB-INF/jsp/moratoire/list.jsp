@@ -27,13 +27,12 @@
                     <th>Code</th>
                     <th>Reponse</th>
                     <th>Etat</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${moratoires}" var="moratoire">
-                    
+                <c:if test="${!moratoire.deleted}">    
                 <tr class="pointeur" onclick="window.location.href='start#!/moratoire/${moratoire.idmoratoire}'">
                     <td>
                         <h4 class="ui image header">
@@ -76,15 +75,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${moratoire.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>

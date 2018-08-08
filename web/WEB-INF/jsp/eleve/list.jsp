@@ -32,7 +32,7 @@
 
             <tbody>
                 <c:forEach items="${eleves}" var="eleve">
-                <c:if test="${!empty eleve}">
+                <c:if test="${!eleve.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/eleve/${eleve.ideleve}'">
                     <td>
                         <h4 class="ui image header">

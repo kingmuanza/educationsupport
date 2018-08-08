@@ -28,13 +28,12 @@
                     <th>ENSEIGNANT</th>
                     <th>Description</th>
                     <th>Motif</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${sanctions}" var="sanction">
-                    
+                <c:if test="${!sanction.deleted}">    
                 <tr class="pointeur" onclick="window.location.href='start#!/sanction/${sanction.idsanction}'">
                     <td>
                         <h4 class="ui image header">
@@ -90,15 +89,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${sanction.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>

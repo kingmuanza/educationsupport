@@ -26,13 +26,12 @@
                     <th>ELEVE</th>
                     <th>Motif</th>
                     <th>Echéance</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${relances}" var="relance">
-                    
+                <c:if test="${!relance.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/relance/${relance.idrelance}'">
                     <td>
                         <h4 class="ui image header">
@@ -84,6 +83,7 @@
                     </td>
                     
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>

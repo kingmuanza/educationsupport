@@ -25,13 +25,12 @@
                     <th>UTILISATEUR</th>
                     <th>Login</th>
                     <th>Mot de passe</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${utilisateurs}" var="utilisateur">
-                    
+                <c:if test="${!utilisateur.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/utilisateur/${utilisateur.idutilisateur}'">
                     <td>
                         <h4 class="ui image header">
@@ -57,15 +56,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${utilisateur.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>

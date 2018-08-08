@@ -26,13 +26,12 @@
                     <th>ANNEE SCOLAIRE</th>
                     <th>TRIMESTRE</th>
                     <th>Numero</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${sequences}" var="sequence">
-                    
+                <c:if test="${!sequence.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/sequence/${sequence.idsequence}'">
                     <td>
                         <h4 class="ui image header">
@@ -68,15 +67,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${sequence.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>

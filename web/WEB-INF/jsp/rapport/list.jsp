@@ -26,13 +26,12 @@
                     <th>REUNION</th>
                     <th>Code</th>
                     <th>Fichier</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${rapports}" var="rapport">
-                    
+                <c:if test="${!rapport.deleted}">    
                 <tr class="pointeur" onclick="window.location.href='start#!/rapport/${rapport.idrapport}'">
                     <td>
                         <h4 class="ui image header">
@@ -68,15 +67,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${rapport.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>

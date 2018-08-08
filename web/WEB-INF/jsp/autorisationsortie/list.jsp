@@ -27,14 +27,13 @@
                     <th>EMPLOYE</th>
                     <th>Code</th>
                     <th>Début</th>
-                    <th>Fin</th>         
-                    <th>Supprimé</th>      
+                    <th>Fin</th>           
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${autorisationsorties}" var="autorisationsortie">
-                    
+                <c:if test="${!autorisationsortie.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/autorisationsortie/${autorisationsortie.idautorisationSortie}'">
                     <td>
                         <h4 class="ui image header">
@@ -87,15 +86,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${autorisationsortie.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
 
             </tbody>

@@ -24,13 +24,12 @@
                 <tr>
                     <th>TRIMESTRE</th>
                     <th>Numero</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${trimestres}" var="trimestre">
-                    
+                <c:if test="${!trimestre.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/trimestre/${trimestre.idtrimestre}'">
                     <td>
                         <h4 class="ui image header">
@@ -58,6 +57,7 @@
                     </td>
                     
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>

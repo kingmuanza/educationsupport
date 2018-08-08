@@ -26,13 +26,12 @@
                     <th>INDIVIDU</th>
                     <th>Marge</th>
                     <th>Date Retard</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${retards}" var="retard">
-                    
+                <c:if test="${!retard.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/retard/${retard.idretard}'">
                     <td>
                         <h4 class="ui image header">
@@ -68,15 +67,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${retard.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>

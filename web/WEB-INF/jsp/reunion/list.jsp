@@ -26,13 +26,12 @@
                     <th>Code</th>
                     <th>Etat</th>
                     <th>Date REUNION</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${reunions}" var="reunion">
-                    
+                <c:if test="${!reunion.deleted}">    
                 <tr class="pointeur" onclick="window.location.href='start#!/reunion/${reunion.idreunion}'">
                     <td>
                         <h4 class="ui image header">
@@ -68,15 +67,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${reunion.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>

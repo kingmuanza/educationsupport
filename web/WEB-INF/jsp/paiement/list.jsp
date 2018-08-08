@@ -27,13 +27,12 @@
                     <th>Code</th>
                     <th>Montant</th>
                     <th>Date</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${paiements}" var="paiement">
-                    
+                <c:if test="${!paiement.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/paiement/${paiement.idpaiement}'">
                     <td>
                         <h4 class="ui image header">
@@ -76,15 +75,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${paiement.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>

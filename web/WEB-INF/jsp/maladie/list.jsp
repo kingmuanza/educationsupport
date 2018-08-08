@@ -26,13 +26,12 @@
                     <th>Nom</th>
                     <th>Description</th>
                     <th>Type</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${maladies}" var="maladie">
-                    
+                <c:if test="${!maladie.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/maladie/${maladie.idmaladie}'">
                     <td>
                         <h4 class="ui image header">
@@ -65,15 +64,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${maladie.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>

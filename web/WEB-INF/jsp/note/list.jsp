@@ -26,13 +26,12 @@
                     <th>ELEVE</th>
                     <th>EVALUATION</th>
                     <th>Valeur</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${notes}" var="note">
-                    
+                <c:if test="${!note.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/note/${note.idnote}'">
                     <td>
                         <h4 class="ui image header">
@@ -83,6 +82,7 @@
                     </td>
                     
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>
