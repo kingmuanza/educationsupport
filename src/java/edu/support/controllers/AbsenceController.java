@@ -47,7 +47,7 @@ public class AbsenceController {
     private final static String VUE_EDIT = "jsp/absence/edit";
     private final static String VUE_LIST = "jsp/absence/list";
     private final static String VUE_VIEW = "jsp/absence/view";
-    private final static String PATH_LIST = "/absence/list";
+    private final static String PATH_LIST = "/start#!/absences";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){

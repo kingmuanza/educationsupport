@@ -15,7 +15,7 @@
     </head>
     <body>
         <form:errors path="droitacces.*"/>
-        <form method="post" action="create">
+        <form method="post" action="<c:url value="/droitacces/create"/>">
             <table>
                 <tr>
                     <td><label>Niveau</label></td>

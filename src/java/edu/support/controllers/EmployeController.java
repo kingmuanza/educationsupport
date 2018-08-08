@@ -45,11 +45,11 @@ public class EmployeController {
     private final static String VUE_EDIT = "jsp/employe/edit";
     private final static String VUE_LIST = "jsp/employe/list";
     private final static String VUE_VIEW = "jsp/employe/view";
-    private final static String PATH_LIST = "/employe/list";
+    private final static String PATH_LIST = "/start#!/employes";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","individuIdindividu"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -69,7 +69,7 @@ public class EmployeController {
         }
         employe.setCreated(new Date());
         employe.setModified(new Date());
-        employe.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
+        employe.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
         cfl.create(employe);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -87,7 +87,7 @@ public class EmployeController {
     public RedirectView postEdit(@Valid @ModelAttribute("employe")Employe employe ,@RequestParam("idemploye")int id,HttpServletRequest request, @RequestParam Map<String,String> params){
         employe.setModified(new Date());
         employe.setCreated(cfl.find(id).getCreated());
-        employe.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
+        employe.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
         cfl.edit(employe);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

@@ -45,11 +45,11 @@ public class ConvocationController {
     private final static String VUE_EDIT = "jsp/convocation/edit";
     private final static String VUE_LIST = "jsp/convocation/list";
     private final static String VUE_VIEW = "jsp/convocation/view";
-    private final static String PATH_LIST = "/convocation/list";
+    private final static String PATH_LIST = "/start#!/convocations";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","eleveIdeleve"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -69,7 +69,7 @@ public class ConvocationController {
         }
         convocation.setCreated(new Date());
         convocation.setModified(new Date());
-        convocation.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        convocation.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
         cfl.create(convocation);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -86,8 +86,8 @@ public class ConvocationController {
     @RequestMapping(value="/edit", method=RequestMethod.POST)
     public RedirectView postEdit(@Valid @ModelAttribute("convocation")Convocation convocation , @RequestParam Map<String,String> params,HttpServletRequest request){
         convocation.setModified(new Date());
-        convocation.setCreated(cfl.find(params.get("idconvocation")).getCreated());
-        convocation.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        convocation.setCreated(cfl.find(Integer.parseInt(params.get("idconvocation"))).getCreated());
+        convocation.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
         cfl.edit(convocation);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

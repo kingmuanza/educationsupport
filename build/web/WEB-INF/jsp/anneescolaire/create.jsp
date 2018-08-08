@@ -15,15 +15,18 @@
     </head>
     <body>
         <form:errors path="anneescolaire.*"/>
-        <form method="post" action="create">
+        <form method="post" action="<c:url value="/anneescolaire/create"/>">
             <table>
                 <tr>
                     <td><label>Début</label></td>
-                    <td><input type="text" name="dateDebut" required="true"/></td>
+                    <td><input type="date" name="dateDebut" required="true"/></td>
                     <td><label>Fin</label></td>
-                    <td><input type="text" name="dateFin" required="true"/></td>
+                    <td><input type="date" name="dateFin" required="true"/></td>
                     <td><label>En cours</label></td>
-                    <td><input type="text" name="enCours" required="true"/></td>
+                            <td><select name="enCours" required="true">
+                                    <option value="0"> --  NON -- </option>
+                                    <option value="1"> --  OUI -- </option>
+                        </select></td>
                 </tr>
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
                 <tr>

@@ -53,14 +53,14 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${anneescolaire.dateFin}</div>
+                                <fmt:formatDate value="${anneescolaire.dateFin}" pattern="yyyy-MM-dd"/></div>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${anneescolaire.enCrours}</div>
+                                ${anneescolaire.enCours}</div>
                             </div>
                         </h4>
                     </td>

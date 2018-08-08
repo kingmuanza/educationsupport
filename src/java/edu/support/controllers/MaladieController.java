@@ -40,7 +40,7 @@ public class MaladieController {
     private final static String VUE_EDIT = "jsp/maladie/edit";
     private final static String VUE_LIST = "jsp/maladie/list";
     private final static String VUE_VIEW = "jsp/maladie/view";
-    private final static String PATH_LIST = "/maladie/list";
+    private final static String PATH_LIST = "/start#!/maladies";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){

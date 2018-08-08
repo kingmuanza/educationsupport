@@ -57,12 +57,10 @@ public class AutorisationSortie implements Serializable {
     @Column(name = "code", nullable = false, length = 45)
     private String code;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "date_jour", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateJour;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "date_retour", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateRetour;
@@ -75,7 +73,7 @@ public class AutorisationSortie implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     @JsonIgnore
@@ -92,7 +90,7 @@ public class AutorisationSortie implements Serializable {
         this.idautorisationSortie = idautorisationSortie;
     }
 
-    public AutorisationSortie(Integer idautorisationSortie, String code, Date dateJour, Date dateRetour, short deleted) {
+    public AutorisationSortie(Integer idautorisationSortie, String code, Date dateJour, Date dateRetour, boolean deleted) {
         this.idautorisationSortie = idautorisationSortie;
         this.code = code;
         this.dateJour = dateJour;
@@ -148,11 +146,11 @@ public class AutorisationSortie implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

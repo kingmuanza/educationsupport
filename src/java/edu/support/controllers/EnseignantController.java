@@ -45,11 +45,11 @@ public class EnseignantController {
     private final static String VUE_EDIT = "jsp/enseignant/edit";
     private final static String VUE_LIST = "jsp/enseignant/list";
     private final static String VUE_VIEW = "jsp/enseignant/view";
-    private final static String PATH_LIST = "/enseignant/list";
+    private final static String PATH_LIST = "/start#!/enseignants";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","individuIdindividu"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -69,7 +69,7 @@ public class EnseignantController {
         }
         enseignant.setCreated(new Date());
         enseignant.setModified(new Date());
-        enseignant.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
+        enseignant.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
         cfl.create(enseignant);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -86,8 +86,8 @@ public class EnseignantController {
     @RequestMapping(value="/edit", method=RequestMethod.POST)
     public RedirectView postEdit(@Valid @ModelAttribute("enseignant")Enseignant enseignant, @RequestParam Map<String,String> params,HttpServletRequest request){
         enseignant.setModified(new Date());
-        enseignant.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
-        enseignant.setCreated(cfl.find(params.get("idenseignant")).getCreated());
+        enseignant.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
+        enseignant.setCreated(cfl.find(Integer.parseInt(params.get("idenseignant"))).getCreated());
         cfl.edit(enseignant);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

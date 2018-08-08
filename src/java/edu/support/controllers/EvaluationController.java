@@ -53,11 +53,11 @@ public class EvaluationController {
     private final static String VUE_EDIT = "jsp/evaluation/edit";
     private final static String VUE_LIST = "jsp/evaluation/list";
     private final static String VUE_VIEW = "jsp/evaluation/view";
-    private final static String PATH_LIST = "/evaluation/list";
+    private final static String PATH_LIST = "/start#!/evaluations";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","classeIdclasse","matiereIdmatiere","sequenceIdsequence"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -65,6 +65,9 @@ public class EvaluationController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
+        mv.addObject("classes", cfl.findAll());
+        mv.addObject("matieres", mfl.findAll());
+        mv.addObject("sequences", sfl.findAll());
         return mv;
     }
     
@@ -74,11 +77,11 @@ public class EvaluationController {
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-//        evaluation.setCreated(new Date());
-//        evaluation.setModified(new Date());
-        evaluation.setClasseIdclasse(cfl.find(params.get("classeIdclasse")));
-        evaluation.setMatiereIdmatiere(mfl.find(params.get("matiereIdmatiere")));
-        evaluation.setSequenceIdsequence(sfl.find(params.get("sequenceIdsequence")));
+        evaluation.setCreated(new Date());
+        evaluation.setModified(new Date());
+        evaluation.setClasseIdclasse(cfl.find(Integer.parseInt(params.get("classeIdclasse"))));
+        evaluation.setMatiereIdmatiere(mfl.find(Integer.parseInt(params.get("matiereIdmatiere"))));
+        evaluation.setSequenceIdsequence(sfl.find(Integer.parseInt(params.get("sequenceIdsequence"))));
         efl.create(evaluation);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -93,11 +96,11 @@ public class EvaluationController {
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
     public RedirectView postEdit(@Valid @ModelAttribute("evaluation")Evaluation evaluation ,@RequestParam Map<String,String> params, HttpServletRequest request){
-//        evaluation.setModified(new Date());
-//        evaluation.setCreated(cfl.find(params.get("idevaluation").getCreated());
-        evaluation.setClasseIdclasse(cfl.find(params.get("classeIdclasse")));
-        evaluation.setMatiereIdmatiere(mfl.find(params.get("matiereIdmatiere")));
-        evaluation.setSequenceIdsequence(sfl.find(params.get("sequenceIdsequence")));
+        evaluation.setModified(new Date());
+        evaluation.setCreated(efl.find(Integer.parseInt(params.get("idevaluation"))).getCreated());
+        evaluation.setClasseIdclasse(cfl.find(Integer.parseInt(params.get("classeIdclasse"))));
+        evaluation.setMatiereIdmatiere(mfl.find(Integer.parseInt(params.get("matiereIdmatiere"))));
+        evaluation.setSequenceIdsequence(sfl.find(Integer.parseInt(params.get("sequenceIdsequence"))));
         efl.edit(evaluation);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

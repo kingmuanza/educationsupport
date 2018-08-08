@@ -40,7 +40,7 @@ public class MatiereController {
     private final static String VUE_EDIT = "jsp/matiere/edit";
     private final static String VUE_LIST = "jsp/matiere/list";
     private final static String VUE_VIEW = "jsp/matiere/view";
-    private final static String PATH_LIST = "/matiere/list";
+    private final static String PATH_LIST = "/start#!/matieres";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){

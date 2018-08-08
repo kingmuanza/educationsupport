@@ -23,11 +23,11 @@
                 </tr>
                 <tr>
                     <td><label>Date Debut</label></td>
-                    <td><input type="datetime" name="dateDebut" required="true"/></td>
+                    <td><input type="date" name="dateDebut" required="true"/></td>
                 </tr>
                 <tr>
                     <td><label>Date Fin</label></td>
-                    <td><input type="datetime" name="dateFin" required="true"/></td>
+                    <td><input type="date" name="dateFin" required="true"/></td>
                 </tr>
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
                 <tr>

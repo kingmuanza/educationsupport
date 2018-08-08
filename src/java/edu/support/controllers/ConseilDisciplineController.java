@@ -10,6 +10,7 @@ import edu.support.entities.ConseilDiscipline;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -40,11 +41,11 @@ public class ConseilDisciplineController {
     private final static String VUE_EDIT = "jsp/conseildiscipline/edit";
     private final static String VUE_LIST = "jsp/conseildiscipline/list";
     private final static String VUE_VIEW = "jsp/conseildiscipline/view";
-    private final static String PATH_LIST = "/conseildiscipline/list";
+    private final static String PATH_LIST = "/start#!/conseildisciplines";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","dateDebut","dateFin"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -56,11 +57,13 @@ public class ConseilDisciplineController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("conseildiscipline")ConseilDiscipline conseildiscipline,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("conseildiscipline")ConseilDiscipline conseildiscipline,BindingResult result ,HttpServletRequest request, @RequestParam Map <String,String>params) throws ParseException{
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
+        conseildiscipline.setDateDebut(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateDebut")));
+        conseildiscipline.setDateFin(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateFin")));
         conseildiscipline.setCreated(new Date());
         conseildiscipline.setModified(new Date());
         cfl.create(conseildiscipline);
@@ -76,9 +79,11 @@ public class ConseilDisciplineController {
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("conseildiscipline")ConseilDiscipline conseildiscipline ,@RequestParam("idconseildiscipline")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("conseildiscipline")ConseilDiscipline conseildiscipline ,@RequestParam Map<String,String>params,HttpServletRequest request) throws ParseException{
+        conseildiscipline.setDateDebut(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateDebut")));
+        conseildiscipline.setDateFin(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateFin")));
         conseildiscipline.setModified(new Date());
-        conseildiscipline.setCreated(cfl.find(id).getCreated());
+        conseildiscipline.setCreated(cfl.find(Integer.parseInt(params.get("idconseilDiscipline"))).getCreated());
         cfl.edit(conseildiscipline);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

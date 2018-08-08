@@ -15,12 +15,12 @@
     </head>
     <body>
         <form:errors path="eleve.*"/>
-        <form method="post" action="create">
+        <form method="post" action="<c:url value="/eleve/create"/>">
             <table>
                 <tr>
                     <td><label>Individu</label></td>
                     <td>
-                        <select name="individus">
+                        <select name="individuIdindividu">
                             <option >Aucune valeur</option>
                             <c:forEach items="${individus}" var="individu">
                                 <option value="${individu.idindividu}">${individu.noms} ${individu.prenoms}</option>
@@ -31,7 +31,7 @@
                 <tr>
                     <td><label>Classe</label></td>
                     <td>
-                        <select name="classes">
+                        <select name="classeIdclasse">
                             <option >Aucune valeur</option>
                             <c:forEach items="${classes}" var="classe">
                                 <option value="${classe.idclasse}">${classe.code}</option>

@@ -10,6 +10,7 @@ import edu.support.entities.AnneeScolaire;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -40,11 +41,11 @@ public class AnneeScolaireController {
     private final static String VUE_EDIT = "jsp/anneescolaire/edit";
     private final static String VUE_LIST = "jsp/anneescolaire/list";
     private final static String VUE_VIEW = "jsp/anneescolaire/view";
-    private final static String PATH_LIST = "/anneescolaire/list";
+    private final static String PATH_LIST = "/start#!/anneescolaires";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"dateDebut","dateFin","created","modified"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -56,11 +57,14 @@ public class AnneeScolaireController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("anneescolaire")AnneeScolaire anneescolaire,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("anneescolaire")AnneeScolaire anneescolaire,BindingResult result ,HttpServletRequest request, @RequestParam Map<String,String> params) throws ParseException{
         if(result.hasErrors()){
+            System.out.println(result.getFieldErrors().get(0).getRejectedValue() +" + "+result.getFieldErrors().get(0).getField());
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
+        anneescolaire.setDateDebut(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateDebut")));
+        anneescolaire.setDateFin(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateFin")));
         anneescolaire.setCreated(new Date());
         anneescolaire.setModified(new Date());
         cfl.create(anneescolaire);
@@ -76,9 +80,11 @@ public class AnneeScolaireController {
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("anneescolaire")AnneeScolaire anneescolaire ,@RequestParam("idanneescolaire")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("anneescolaire")AnneeScolaire anneescolaire ,@RequestParam Map<String,String> params,HttpServletRequest request) throws ParseException{
+        anneescolaire.setDateDebut(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateDebut")));
+        anneescolaire.setDateFin(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateFin")));
         anneescolaire.setModified(new Date());
-        anneescolaire.setCreated(cfl.find(id).getCreated());
+        anneescolaire.setCreated(cfl.find(params.get("idanneescolaire")).getCreated());
         cfl.edit(anneescolaire);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

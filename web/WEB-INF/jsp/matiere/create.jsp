@@ -11,23 +11,23 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ABSENCE | Create</title>
+        <title>MATIERE | Create</title>
     </head>
     <body>
-        <form:errors path="absence.*"/>
-        <form method="post" action="create">
+        <form:errors path="matiere.*"/>
+        <form method="post" action="<c:url value="/matiere/create"/>">
             <table>
                 <tr>
-                    <td><label>Jour Absence</label></td>
-                    <td><input type="text" name="jourAbsence" required="true"/></td>
+                    <td><label>Code</label></td>
+                    <td><input type="text" name="code" required="true"/></td>
                 </tr>
                 <tr>
-                    <td><label>Justifier ?</label></td>
-                    <td><input type="text" name="justifee" required="true"/></td>
+                    <td><label>Libelle </label></td>
+                    <td><input type="text" name="libelle" required="true"/></td>
                 </tr>
                 <tr>
-                    <td><label>Motif</label></td>
-                    <td><input type="text" name="motif" required="true"/></td>
+                    <td><label>Coefficient</label></td>
+                    <td><input type="number" name="coefficient" required="true"/></td>
                 </tr>
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
                 <tr>

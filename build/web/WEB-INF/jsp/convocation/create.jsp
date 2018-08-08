@@ -18,6 +18,21 @@
         <form method="post" action="create">
             <table>
                 <tr>
+                    <td><label>Eleve convoqué</label></td>
+                            <td><select  type="text" name="eleveIdeleve" required="true">
+                                    <option> -- SELECT --</option>
+                                    <c:forEach items="${eleves}" var="eleve">
+                                            <option value="${eleve.ideleve}">${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms}</option>
+                                        
+                                    </c:forEach>
+                        </select></td>
+                </tr>
+                <tr>
+                    <td><label>Code</label></td>
+                    <td><input type="text" name="code" required="true"/></td>
+                </tr>
+            <table>
+                <tr>
                     <td><label>Motif</label></td>
                     <td><input type="text" name="motif" required="true"/></td>
                 </tr>

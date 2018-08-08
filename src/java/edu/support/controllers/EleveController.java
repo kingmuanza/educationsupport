@@ -49,11 +49,11 @@ public class EleveController {
     private final static String VUE_EDIT = "jsp/eleve/edit";
     private final static String VUE_LIST = "jsp/eleve/list";
     private final static String VUE_VIEW = "jsp/eleve/view";
-    private final static String PATH_LIST = "/eleve/list";
+    private final static String PATH_LIST = "/start#!/eleves";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","individuIdindividu","classeIdclasse"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -76,8 +76,8 @@ public class EleveController {
         }
         eleve.setCreated(new Date());
         eleve.setModified(new Date());
-        eleve.setClasseIdclasse(classefl.find(params.get("classeIclasse")));
-        eleve.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
+        eleve.setClasseIdclasse(classefl.find(Integer.parseInt(params.get("classeIclasse"))));
+        eleve.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
         cfl.create(eleve);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -96,8 +96,8 @@ public class EleveController {
     public RedirectView postEdit(@Valid @ModelAttribute("eleve")Eleve eleve ,@RequestParam Map<String,String>params,HttpServletRequest request){
         eleve.setModified(new Date());
         eleve.setCreated(cfl.find(params.get("ideleve")).getCreated());
-        eleve.setClasseIdclasse(classefl.find(params.get("classeIclasse")));
-        eleve.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
+        eleve.setClasseIdclasse(classefl.find(Integer.parseInt(params.get("classeIclasse"))));
+        eleve.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
         cfl.edit(eleve);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

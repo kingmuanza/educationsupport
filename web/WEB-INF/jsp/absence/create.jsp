@@ -15,7 +15,7 @@
     </head>
     <body>
         <form:errors path="absence.*"/>
-        <form method="post" action="create" style="padding-top: 20px;">
+        <form method="post" action="<c:url value="/absence/create"/>" style="padding-top: 20px;">
             <table>
                 <tr>
                     <td><label>Individu absent</label></td>

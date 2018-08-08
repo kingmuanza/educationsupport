@@ -11,23 +11,23 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ABSENCE | Create</title>
+        <title>MALADIE | Create</title>
     </head>
     <body>
         <form:errors path="absence.*"/>
         <form method="post" action="create">
             <table>
                 <tr>
-                    <td><label>Jour Absence</label></td>
-                    <td><input type="text" name="jourAbsence" required="true"/></td>
+                    <td><label>Nom</label></td>
+                    <td><input type="text" name="nom" required="true"/></td>
                 </tr>
                 <tr>
-                    <td><label>Justifier ?</label></td>
-                    <td><input type="text" name="justifee" required="true"/></td>
+                    <td><label>Description</label></td>
+                    <td><input type="text" name="description" required="true"/></td>
                 </tr>
                 <tr>
-                    <td><label>Motif</label></td>
-                    <td><input type="text" name="motif" required="true"/></td>
+                    <td><label>Type Maladie</label></td>
+                    <td><input type="text" name="typeMaladie" required="true"/></td>
                 </tr>
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
                 <tr>

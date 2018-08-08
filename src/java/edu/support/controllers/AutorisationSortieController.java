@@ -45,11 +45,11 @@ public class AutorisationSortieController {
     private final static String VUE_EDIT = "jsp/autorisationsortie/edit";
     private final static String VUE_LIST = "jsp/autorisationsortie/list";
     private final static String VUE_VIEW = "jsp/autorisationsortie/view";
-    private final static String PATH_LIST = "/autorisationsortie/list";
+    private final static String PATH_LIST = "/start#!/autorisationsorties";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","dateJour","dateRetour","eleveIdeleve","employeIdemploye"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -62,15 +62,20 @@ public class AutorisationSortieController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("autorisationsortie")AutorisationSortie autorisationsortie,BindingResult result ,HttpServletRequest request, @RequestParam Map<String,String> params){
+    public Object postCreate(@Valid @ModelAttribute("autorisationsortie")AutorisationSortie autorisationsortie,BindingResult result,@RequestParam("eleveIdeleve") String[] eleveIdeleve ,HttpServletRequest request, @RequestParam Map<String,String> params) throws ParseException{
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-        autorisationsortie.setCreated(new Date());
-        autorisationsortie.setModified(new Date());
-        autorisationsortie.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
-        asfl.create(autorisationsortie);
+        String eleves[] = eleveIdeleve;
+        for(String s: eleves){
+            autorisationsortie.setDateJour(new SimpleDateFormat("yyy-MM-ddd").parse(params.get("dateJour")));
+            autorisationsortie.setDateRetour(new SimpleDateFormat("yyy-MM-ddd").parse(params.get("dateRetour")));
+            autorisationsortie.setCreated(new Date());
+            autorisationsortie.setModified(new Date());
+            autorisationsortie.setEleveIdeleve(efl.find(Integer.parseInt(s)));
+            asfl.create(autorisationsortie);
+        }
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -83,11 +88,16 @@ public class AutorisationSortieController {
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("autorisationsortie")AutorisationSortie autorisationsortie , @RequestParam Map<String,String> params,HttpServletRequest request){
-        autorisationsortie.setModified(new Date());
-        autorisationsortie.setCreated(asfl.find(params.get("idautorisationsortie")).getCreated());
-        autorisationsortie.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
-        asfl.edit(autorisationsortie);
+    public RedirectView postEdit(@Valid @ModelAttribute("autorisationsortie")AutorisationSortie autorisationsortie, @RequestParam("eleveIdeleve") String[] eleveIdeleve, @RequestParam Map<String,String> params,HttpServletRequest request) throws ParseException{
+        String eleves[] = eleveIdeleve;
+        for(String s: eleves){
+            autorisationsortie.setDateJour(new SimpleDateFormat("yyy-MM-ddd").parse(params.get("dateJour")));
+            autorisationsortie.setDateRetour(new SimpleDateFormat("yyy-MM-ddd").parse(params.get("dateRetour")));
+            autorisationsortie.setCreated(new Date());
+            autorisationsortie.setModified(new Date());
+            autorisationsortie.setEleveIdeleve(efl.find(Integer.parseInt(s)));
+            asfl.create(autorisationsortie);
+        }
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

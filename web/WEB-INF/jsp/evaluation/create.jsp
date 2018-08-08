@@ -11,23 +11,38 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ABSENCE | Create</title>
+        <title>EVALUATION | Create</title>
     </head>
     <body>
-        <form:errors path="absence.*"/>
-        <form method="post" action="create">
+        <form:errors path="evaluation.*"/>
+        <form method="post" action="<c:url value="/evaluation/create"/>">
             <table>
                 <tr>
-                    <td><label>Jour Absence</label></td>
-                    <td><input type="text" name="jourAbsence" required="true"/></td>
+                    <td><label>Classe</label></td>
+                            <td><select name="classeIdclasse" required="true">
+                                    <option> Aucune valeur</option>
+                                    <c:forEach items="${classes}" var="classe">
+                                        <option value="${classe.idclasse}">${classe.code}</option>
+                                    </c:forEach>
+                        </select></td>
                 </tr>
                 <tr>
-                    <td><label>Justifier ?</label></td>
-                    <td><input type="text" name="justifee" required="true"/></td>
+                    <td><label>Matiere</label></td>
+                            <td><select name="matiereIdmatiere" required="true">
+                                    <option> Aucune valeur</option>
+                                    <c:forEach items="${matieres}" var="matiere">
+                                        <option value="${matiere.idmatiere}">${matiere.code} ${matiere.libelle}</option>
+                                    </c:forEach>
+                        </select></td>
                 </tr>
                 <tr>
-                    <td><label>Motif</label></td>
-                    <td><input type="text" name="motif" required="true"/></td>
+                    <td><label>Sequence</label></td>
+                            <td><select name="sequenceIdsequence" required="true">
+                                    <option> Aucune valeur</option>
+                                    <c:forEach items="${sequences}" var="sequence">
+                                        <option value="${sequence.idsequence}">${sequence.numero} - ${sequence.code}</option>
+                                    </c:forEach>
+                        </select></td>
                 </tr>
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
                 <tr>

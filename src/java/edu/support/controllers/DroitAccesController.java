@@ -40,7 +40,7 @@ public class DroitAccesController {
     private final static String VUE_EDIT = "jsp/droitacces/edit";
     private final static String VUE_LIST = "jsp/droitacces/list";
     private final static String VUE_VIEW = "jsp/droitacces/view";
-    private final static String PATH_LIST = "/droitacces/list";
+    private final static String PATH_LIST = "/start#!/droitacces";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
@@ -76,7 +76,7 @@ public class DroitAccesController {
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("droitacces")DroitAcces droitacces ,@RequestParam("iddroitacces")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("droitacces")DroitAcces droitacces ,@RequestParam("iddroitAcces")int id,HttpServletRequest request){
         droitacces.setModified(new Date());
         droitacces.setCreated(cfl.find(id).getCreated());
         cfl.edit(droitacces);
