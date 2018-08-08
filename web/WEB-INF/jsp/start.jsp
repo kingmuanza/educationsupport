@@ -239,7 +239,7 @@
                         Exporter en PDF
                     </a-->
                     <div class="right menu">
-                        <a class="item teal">
+                        <a class="item teal" onclick="synchronisera();">
                             <i id="synchronnisation" class="sync large icon titre"></i>
                         </a>
                         <div class="item">
@@ -278,11 +278,12 @@
         <script src="<c:url value="/resources/js/angular-route.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/myapp.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/routage.js?id=48454"/>" type="text/javascript"></script>
+        
         <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
         <!-- Add additional services that you want to use -->
-        <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-auth.js"></script>
+<!--        <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-database.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-firestore.js"></script>-->
 
         
         <script>
@@ -293,7 +294,7 @@
                     console.log("Data " + data.length);
                     var database = firebase.database();
                     database.ref('/eleves').set(data);
-                }
+                });
             }
             // TODO: Replace with your project's customized code snippet
 

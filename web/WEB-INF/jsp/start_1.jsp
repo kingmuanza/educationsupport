@@ -239,7 +239,7 @@
                         Exporter en PDF
                     </a-->
                     <div class="right menu">
-                        <a class="item teal">
+                        <a class="item teal" onclick="synchronisera();">
                             <i id="synchronnisation" class="sync large icon titre"></i>
                         </a>
                         <div class="item">
@@ -278,58 +278,117 @@
         <script src="<c:url value="/resources/js/angular-route.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/myapp.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/routage.js?id=48454"/>" type="text/javascript"></script>
+        
+        <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
+        <!-- Add additional services that you want to use -->
+<!--        <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-firestore.js"></script>-->
 
+        
         <script>
-
-                        function checkInternet() {
-                            //console.log("Checking internet...");
-                            if (navigator.onLine) {
-                                $('#bouton_internet').removeClass("outline");
-                                $('#synchronnisation').addClass("loading");
-                                $('#label_internet').html("Connecté à internet");
-                                //console.log("lo net");
-                            } else {
-                                $('#bouton_internet').addClass("outline");
-                                $('#synchronnisation').removeClass("loading");
-                                $('#label_internet').html("Aucune connexion internet");
-                                //console.log("lo ndem");
-                            }
-                        }
-                        $(document).ready(function () {
-
-                            var myVar = setInterval(function(){
-                                checkInternet();
-                            }, 3000);
+            // Initialize Firebase
+            function synchronisera() {
+                console.log("Synchronisation...");
+                $.get("api/eleves/list", function (data) {
+                    console.log("Data " + data.length);
+                    var database = firebase.database();
+                    database.ref('/eleves').set(data);
+                });
+            }
+            // TODO: Replace with your project's customized code snippet
 
 
-                            $('.ui.dropdown').dropdown();
-                            console.log("Fichier start ok !");
+            function checkInternet() {
+                //console.log("Checking internet...");
+                if (navigator.onLine) {
+                    $('#bouton_internet').removeClass("outline");
+                    $('#synchronnisation').addClass("loading");
+                    $('#label_internet').html("Connecté à internet");
+                    //console.log("lo net");
+                    synchronisera();
+                } else {
+                    $('#bouton_internet').addClass("outline");
+                    $('#synchronnisation').removeClass("loading");
+                    $('#label_internet').html("Aucune connexion internet");
+                    //console.log("lo ndem");
+                }
+            }
+            $(document).ready(function () {
+
+                var config = {
+                    apiKey: "AIzaSyDGAo_xili2JPQIisEtk1Nyn-2lbkVD8FM",
+                    authDomain: "bashenga-muanza.firebaseapp.com",
+                    databaseURL: "https://bashenga-muanza.firebaseio.com",
+                    projectId: "bashenga-muanza",
+                    storageBucket: "bashenga-muanza.appspot.com",
+                    messagingSenderId: "717828984564"
+                };
+                firebase.initializeApp(config);
+
+                firebase.auth().signInWithEmailAndPassword("muanza@gmail.com", "123456").catch(function (error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // ...
+                    console.log(errorCode)
+                    console.log(errorMessage)
+                });
+
+                firebase.auth().onAuthStateChanged(function (user) {
+                    if (user) {
+                        console.log(user);
+                        // User is signed in.
+                        var displayName = user.displayName;
+                        var email = user.email;
+                        var emailVerified = user.emailVerified;
+                        var photoURL = user.photoURL;
+                        var isAnonymous = user.isAnonymous;
+                        var uid = user.uid;
+                        var providerData = user.providerData;
+                        // ...
+                    } else {
+                        // User is signed out.
+                        // ...
+                    }
+                });
+
+                var myVar = setInterval(function () {
+                    checkInternet();
+                }, 10000);
+
+
+                $('.ui.dropdown').dropdown();
+                console.log("Fichier start ok !");
             <c:forEach items="${notifications}" var="n">
 
-                            $.uiAlert({
-                                textHead: "${n.titre}",
-                                text: "${n.message}",
-                                bgcolor: '${n.success ? "#004d6f":"#DB2828"} ',
-                                textcolor: '#fff',
-                                position: 'top-right', // top And bottom ||  left / center / right
-                                icon: 'checkmark box',
-                                time: 5
-                            });
+                $.uiAlert({
+                    textHead: "${n.titre}",
+                    text: "${n.message}",
+                    bgcolor: '${n.success ? "#004d6f":"#DB2828"} ',
+                    textcolor: '#fff',
+                    position: 'top-right', // top And bottom ||  left / center / right
+                    icon: 'checkmark box',
+                    time: 5
+                });
             </c:forEach>
 
-                        });
-                        $(document).ajaxStart(function () {
-                            console.log("AJAX started")
-                        });
+            });
+            $(document).ajaxStart(function () {
+                console.log("AJAX started")
+            });
 
-                        $(document).ajaxStop(function () {
-                            console.log("AJAX stop")
-                        });
-                        $(window).bind('hashchange', function () {
-                            $("#chargement").fadeIn("slow", function () {
-                                $("#chargement").fadeOut("slow")
-                            });
-                        });
+            $(document).ajaxStop(function () {
+                console.log("AJAX stop")
+            });
+            $(window).bind('hashchange', function () {
+                $("#chargement").fadeIn("slow", function () {
+                    $("#chargement").fadeOut("slow")
+                });
+            });
         </script>
+
+
+
     </body>
 </html>
