@@ -277,7 +277,7 @@
         <script src="<c:url value="/resources/js/angular.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/angular-route.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/myapp.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/resources/js/routage.js?id=48454"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/routage.js?id=484"/>" type="text/javascript"></script>
         
         <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
         <!-- Add additional services that you want to use -->
@@ -289,8 +289,9 @@
         <script>
             // Initialize Firebase
             function synchronisera() {
+                var date = new Date().getTime()
                 console.log("Synchronisation...");
-                $.get("api/eleves/list", function (data) {
+                $.get("api/eleves/list?oui="+date, function (data) {
                     console.log("Data " + data.length);
                     var database = firebase.database();
                     database.ref('/eleves').set(data);

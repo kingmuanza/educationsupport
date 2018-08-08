@@ -80,6 +80,9 @@ app.config(function ($routeProvider) {
             .when("/relances", {
                 templateUrl: UrlExists("relance/list ")
             })
+            .when("/retard", {
+                templateUrl: UrlExists("retard/create ")
+            })
             .when("/retards", {
                 templateUrl: UrlExists("retard/list ")
             })

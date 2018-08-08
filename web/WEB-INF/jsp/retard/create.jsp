@@ -1,8 +1,3 @@
-<%-- 
-    Document   : create
-    Created on : 13 juil. 2018, 13:04:11
-    Author     : N9-T
---%>
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -13,9 +8,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>ABSENCE | Create</title>
     </head>
-    <body>
+    <body >
         <form:errors path="absence.*"/>
-        <form method="post" action="create">
+        <form method="post" action="create" style="padding-top: 20px;">
             <table>
                 <tr>
                     <td><label>Jour Absence</label></td>
