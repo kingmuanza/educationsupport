@@ -49,7 +49,7 @@ public class RetardController {
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","jourRetard","individuIdindividu"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -62,15 +62,19 @@ public class RetardController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("retard")Retard retard,BindingResult result ,HttpServletRequest request, @RequestParam Map <String,String> params){
+    public Object postCreate(@Valid @ModelAttribute("retard")Retard retard,BindingResult result ,HttpServletRequest request,@RequestParam("individuIdindividu")String[]individuIdindividu, @RequestParam Map <String,String> params) throws ParseException{
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-        retard.setCreated(new Date());
-        retard.setModified(new Date());
-        retard.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
-        rfl.create(retard);
+        String individus[] = individuIdindividu;
+        for(String s: individus){
+            retard.setCreated(new Date());
+            retard.setModified(new Date());
+            retard.setJourRetard(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("jourRetard")));
+            retard.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
+            rfl.create(retard);
+        }
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -84,11 +88,15 @@ public class RetardController {
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("retard")Retard retard ,@RequestParam Map<String,String> params,HttpServletRequest request){
-        retard.setModified(new Date());
-        retard.setCreated(rfl.find(params.get("idretard")).getCreated());
-        retard.setIndividuIdindividu(ifl.find(params.get("individuIdindividu")));
-        rfl.edit(retard);
+    public RedirectView postEdit(@Valid @ModelAttribute("retard")Retard retard ,@RequestParam("individuIdindividu")String[]individuIdindividu,@RequestParam Map<String,String> params,HttpServletRequest request) throws ParseException{
+        String individus[] = individuIdindividu;
+        for(String s: individus){
+            retard.setCreated(new Date());
+            retard.setModified(new Date());
+            retard.setJourRetard(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("jourRetard")));
+            retard.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
+            rfl.create(retard);
+        }
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

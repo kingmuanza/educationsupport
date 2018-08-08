@@ -6,23 +6,28 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ABSENCE | Create</title>
+        <title>RETARD | Create</title>
     </head>
     <body >
-        <form:errors path="absence.*"/>
+        <form:errors path="retard.*"/>
         <form method="post" action="create" style="padding-top: 20px;">
             <table>
                 <tr>
-                    <td><label>Jour Absence</label></td>
-                    <td><input type="text" name="jourAbsence" required="true"/></td>
+                    <td><label>Individu en retard</label></td>
+                            <td><select name="individuIdindividu" multiple="true" required="true">
+                                    <option> -- SELECT -- </option>
+                                    <c:forEach items="${individus}" var="individu">
+                                        <option value="${individu.idindividu}">${individu.prenoms} ${individu.noms }</option>
+                                    </c:forEach>
+                        </select></td>
                 </tr>
                 <tr>
-                    <td><label>Justifier ?</label></td>
-                    <td><input type="text" name="justifee" required="true"/></td>
+                    <td><label>Jour retard</label></td>
+                    <td><input type="date" name="jourRetard" required="true"/></td>
                 </tr>
                 <tr>
-                    <td><label>Motif</label></td>
-                    <td><input type="text" name="motif" required="true"/></td>
+                    <td><label>Marge </label></td>
+                    <td><input type="number" name="marge" required="true"/></td>
                 </tr>
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
                 <tr>
