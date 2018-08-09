@@ -26,13 +26,12 @@
                     <th>Code</th>
                     <th>Date Début</th>
                     <th>Date Fin</th>      
-                    <th>Supprimé</th>      
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${conseildisciplines}" var="conseildiscipline">
-                    
+                <c:if test="${!conseildiscipline.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/conseildiscipline/${conseildiscipline.idconseilDiscipline}'">
                     <td>
                         <h4 class="ui image header">
@@ -65,15 +64,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${conseildiscipline.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
 
             </tbody>

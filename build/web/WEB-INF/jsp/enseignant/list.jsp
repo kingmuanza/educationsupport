@@ -26,14 +26,13 @@
                     <th>Matricule</th>
                     <th>Nom</th>
                     <th>Prenom</th>     
-                    <th>Telephone</th>     
-                    <th>Supprimé</th>      
+                    <th>Telephone</th>   
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${enseignants}" var="enseignant">
-                    
+                <c:if test="${!enseignant.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/enseignant/${enseignant.idenseignant}'">
                     <td>
                         <h4 class="ui image header">
@@ -73,17 +72,9 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${enseignant.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
-
             </tbody>
         </table>
 

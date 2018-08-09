@@ -210,10 +210,18 @@ public class EleveControllerRest {
     @RequestMapping(value="/list", produces="application/json")
     public List<EleveDetails> getAllEleveDetails(){
         List<EleveDetails> led = new ArrayList<>();
-        for(Eleve e: efl.findAll()){
-            EleveDetails ed = new EleveDetails(e);
+        efl.findAll().stream().map((e) -> new EleveDetails(e)).forEachOrdered((ed) -> {
             led.add(initializeEleveDetails(ed));
-        }
+        });
+        return led;
+    }
+    @RequestMapping(value="/list/{temps}", produces="application/json")
+    public List<EleveDetails> getAllEleveDetailsActualiser(@PathVariable("temps")int temps){
+        System.out.println("temps : "+temps);
+        List<EleveDetails> led = new ArrayList<>();
+        efl.findAll().stream().map((e) -> new EleveDetails(e)).forEachOrdered((ed) -> {
+            led.add(initializeEleveDetails(ed));
+        });
         return led;
     }
     
@@ -229,7 +237,11 @@ public class EleveControllerRest {
     }
     
     private EleveDetails initializeEleveDetails(EleveDetails ed){
-        ed.setAbsences((List)ed.getEleve().getIndividuIdindividu().getAbsenceCollection());
+        List<Absence> absences = (List)ed.getEleve().getIndividuIdindividu().getAbsenceCollection();
+        for(Absence a : absences){
+            System.out.println(a.getDeleted());
+        }
+        ed.setAbsences(absences);
         ed.setRetards((List)ed.getEleve().getIndividuIdindividu().getRetardCollection());
         ed.setSanctions((List)ed.getEleve().getSanctionCollection());
         ed.setPaiements((List)ed.getEleve().getPaiementCollection());

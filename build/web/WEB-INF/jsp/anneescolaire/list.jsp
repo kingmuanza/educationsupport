@@ -23,17 +23,15 @@
             <thead>
                 <tr>
                     <th>ANNEE SCOLAIRE</th>
-                    
                     <th>Début</th>
                     <th>Fin</th>                    
                     <th>En cours</th>      
-                    <th>Supprimé</th>      
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${anneescolaires}" var="anneescolaire">
-                    
+                <c:if test="${!anneescolaire.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/anneescolaire/${anneescolaire.idanneeScolaire}'">
                     <td>
                         <h4 class="ui image header">
@@ -66,15 +64,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${anneescolaire.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
 
             </tbody>

@@ -25,14 +25,13 @@
                     <th>CONVOCATION</th>
                     <th>ELEVE</th>
                     <th>EMPLOYE</th>                    
-                    <th>Motif</th>      
-                    <th>Supprimé</th>      
+                    <th>Motif</th>    
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${convocations}" var="convocation">
-                    
+                <c:if test="${!convocation.deleted}">    
                 <tr class="pointeur" onclick="window.location.href='start#!/convocation/${convocation.idconvocation}'">
                     <td>
                         <h4 class="ui image header">
@@ -71,15 +70,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${convocation.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
 
             </tbody>

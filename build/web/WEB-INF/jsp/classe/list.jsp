@@ -29,7 +29,7 @@
 
             <tbody>
                 <c:forEach items="${classes}" var="classe">
-                    
+                <c:if test="${!classe.deleted}">    
                 <tr class="pointeur" onclick="window.location.href='start#!/classe/${classe.idclasse}'">
                     <td>
                         <h4 class="ui image header">
@@ -49,8 +49,8 @@
                         </h4>
                     </td>
                 </tr>
+                </c:if>
                 </c:forEach>
-
             </tbody>
         </table>
 

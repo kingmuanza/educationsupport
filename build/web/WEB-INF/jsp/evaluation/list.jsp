@@ -26,13 +26,12 @@
                     <th>Séquence</th>
                     <th>Matiere</th>
                     <th>Classe</th>
-                    <th>Supprimé</th>
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${evaluations}" var="evaluation">
-                    
+                <c:if test="${!evaluation.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/evaluation/${evaluation.idevaluation}'">
                     <td>
                         <h4 class="ui image header">
@@ -65,15 +64,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${evaluation.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
             </tbody>
         </table>

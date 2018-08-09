@@ -27,13 +27,12 @@
                     <th>Date</th>
                     <th>Justifé</th>                    
                     <th>Motif</th>      
-                    <th>Supprimé</th>      
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${absences}" var="absence">
-                    
+                <c:if test="${!absence.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/absence/${absence.idabsence}'">
                     <td>
                         <h4 class="ui image header">
@@ -76,15 +75,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${absence.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
 
             </tbody>

@@ -26,14 +26,13 @@
                     <th>Matricule</th>
                     <th>Nom</th>
                     <th>Prenom</th>                    
-                    <th>Classe</th>      
-                    <th>Supprimé</th>      
+                    <th>Classe</th>     
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${eleves}" var="eleve">
-                    
+                <c:if test="${!eleve.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/eleve/${eleve.ideleve}'">
                     <td>
                         <h4 class="ui image header">
@@ -69,19 +68,12 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                {eleve.classeIdclasse.code}
+                                ${eleve.classeIdclasse.code}
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${eleve.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
 
             </tbody>

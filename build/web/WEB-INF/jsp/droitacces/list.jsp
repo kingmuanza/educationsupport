@@ -25,14 +25,13 @@
                 <tr>
                     <th>ACCES</th>
                     <th>Niveau</th>
-                    <th>Descritption</th>
-                    <th>Supprimé</th>      
+                    <th>Descritption</th>    
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${droitaccess}" var="droitacces">
-                    
+                <c:if test="${!droitacces.deleted}">    
                 <tr class="pointeur" onclick="window.location.href='start#!/droitacces/${droitacces.iddroitAcces}'">
                     <td>
                         <h4 class="ui image header">
@@ -58,15 +57,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${droitacces.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
 
             </tbody>

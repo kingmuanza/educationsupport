@@ -63,8 +63,8 @@ public class AnneeScolaireController {
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-        anneescolaire.setDateDebut(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateDebut")));
-        anneescolaire.setDateFin(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateFin")));
+        //anneescolaire.setDateDebut(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateDebut")));
+        //anneescolaire.setDateFin(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateFin")));
         anneescolaire.setCreated(new Date());
         anneescolaire.setModified(new Date());
         cfl.create(anneescolaire);
@@ -81,8 +81,8 @@ public class AnneeScolaireController {
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
     public RedirectView postEdit(@Valid @ModelAttribute("anneescolaire")AnneeScolaire anneescolaire ,@RequestParam Map<String,String> params,HttpServletRequest request) throws ParseException{
-        anneescolaire.setDateDebut(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateDebut")));
-        anneescolaire.setDateFin(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateFin")));
+        //anneescolaire.setDateDebut(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateDebut")));
+        //anneescolaire.setDateFin(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateFin")));
         anneescolaire.setModified(new Date());
         anneescolaire.setCreated(cfl.find(params.get("idanneescolaire")).getCreated());
         cfl.edit(anneescolaire);

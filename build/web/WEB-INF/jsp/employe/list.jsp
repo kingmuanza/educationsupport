@@ -27,13 +27,12 @@
                     <th>Nom</th>
                     <th>Prenom</th>     
                     <th>Telephone</th>     
-                    <th>Supprimé</th>      
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${employes}" var="employe">
-                    
+                <c:if test="${!employe.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/employe/${employe.idemploye}'">
                     <td>
                         <h4 class="ui image header">
@@ -73,15 +72,8 @@
                             </div>
                         </h4>
                     </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${employe.deleted}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    
                 </tr>
+                </c:if>
                 </c:forEach>
 
             </tbody>
