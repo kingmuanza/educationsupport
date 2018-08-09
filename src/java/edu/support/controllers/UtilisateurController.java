@@ -5,11 +5,13 @@
  */
 package edu.support.controllers;
 
+import edu.support.dao.DroitAccesFacadeLocal;
 import edu.support.dao.UtilisateurFacadeLocal;
 import edu.support.entities.Utilisateur;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -36,6 +38,9 @@ public class UtilisateurController {
     @EJB(mappedName="java:app/edusupport/UtilisateurFacade")
     private UtilisateurFacadeLocal cfl;
     
+    @EJB(mappedName="java:app/edusupport/DroitAccesFacade")
+    private DroitAccesFacadeLocal dafl;
+    
     private final static String VUE_CREATE = "jsp/utilisateur/create";
     private final static String VUE_EDIT = "jsp/utilisateur/edit";
     private final static String VUE_LIST = "jsp/utilisateur/list";
@@ -44,7 +49,7 @@ public class UtilisateurController {
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","droitAccesIddroitAcces"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -52,15 +57,17 @@ public class UtilisateurController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
+        mv.addObject("droitacces", dafl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("utilisateur")Utilisateur utilisateur,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("utilisateur")Utilisateur utilisateur,BindingResult result ,HttpServletRequest request,@RequestParam Map<String,String> params){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
+        utilisateur.setDroitAccesIddroitAcces(dafl.find(Integer.parseInt(params.get("droitAccesIddroitAcces"))));
         utilisateur.setCreated(new Date());
         utilisateur.setModified(new Date());
         cfl.create(utilisateur);
@@ -72,13 +79,16 @@ public class UtilisateurController {
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
         mv.addObject("utilisateur", cfl.find(id));
+        
+        mv.addObject("droitacces", dafl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("utilisateur")Utilisateur utilisateur ,@RequestParam("idutilisateur")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("utilisateur")Utilisateur utilisateur ,@RequestParam Map<String,String> params,HttpServletRequest request){
         utilisateur.setModified(new Date());
-        utilisateur.setCreated(cfl.find(id).getCreated());
+        utilisateur.setDroitAccesIddroitAcces(dafl.find(Integer.parseInt(params.get("droitAccesIddroitAcces"))));
+        utilisateur.setCreated(cfl.find(Integer.parseInt(params.get("idutilisateur"))).getCreated());
         cfl.edit(utilisateur);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

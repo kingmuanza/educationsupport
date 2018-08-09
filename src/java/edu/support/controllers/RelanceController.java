@@ -49,7 +49,7 @@ public class RelanceController {
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","echeance","eleveIdeleve"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -62,14 +62,15 @@ public class RelanceController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("relance")Relance relance,BindingResult result ,HttpServletRequest request ,@RequestParam Map <String,String> params){
+    public Object postCreate(@Valid @ModelAttribute("relance")Relance relance,BindingResult result ,HttpServletRequest request ,@RequestParam Map <String,String> params) throws ParseException{
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
+        relance.setEcheance(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("echeance")));
+        relance.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
         relance.setCreated(new Date());
         relance.setModified(new Date());
-        relance.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
         rfl.create(relance);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -84,10 +85,11 @@ public class RelanceController {
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("relance")Relance relance ,@RequestParam Map <String,String> params,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("relance")Relance relance ,@RequestParam Map <String,String> params,HttpServletRequest request) throws ParseException{
         relance.setModified(new Date());
-        relance.setCreated(rfl.find(params.get("relance")).getCreated());
-        relance.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        relance.setCreated(rfl.find(Integer.parseInt(params.get("relance"))).getCreated());
+        relance.setEcheance(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("echeance")));
+        relance.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
         rfl.edit(relance);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

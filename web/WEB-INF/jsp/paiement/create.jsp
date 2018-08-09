@@ -11,23 +11,33 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ABSENCE | Create</title>
+        <title>PAIEMENT | Create</title>
     </head>
     <body>
-        <form:errors path="absence.*"/>
-        <form method="post" action="create">
+        <form:errors path="paiement.*"/>
+        <form method="post" action="<c:url value="/paiement/create"/>">
             <table>
                 <tr>
-                    <td><label>Jour Absence</label></td>
-                    <td><input type="text" name="jourAbsence" required="true"/></td>
+                    <td><label>Eleve qui sollicite un moratoire</label></td>
+                            <td><select  type="text" name="eleveIdeleve" required="true">
+                                    <option> -- SELECT --</option>
+                                    <c:forEach items="${eleves}" var="eleve">
+                                            <option value="${eleve.ideleve}">${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms}</option>
+                                        
+                                    </c:forEach>
+                        </select></td>
                 </tr>
                 <tr>
-                    <td><label>Justifier ?</label></td>
-                    <td><input type="text" name="justifee" required="true"/></td>
+                    <td><label>Code</label></td>
+                    <td><input type="text" name="code" required="true"/></td>
                 </tr>
                 <tr>
-                    <td><label>Motif</label></td>
-                    <td><input type="text" name="motif" required="true"/></td>
+                    <td><label>Montant </label></td>
+                    <td><input type="number"  name="reponse" required="true"/></td>
+                </tr>
+                <tr>
+                    <td><label>Date du jour du paiement</label></td>
+                    <td><input type="date" name="dateJour" required="true"/></td>
                 </tr>
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
                 <tr>

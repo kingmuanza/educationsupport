@@ -53,7 +53,7 @@ public class PaiementController {
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","dateJour","eleveIdeleve"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -66,14 +66,15 @@ public class PaiementController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("paiement")Paiement paiement,BindingResult result ,HttpServletRequest request ,@RequestParam Map<String,String> params){
+    public Object postCreate(@Valid @ModelAttribute("paiement")Paiement paiement,BindingResult result ,HttpServletRequest request ,@RequestParam Map<String,String> params) throws ParseException{
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
+        paiement.setDateJour(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateJour")));
+        paiement.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
         paiement.setCreated(new Date());
         paiement.setModified(new Date());
-        paiement.setCreated(pfl.find(params.get("idpaiement")).getCreated());
         pfl.create(paiement);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -88,10 +89,11 @@ public class PaiementController {
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("paiement")Paiement paiement ,@RequestParam Map<String,String> params, HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("paiement")Paiement paiement ,@RequestParam Map<String,String> params, HttpServletRequest request) throws ParseException{
         paiement.setModified(new Date());
-        paiement.setCreated(pfl.find(params.get("idpaiement")).getCreated());
-        paiement.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        paiement.setCreated(pfl.find(Integer.parseInt(params.get("idpaiement"))).getCreated());
+        paiement.setDateJour(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateJour")));
+        paiement.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
         pfl.edit(paiement);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

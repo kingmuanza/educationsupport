@@ -11,23 +11,36 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ABSENCE | Create</title>
+        <title>MORATOIRE | Create</title>
     </head>
     <body>
-        <form:errors path="absence.*"/>
-        <form method="post" action="create">
+        <form:errors path="moratoire.*"/>
+        <form method="post" action="<c:url value="/moratoire/create"/>">
             <table>
                 <tr>
-                    <td><label>Jour Absence</label></td>
-                    <td><input type="text" name="jourAbsence" required="true"/></td>
+                    <td><label>Eleve qui sollicite un moratoire</label></td>
+                            <td><select  type="text" name="eleveIdeleve" required="true">
+                                    <option> -- SELECT --</option>
+                                    <c:forEach items="${eleves}" var="eleve">
+                                            <option value="${eleve.ideleve}">${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms}</option>
+                                        
+                                    </c:forEach>
+                        </select></td>
                 </tr>
                 <tr>
-                    <td><label>Justifier ?</label></td>
-                    <td><input type="text" name="justifee" required="true"/></td>
+                    <td><label>Code</label></td>
+                    <td><input type="text" name="code" required="true"/></td>
                 </tr>
                 <tr>
-                    <td><label>Motif</label></td>
-                    <td><input type="text" name="motif" required="true"/></td>
+                    <td><label>Reponse </label></td>
+                    <td><input type="text" name="reponse" /></td>
+                </tr>
+                <tr>
+                    <td><label>Etat</label></td>
+                            <td><select type="text" name="etat" required="true">
+                                    <option value="0"> Traitement En cours</option>
+                                    <option value="1"> Acceptée</option>
+                        </select></td>
                 </tr>
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
                 <tr>
