@@ -10,10 +10,10 @@
         <title>EDUCATION SUPPORT</title>
 
         <!-- Fichiers CSS pour le dataTable-->
-        <link href="<c:url value="css/dataTables.semanticui.min.css"/>" rel="stylesheet" type="text/css"/>
-        <link href="<c:url value="css/responsive.semanticui.min.css"/>" rel="stylesheet" type="text/css"/>        
-        <link href="<c:url value="css/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css"/>
-        <link href="<c:url value="css/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="/resources/css/dataTables.semanticui.min.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="/resources/css/responsive.semanticui.min.css"/>" rel="stylesheet" type="text/css"/>        
+        <link href="<c:url value="/resources/css/buttons.dataTables.min.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="/resources/css/jquery.dataTables.min.css"/>" rel="stylesheet" type="text/css"/>
 
     </head>
     <body>
@@ -22,8 +22,8 @@
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>TRIMESTRE</th>
                     <th>Numero</th>
+                    <th>Edition</th>
                 </tr>
             </thead>
 
@@ -31,16 +31,7 @@
                 <c:forEach items="${trimestres}" var="trimestre">
                 <c:if test="${!trimestre.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/trimestre/${trimestre.idtrimestre}'">
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                Crée le <fmt:formatDate value="${trimestre.created}" pattern="yyyy-MM-dd"/>
-                                <div class="sub header">
-                                    Modifié le <fmt:formatDate value="${trimestre.modified}" pattern="yyyy-MM-dd"/>
-                                </div>
-                            </div>
-                        </h4>
-                    </td>
+                    
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
@@ -51,11 +42,13 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${trimestre.deleted}</div>
+                                Crée le <fmt:formatDate value="${trimestre.created}" pattern="yyyy-MM-dd"/>
+                                <div class="sub header">
+                                    Modifié le <fmt:formatDate value="${trimestre.modified}" pattern="yyyy-MM-dd"/>
+                                </div>
                             </div>
                         </h4>
                     </td>
-                    
                 </tr>
                 </c:if>
                 </c:forEach>
@@ -66,16 +59,16 @@
 
 
         <!-- Datatable -->
-        <script src="<c:url value="js/jquery.dataTables.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="js/jszip.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="js/pdf.js.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="js/dataTables.buttons.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="js/buttons.flash.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="js/buttons.html5.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="js/buttons.print.min.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="js/pdfmake.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/jquery.dataTables.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/jszip.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/pdf.js.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/dataTables.buttons.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/buttons.flash.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/buttons.html5.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/buttons.print.min.js"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/pdfmake.min.js"/>" type="text/javascript"></script>
         <script>
-            var titre = 'Bonjour';
+            var titre = 'Trimestres';
             $(document).ready(function () {
                 
                 //ouvrirMenuCorrespondant("#section_params", "bouton_params", "trimestre");

@@ -22,10 +22,10 @@
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>RETARD</th>
-                    <th>INDIVIDU</th>
+                    <th>Individu</th>
                     <th>Marge</th>
                     <th>Date Retard</th>
+                    <th>Edition</th>
                 </tr>
             </thead>
 
@@ -33,16 +33,6 @@
                 <c:forEach items="${retards}" var="retard">
                 <c:if test="${!retard.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/retard/${retard.idretard}'">
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                Crée le <fmt:formatDate value="${retard.created}" pattern="yyyy-MM-dd"/>
-                                <div class="sub header">
-                                    Modifié le <fmt:formatDate value="${retard.modified}" pattern="yyyy-MM-dd"/>
-                                </div>
-                            </div>
-                        </h4>
-                    </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
@@ -67,6 +57,16 @@
                             </div>
                         </h4>
                     </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                Crée le <fmt:formatDate value="${retard.created}" pattern="yyyy-MM-dd"/>
+                                <div class="sub header">
+                                    Modifié le <fmt:formatDate value="${retard.modified}" pattern="yyyy-MM-dd"/>
+                                </div>
+                            </div>
+                        </h4>
+                    </td>
                 </tr>
                 </c:if>
                 </c:forEach>
@@ -86,7 +86,7 @@
         <script src="<c:url value="/resources/js/buttons.print.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/pdfmake.min.js"/>" type="text/javascript"></script>
         <script>
-            var titre = 'Bonjour';
+            var titre = 'Retards';
             $(document).ready(function () {
                 
                 //ouvrirMenuCorrespondant("#section_params", "bouton_params", "retard");
