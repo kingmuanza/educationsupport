@@ -22,10 +22,10 @@
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>MALADIES</th>
                     <th>Nom</th>
                     <th>Description</th>
                     <th>Type</th>
+                    <th>Edition</th>
                 </tr>
             </thead>
 
@@ -33,16 +33,6 @@
                 <c:forEach items="${maladies}" var="maladie">
                 <c:if test="${!maladie.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/maladie/${maladie.idmaladie}'">
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                Crée le <fmt:formatDate value="${maladie.created}" pattern="yyyy-MM-dd"/>
-                                <div class="sub header">
-                                    Modifié le <fmt:formatDate value="${maladie.modified}" pattern="yyyy-MM-dd"/>
-                                </div>
-                            </div>
-                        </h4>
-                    </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
@@ -61,6 +51,16 @@
                         <h4 class="ui image header">
                             <div class="content">
                                 ${maladie.typeMaladie}</div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                Crée le <fmt:formatDate value="${maladie.created}" pattern="yyyy-MM-dd"/>
+                                <div class="sub header">
+                                    Modifié le <fmt:formatDate value="${maladie.modified}" pattern="yyyy-MM-dd"/>
+                                </div>
                             </div>
                         </h4>
                     </td>
@@ -83,7 +83,7 @@
         <script src="<c:url value="/resources/js/buttons.print.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/pdfmake.min.js"/>" type="text/javascript"></script>
         <script>
-            var titre = 'Bonjour';
+            var titre = 'Maladie';
             $(document).ready(function () {
                 
                 //ouvrirMenuCorrespondant("#section_params", "bouton_params", "maladie");

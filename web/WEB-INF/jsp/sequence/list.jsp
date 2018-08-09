@@ -36,9 +36,9 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${sequence.anneescolaireIdanneeScolaire.dateDebut}
+                                ${sequence.anneeScolaireIdanneeScolaire.dateDebut}
                                 <div class="sub header">
-                                    ${sequence.anneescolaireIdanneeScolaire.dateFin}
+                                    ${sequence.anneeScolaireIdanneeScolaire.dateFin}
                                 </div>
                             </div>
                         </h4>

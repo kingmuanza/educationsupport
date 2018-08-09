@@ -26,6 +26,12 @@ app.config(function ($routeProvider) {
             .when("/absence", {
                 templateUrl: UrlExists("absence/create ")
             })
+            .when("/anneescolaires", {
+                templateUrl: UrlExists("anneescolaire/list ")
+            })
+            .when("/anneescolaire", {
+                templateUrl: UrlExists("anneescolaire/create ")
+            })
             .when("/autorisationsorties", {
                 templateUrl: UrlExists("autorisationsortie/list ")
             })
@@ -175,12 +181,6 @@ app.config(function ($routeProvider) {
             })
             .when("/utilisateur", {
                 templateUrl: UrlExists("utilisateur/create ")
-            })
-            .when("/paiements", {
-                templateUrl: UrlExists("paiement/list ")
-            })
-            .when("/paiement", {
-                templateUrl: UrlExists("paiement/create ")
             })
             .when("/insolvables", {
                 templateUrl: UrlExists("paiement/insolvables/list ")

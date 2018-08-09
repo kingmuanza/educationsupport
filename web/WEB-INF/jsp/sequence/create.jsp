@@ -38,7 +38,7 @@
                     <td><label>Année Scolaire </label></td>
                             <td><select name="anneeScolaireIdanneeScolaire" required="true">
                                     <option> Aucune valeur</option>
-                                    <c:forEach items="${anneescolaires}" var="annee">
+                                    <c:forEach items="${anneeScolaires}" var="annee">
                                         <option value="${annee.idanneeScolaire}">Année Scolaire ${annee.dateDebut.year} - ${annee.dateFin.year}</option>
                                     </c:forEach>
                         </select></td>

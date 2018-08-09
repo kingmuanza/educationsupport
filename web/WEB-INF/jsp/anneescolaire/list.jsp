@@ -30,7 +30,7 @@
             </thead>
 
             <tbody>
-                <c:forEach items="${anneescolaires}" var="anneescolaire">
+                <c:forEach items="${anneeScolaires}" var="anneescolaire">
                 <c:if test="${!anneescolaire.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/anneescolaire/${anneescolaire.idanneeScolaire}'">
                     <td>

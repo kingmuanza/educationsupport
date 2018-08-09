@@ -22,11 +22,11 @@
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>EMPLOYE</th>
                     <th>Matricule</th>
                     <th>Nom</th>
                     <th>Prenom</th>     
                     <th>Telephone</th>     
+                    <th>Edition</th>     
                 </tr>
             </thead>
 
@@ -34,16 +34,6 @@
                 <c:forEach items="${employes}" var="employe">
                 <c:if test="${!employe.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/employe/${employe.idemploye}'">
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                Crée le <fmt:formatDate value="${employe.created}" pattern="yyyy-MM-dd"/>
-                                <div class="sub header">
-                                    Modifié le <fmt:formatDate value="${employe.modified}" pattern="yyyy-MM-dd"/>
-                                </div>
-                            </div>
-                        </h4>
-                    </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
@@ -72,6 +62,16 @@
                             </div>
                         </h4>
                     </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                Crée le <fmt:formatDate value="${employe.created}" pattern="yyyy-MM-dd"/>
+                                <div class="sub header">
+                                    Modifié le <fmt:formatDate value="${employe.modified}" pattern="yyyy-MM-dd"/>
+                                </div>
+                            </div>
+                        </h4>
+                    </td>
                 </tr>
                 </c:if>
                 </c:forEach>
@@ -92,7 +92,7 @@
         <script src="<c:url value="/resources/js/buttons.print.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/pdfmake.min.js"/>" type="text/javascript"></script>
         <script>
-            var titre = 'Bonjour';
+            var titre = 'Employé';
             $(document).ready(function () {
                 
                 //ouvrirMenuCorrespondant("#section_params", "bouton_params", "employe");
