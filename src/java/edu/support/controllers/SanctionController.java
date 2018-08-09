@@ -69,7 +69,7 @@ public class SanctionController {
         }
         sanction.setCreated(new Date());
         sanction.setModified(new Date());
-        sanction.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        sanction.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
         sfl.create(sanction);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -86,8 +86,8 @@ public class SanctionController {
     @RequestMapping(value="/edit", method=RequestMethod.POST)
     public RedirectView postEdit(@Valid @ModelAttribute("sanction")Sanction sanction ,@RequestParam Map<String,String> params,HttpServletRequest request){
         sanction.setModified(new Date());
-        sanction.setCreated(sfl.find(params.get("iddsanction")).getCreated());
-        sanction.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        sanction.setCreated(sfl.find(Integer.parseInt(params.get("iddsanction"))).getCreated());
+        sanction.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
         sfl.edit(sanction);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

@@ -15,7 +15,6 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import static jdk.nashorn.internal.runtime.Debug.id;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -50,7 +49,7 @@ public class MoratoireController {
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","eleveIdeleve"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -70,7 +69,7 @@ public class MoratoireController {
         }
         moratoire.setCreated(new Date());
         moratoire.setModified(new Date());
-        moratoire.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        moratoire.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
         mfl.create(moratoire);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -87,8 +86,8 @@ public class MoratoireController {
     @RequestMapping(value="/edit", method=RequestMethod.POST)
     public RedirectView postEdit(@Valid @ModelAttribute("moratoire")Moratoire moratoire ,@RequestParam Map <String,String> params,HttpServletRequest request){
         moratoire.setModified(new Date());
-        moratoire.setCreated(mfl.find(params.get("idmoratoire")).getCreated());
-        moratoire.setEleveIdeleve(efl.find(params.get("eleveIdeleve")));
+        moratoire.setCreated(mfl.find(Integer.parseInt(params.get("idmoratoire"))).getCreated());
+        moratoire.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
         mfl.edit(moratoire);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

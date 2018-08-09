@@ -5,11 +5,14 @@
  */
 package edu.support.controllers;
 
+import edu.support.dao.AnneeScolaireFacadeLocal;
 import edu.support.dao.SequenceFacadeLocal;
+import edu.support.dao.TrimestreFacadeLocal;
 import edu.support.entities.Sequence;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -36,6 +39,12 @@ public class SequenceController {
     @EJB(mappedName="java:app/edusupport/SequenceFacade")
     private SequenceFacadeLocal cfl;
     
+    @EJB(mappedName="java:app/edusupport/TrimestreFacade")
+    private TrimestreFacadeLocal tfl;
+    
+    @EJB(mappedName="java:app/edusupport/AnneeScolaireFacade")
+    private AnneeScolaireFacadeLocal asfl;
+    
     private final static String VUE_CREATE = "jsp/sequence/create";
     private final static String VUE_EDIT = "jsp/sequence/edit";
     private final static String VUE_LIST = "jsp/sequence/list";
@@ -44,7 +53,7 @@ public class SequenceController {
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","anneeScolaireIdanneeScolaire","trmestreIdtrimestre"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -52,15 +61,19 @@ public class SequenceController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
+        mv.addObject("trimestre", tfl.findAll());
+        mv.addObject("anneescolaires", asfl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("sequence")Sequence sequence,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("sequence")Sequence sequence,BindingResult result ,HttpServletRequest request, @RequestParam Map<String,String> params){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
+        sequence.setAnneeScolaireIdanneeScolaire(asfl.find(Integer.parseInt(params.get("anneeScolaireIdanneeScolaire"))));
+        sequence.setTrimestreIdtrimestre(tfl.find(Integer.parseInt(params.get("trimestreIdtrimestre"))));
         sequence.setCreated(new Date());
         sequence.setModified(new Date());
         cfl.create(sequence);
@@ -76,9 +89,11 @@ public class SequenceController {
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("sequence")Sequence sequence ,@RequestParam("idsequence")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("sequence")Sequence sequence ,HttpServletRequest request,@RequestParam Map<String,String> params){
         sequence.setModified(new Date());
-        sequence.setCreated(cfl.find(id).getCreated());
+        sequence.setAnneeScolaireIdanneeScolaire(asfl.find(Integer.parseInt(params.get("anneeScolaireIdanneeScolaire"))));
+        sequence.setTrimestreIdtrimestre(tfl.find(Integer.parseInt(params.get("trimestreIdtrimestre"))));
+        sequence.setCreated(cfl.find(Integer.parseInt(params.get("idsequence"))).getCreated());
         cfl.edit(sequence);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
