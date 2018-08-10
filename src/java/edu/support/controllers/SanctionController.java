@@ -45,7 +45,7 @@ public class SanctionController {
     private final static String VUE_EDIT = "jsp/sanction/edit";
     private final static String VUE_LIST = "jsp/sanction/list";
     private final static String VUE_VIEW = "jsp/sanction/view";
-    private final static String PATH_LIST = "/sanction/list";
+    private final static String PATH_LIST = "/start#!/sanctions";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){

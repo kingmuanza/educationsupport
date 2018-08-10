@@ -14,38 +14,37 @@
         <title>ELEVE | Create</title>
     </head>
     <body>
+        <h1 class="titre">
+            Enregistrement des éleves
+        </h1>
         <form:errors path="eleve.*"/>
-        <form method="post" action="<c:url value="/eleve/create"/>">
-            <table>
-                <tr>
-                    <td><label>Individu</label></td>
-                    <td>
-                        <select name="individuIdindividu">
-                            <option >Aucune valeur</option>
+        <form method="post" class="ui form" action="<c:url value="/eleve/create"/>">
+            
+                <div class="field">
+                    <label>Individu</label>
+                    <select class="select" name="individuIdindividu">
+                        <option>Sélectionnez l'individu</option>
                             <c:forEach items="${individus}" var="individu">
                                 <option value="${individu.idindividu}">${individu.noms} ${individu.prenoms}</option>
                             </c:forEach>
                         </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label>Classe</label></td>
-                    <td>
-                        <select name="classeIdclasse">
-                            <option >Aucune valeur</option>
+                </div>
+                <div class="field">
+                    <label>Classe</label>
+                        <select class="select" name="classeIdclasse">
+                            <option>Sélectionnez la classe</option>
                             <c:forEach items="${classes}" var="classe">
                                 <option value="${classe.idclasse}">${classe.code}</option>
                             </c:forEach>
                         </select>
-                    </td>
-                </tr>
+                </div>
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+                <button class="ui button" type="submit">Enregistrer</button>
         </form>
-
+                <script>
+            $(document).ready(function () {
+                $(".select").dropdown("get value");
+            });
+        </script>
     </body>
 </html>

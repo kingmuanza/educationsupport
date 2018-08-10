@@ -14,27 +14,26 @@
         <title>MALADIE | Create</title>
     </head>
     <body>
-        <form:errors path="absence.*"/>
-        <form method="post" action="create">
-            <table>
-                <tr>
-                    <td><label>Nom</label></td>
-                    <td><input type="text" name="nom" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Description</label></td>
-                    <td><input type="text" name="description" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Type Maladie</label></td>
-                    <td><input type="text" name="typeMaladie" required="true"/></td>
-                </tr>
+        <h1 class="titre">
+            Enregistrement des maladies
+        </h1>
+        <form:errors path="maladie.*"/>
+        <form method="post" class="ui form" action="create">
+            
+                <div class="field">
+                    <label>Nom</label>
+                    <input type="text" name="nom" required="true"/>
+                </div> 
+                <div class="field">
+                    <label>Description</label>
+                    <input type="text" name="description" required="true"/>
+                </div> 
+                <div class="field">
+                    <label>Type Maladie</label>
+                    <input type="text" name="typeMaladie" required="true"/>
+                </div> 
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+                <button class="ui button" type="submit">Enregistrer</button>
         </form>
         
     </body>

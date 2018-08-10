@@ -6,6 +6,7 @@
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -14,38 +15,41 @@
         <title>PAIEMENT | Create</title>
     </head>
     <body>
+        <h1 class="titre">
+            Enregistrement des paiements
+        </h1>
         <form:errors path="paiement.*"/>
-        <form method="post" action="<c:url value="/paiement/create"/>">
-            <table>
-                <tr>
-                    <td><label>Eleve qui sollicite un moratoire</label></td>
-                            <td><select  type="text" name="eleveIdeleve" required="true">
-                                    <option> -- SELECT --</option>
-                                    <c:forEach items="${eleves}" var="eleve">
-                                            <option value="${eleve.ideleve}">${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms}</option>
-                                        
-                                    </c:forEach>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td><label>Code</label></td>
-                    <td><input type="text" name="code" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Montant </label></td>
-                    <td><input type="number"  name="reponse" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Date du jour du paiement</label></td>
-                    <td><input type="date" name="dateJour" required="true"/></td>
-                </tr>
-                <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+        <form method="post" class="ui form" action="<c:url value="/paiement/create"/>">
+
+            <div class="field">
+                <label>Eleve qui effectue le paiement</label>
+                <select id="multi-select" type="text" name="eleveIdeleve" required="true">
+                    <option> Sélectionnez un éleve</option>
+                    <c:forEach items="${eleves}" var="eleve">
+                        <option value="${eleve.ideleve}">${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms}</option>
+
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="field">
+                <label>Code</label>
+                <input type="text" name="code" required="true"/>
+            </div>
+            <div class="field">
+                <label>Montant </label>
+                <input type="number"  name="reponse" required="true"/>
+            </div>
+            <div class="field">
+                <label>Date du jour du paiement</label>
+                <input type="date" name="dateJour" value="<fmt:formatDate value="${date}" pattern="yyyy-MM-dd"/>" required="true"/>
+            </div>
+            <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
+            <button class="ui button" type="submit">Enregistrer</button>
         </form>
-        
+        <script>
+            $(document).ready(function () {
+                $("#multi-select").dropdown("get value");
+            });
+        </script>
     </body>
 </html>

@@ -45,7 +45,7 @@ public class RapportController {
     private final static String VUE_EDIT = "jsp/rapport/edit";
     private final static String VUE_LIST = "jsp/rapport/list";
     private final static String VUE_VIEW = "jsp/rapport/view";
-    private final static String PATH_LIST = "/rapport/list";
+    private final static String PATH_LIST = "/start#!/rapports";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){

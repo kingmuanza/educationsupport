@@ -14,35 +14,40 @@
         <title>CONVOCATION | Create</title>
     </head>
     <body>
-        <form:errors path="convocation.*"/>
-        <form method="post" action="create">
-            <table>
-                <tr>
-                    <td><label>Eleve convoqué</label></td>
-                            <td><select  type="text" name="eleveIdeleve" required="true">
-                                    <option> -- SELECT --</option>
-                                    <c:forEach items="${eleves}" var="eleve">
-                                            <option value="${eleve.ideleve}">${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms}</option>
-                                        
-                                    </c:forEach>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td><label>Code</label></td>
-                    <td><input type="text" name="code" required="true"/></td>
-                </tr>
-            <table>
-                <tr>
-                    <td><label>Motif</label></td>
-                    <td><input type="text" name="motif" required="true"/></td>
-                </tr>
-                <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
-        </form>
+        <h1 class="titre">
+            Enregistrement des convocations
+        </h1>
         
+        <form:errors path="convocation.*"/>
+        <form method="post" class="ui form" action="create">
+
+            <div class="field">
+                <label>Eleve convoqué</label>
+                    <div class="default text">Sélectionnez l'élève</div>
+                    <select id="multi-select" type="text" name="eleveIdeleve" required="true">
+                        <option>Sélectionnez l'élève</option>
+                        <c:forEach items="${eleves}" var="eleve">
+                            <option value="${eleve.ideleve}">${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms}</option>
+                        </c:forEach>
+                    </select>
+                
+            </div>
+            <div class="field">
+                <label>Code</label>
+                <input type="text" name="code" required="true"/>
+            </div>
+
+            <div class="field">
+                <label>Motif</label>
+                <input type="text" name="motif" required="true"/>
+            </div>
+            <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
+            <button class="ui button" type="submit">Enregistrer</button>
+        </form>
+            <script>
+            $(document).ready(function () {
+                $("#multi-select").dropdown("get value");
+            });
+        </script>
     </body>
 </html>

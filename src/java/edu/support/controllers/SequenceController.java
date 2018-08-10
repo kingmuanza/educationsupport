@@ -49,7 +49,7 @@ public class SequenceController {
     private final static String VUE_EDIT = "jsp/sequence/edit";
     private final static String VUE_LIST = "jsp/sequence/list";
     private final static String VUE_VIEW = "jsp/sequence/view";
-    private final static String PATH_LIST = "/sequence/list";
+    private final static String PATH_LIST = "/start#!/sequences";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){

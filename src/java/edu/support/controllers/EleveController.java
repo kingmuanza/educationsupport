@@ -76,7 +76,7 @@ public class EleveController {
         }
         eleve.setCreated(new Date());
         eleve.setModified(new Date());
-        eleve.setClasseIdclasse(classefl.find(Integer.parseInt(params.get("classeIclasse"))));
+        eleve.setClasseIdclasse(classefl.find(Integer.parseInt(params.get("classeIdclasse"))));
         eleve.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
         cfl.create(eleve);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);

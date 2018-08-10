@@ -14,27 +14,26 @@
         <title>MATIERE | Create</title>
     </head>
     <body>
+        <h1 class="titre">
+            Enregistrement des matières
+        </h1>
         <form:errors path="matiere.*"/>
-        <form method="post" action="<c:url value="/matiere/create"/>">
-            <table>
-                <tr>
-                    <td><label>Code</label></td>
-                    <td><input type="text" name="code" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Libelle </label></td>
-                    <td><input type="text" name="libelle" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Coefficient</label></td>
-                    <td><input type="number" name="coefficient" required="true"/></td>
-                </tr>
+        <form method="post" class="ui form" action="<c:url value="/matiere/create"/>">
+            
+                <div class="field"> 
+                    <label>Code</label>
+                    <input type="text" name="code" required="true"/>
+                </div> 
+                <div class="field"> 
+                    <label>Libelle </label>
+                    <input type="text" name="libelle" required="true"/>
+                </div> 
+                <div class="field"> 
+                    <label>Coefficient</label>
+                    <input type="number" name="coefficient" required="true"/>
+                </div> 
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+            <button class="ui button" type="submit">Enregistrer</button>
         </form>
         
     </body>

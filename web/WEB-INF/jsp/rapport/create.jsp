@@ -11,31 +11,23 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ABSENCE | Create</title>
+        <title>RAPPORT | Create</title>
     </head>
     <body>
-        <form:errors path="absence.*"/>
-        <form method="post" action="create">
-            <table>
-                <tr>
-                    <td><label>Jour Absence</label></td>
-                    <td><input type="text" name="jourAbsence" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Justifier ?</label></td>
-                    <td><input type="text" name="justifee" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Motif</label></td>
-                    <td><input type="text" name="motif" required="true"/></td>
-                </tr>
-                <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+        <h1 class="titre">
+            Enregistrement des rapports
+        </h1>
+        <form:errors path="rapport.*"/>
+        <form method="post" class="ui form" action="<c:url value="/rapport/create"/>">
+
+            
+            <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
+            <button class="ui button" type="submit" >Enregistrer</button>
         </form>
-        
+        <script>
+            $(document).ready(function () {
+                $("#multi-select").dropdown("get value");
+            });
+        </script>
     </body>
 </html>

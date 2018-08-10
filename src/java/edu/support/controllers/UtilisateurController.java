@@ -45,7 +45,7 @@ public class UtilisateurController {
     private final static String VUE_EDIT = "jsp/utilisateur/edit";
     private final static String VUE_LIST = "jsp/utilisateur/list";
     private final static String VUE_VIEW = "jsp/utilisateur/view";
-    private final static String PATH_LIST = "/utilisateur/list";
+    private final static String PATH_LIST = "/start#!/utilisateurs";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){

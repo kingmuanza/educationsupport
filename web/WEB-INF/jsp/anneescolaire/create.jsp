@@ -14,27 +14,31 @@
         <title>ANNEE SCOLAIRE | Create</title>
     </head>
     <body>
+        <h1 class="titre">
+            Enregistrement des années scolaires
+        </h1>
         <form:errors path="anneescolaire.*"/>
-        <form method="post" action="<c:url value="/anneescolaire/create"/>">
-            <table>
-                <tr>
-                    <td><label>Début</label></td>
-                    <td><input type="date" name="dateDebut" required="true"/></td>
-                    <td><label>Fin</label></td>
-                    <td><input type="date" name="dateFin" required="true"/></td>
-                    <td><label>En cours</label></td>
-                            <td><select name="enCours" required="true">
-                                    <option value="0"> --  NON -- </option>
-                                    <option value="1"> --  OUI -- </option>
-                        </select></td>
-                </tr>
-                <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+        <form method="post" class="ui form" action="<c:url value="/anneescolaire/create"/>">
+            <div class="fiel">
+                <label>Date de début</label>
+                <input type="date" name="dateDebut" required="true"/>
+            </div>
+            <div class="field">
+                <label>Date de fin</label>
+                <input type="date" name="dateFin" required="true"/>
+            </div>
+            <div class="field">
+                <label>Est-ce l'année en cours</label>
+                <div class="ui dropdown selection">
+                    <i class="dropdown icon"></i>
+                    <select name="enCours" required="true">
+                        <option value="0">  NON </option>
+                        <option value="1">  OUI </option>
+                    </select>
+                </div>
+            </div>
+            <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
+            <button class="ui button" type="submit">Enregistrer</button>
         </form>
-        
     </body>
 </html>

@@ -14,20 +14,19 @@
         <title>CLASSE | Create</title>
     </head>
     <body>
+        <h1 class="titre">
+            Enregistrement des classes
+        </h1>
         <form:errors path="classe.*"/>
-        <form method="post" action="create">
-            <table>
-                <tr>
-                    <td><label>Code</label></td>
-                    <td><input type="text" name="code" required="true"/></td>
-                </tr>
-                <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+        <form method="post" class="ui form" action="create">
+
+            <div class="field">
+                <label>Code</label>
+                <input type="text" name="code" required="true"/>
+            </div>
+            <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
+            <button class="ui button" type="submit">Enregistrer</button>
         </form>
-        
+
     </body>
 </html>

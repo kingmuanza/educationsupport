@@ -45,7 +45,7 @@ public class RelanceController {
     private final static String VUE_EDIT = "jsp/relance/edit";
     private final static String VUE_LIST = "jsp/relance/list";
     private final static String VUE_VIEW = "jsp/relance/view";
-    private final static String PATH_LIST = "/relance/list";
+    private final static String PATH_LIST = "/start#!/relances";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){

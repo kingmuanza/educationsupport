@@ -40,7 +40,7 @@ public class ReunionController {
     private final static String VUE_EDIT = "jsp/reunion/edit";
     private final static String VUE_LIST = "jsp/reunion/list";
     private final static String VUE_VIEW = "jsp/reunion/view";
-    private final static String PATH_LIST = "/reunion/list";
+    private final static String PATH_LIST = "/start#!/reunions";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){

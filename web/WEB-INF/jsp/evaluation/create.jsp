@@ -14,43 +14,58 @@
         <title>EVALUATION | Create</title>
     </head>
     <body>
+        <h1 class="titre">
+            Enregistrement des évaluations
+        </h1>
         <form:errors path="evaluation.*"/>
-        <form method="post" action="<c:url value="/evaluation/create"/>">
-            <table>
-                <tr>
-                    <td><label>Classe</label></td>
-                            <td><select name="classeIdclasse" required="true">
-                                    <option> Aucune valeur</option>
-                                    <c:forEach items="${classes}" var="classe">
-                                        <option value="${classe.idclasse}">${classe.code}</option>
-                                    </c:forEach>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td><label>Matiere</label></td>
-                            <td><select name="matiereIdmatiere" required="true">
-                                    <option> Aucune valeur</option>
-                                    <c:forEach items="${matieres}" var="matiere">
-                                        <option value="${matiere.idmatiere}">${matiere.code} ${matiere.libelle}</option>
-                                    </c:forEach>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td><label>Sequence</label></td>
-                            <td><select name="sequenceIdsequence" required="true">
-                                    <option> Aucune valeur</option>
-                                    <c:forEach items="${sequences}" var="sequence">
-                                        <option value="${sequence.idsequence}">${sequence.numero} - ${sequence.code}</option>
-                                    </c:forEach>
-                        </select></td>
-                </tr>
-                <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+        <form method="post" class="ui form" action="<c:url value="/evaluation/create"/>">
+
+            <div class="field">
+                <label>Classe</label>
+                <div class="ui dropdown selection ">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Sélectionnez la classe</div>
+                    <select class="select" name="classeIdclasse" required="true">
+                        <option>Sélectionnez la classe</option>
+                        <c:forEach items="${classes}" var="classe">
+                            <option value="${classe.idclasse}">${classe.code}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <label>Matiere</label>
+                <div class="ui dropdown selection ">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Sélectionnez la matière</div>
+                    <select class="select" name="matiereIdmatiere" required="true">
+                        <option>Sélectionnez la matière</option>
+                        <c:forEach items="${matieres}" var="matiere">
+                            <option value="${matiere.idmatiere}">${matiere.code} ${matiere.libelle}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <label>Sequence</label>
+                <div class="ui dropdown selection ">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Sélectionnez la séquence</div>
+                    <select class="select" name="sequenceIdsequence" required="true">
+                        <option>Sélectionnez la séquence</option>
+                        <c:forEach items="${sequences}" var="sequence">
+                            <option value="${sequence.idsequence}">${sequence.numero} - ${sequence.code}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
+            <button class="ui button" type="submit">Enregistrer</button>
         </form>
-        
+        <script>
+            $(document).ready(function () {
+                $(".select").dropdown("get value");
+            });
+        </script>
     </body>
 </html>

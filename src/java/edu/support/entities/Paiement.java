@@ -59,7 +59,6 @@ public class Paiement implements Serializable {
     @Column(name = "montant", nullable = false)
     private double montant;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "date_jour", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateJour;

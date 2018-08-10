@@ -14,21 +14,25 @@
         <title>TRIMESTRE | Create</title>
     </head>
     <body>
+        <h1 class="titre">
+            Enregistrement des trimestres
+        </h1>
         <form:errors path="trimestre.*"/>
-        <form method="post" action="<c:url value="/trimestre/create"/>">
-            <table>
-                <tr>
-                    <td><label>Numero</label></td>
-                    <td><input type="numero" name="numero" required="true"/></td>
-                </tr>
+        <form method="post" class="ui form" action="<c:url value="/trimestre/create"/>">
+            
+                <div class="field">
+                    <label>Numero</label>
+                    <input type="numero" name="numero" required="true"/>
+                </div>
+                
                 
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+                <button class="ui button" type="submit">Enregistrer</button>
         </form>
-        
+        <script>
+            $(document).ready(function () {
+                $("#multi-select").dropdown("get value");
+            });
+        </script>
     </body>
 </html>

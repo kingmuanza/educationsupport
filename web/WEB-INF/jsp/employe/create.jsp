@@ -14,25 +14,31 @@
         <title>EMPLOYE | Create</title>
     </head>
     <body>
+        <h1 class="titre">
+            Enregistrement des employés
+        </h1>
         <form:errors path="employe.*"/>
-        <form method="post" action="<c:url value="/employe/create"/>">
-            <table>
-                <tr>
-                    <td><label>Individu</label></td>
-                            <td><select name="indidivduIdindividu" required="true">
-                                    <option> Aucune valeur</option>
-                                    <c:forEach items="${individus}" var="individu">
-                                        <option value="${individu.idindividu}">${individu.prenoms} ${individu.noms}</option>
-                                    </c:forEach>
-                        </select></td>
-                </tr>
-                <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+        <form method="post" class="ui form" action="<c:url value="/employe/create"/>">
+            <div class="field">
+                <label>Individu</label>
+                <div class="ui dropdown selection ">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Sélectionnez l'individu</div>
+                    <select id="multi-select" name="individuIdindividu" required="true">
+                        <option> Sélectionnez l'individu</option>
+                        <c:forEach items="${individus}" var="individu">
+                            <option value="${individu.idindividu}">${individu.prenoms} ${individu.noms}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
+            <button class="ui button" type="submit">Enregistrer</button>
         </form>
-        
+        <script>
+            $(document).ready(function () {
+                $("#multi-select").dropdown("get value");
+            });
+        </script>
     </body>
 </html>

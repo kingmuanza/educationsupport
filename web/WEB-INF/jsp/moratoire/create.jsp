@@ -15,40 +15,46 @@
     </head>
     <body>
         <form:errors path="moratoire.*"/>
-        <form method="post" action="<c:url value="/moratoire/create"/>">
-            <table>
-                <tr>
-                    <td><label>Eleve qui sollicite un moratoire</label></td>
-                            <td><select  type="text" name="eleveIdeleve" required="true">
-                                    <option> -- SELECT --</option>
-                                    <c:forEach items="${eleves}" var="eleve">
-                                            <option value="${eleve.ideleve}">${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms}</option>
-                                        
-                                    </c:forEach>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td><label>Code</label></td>
-                    <td><input type="text" name="code" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Reponse </label></td>
-                    <td><input type="text" name="reponse" /></td>
-                </tr>
-                <tr>
-                    <td><label>Etat</label></td>
-                            <td><select type="text" name="etat" required="true">
-                                    <option value="0"> Traitement En cours</option>
-                                    <option value="1"> Acceptée</option>
-                        </select></td>
-                </tr>
-                <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+        <h1 class="titre">
+            Enregistrement des demandes de moratoire
+        </h1>
+        <form method="post" class="ui form" action="<c:url value="/moratoire/create"/>">
+
+            <div class="field">
+                <label>Eleve qui sollicite un moratoire</label>
+                    <select class="multi-select"  type="text" name="eleveIdeleve" required="true">
+                        <option> Sélectionnez un élève</option>
+                        <c:forEach items="${eleves}" var="eleve">
+                            <option value="${eleve.ideleve}">${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms}</option>
+
+                        </c:forEach>
+                    </select>
+                
+            </div>
+            <div class="field">
+                <label>Code</label>
+                <input type="text" name="code" required="true"/>
+            </div>
+            <div class="field">
+                <label>Reponse </label>
+                <input type="text" name="reponse" />
+            </div>
+            <div class="field">
+                <label>Statut</label>
+                <select class="multi-select" type="text" name="etat" required="true">
+                    <option> Sélectionnez un statut</option>
+                    <option value="0"> En cours de traitement</option>
+                    <option value="1"> Acceptée</option>
+                </select>
+                
+            </div>
+            <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
+            <button class="ui button" type="submit">Enregistrer</button>
         </form>
-        
+            <script>
+            $(document).ready(function () {
+                $(".multi-select").dropdown("get value");
+            });
+        </script>
     </body>
 </html>

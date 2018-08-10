@@ -49,7 +49,7 @@ public class PaiementController {
     private final static String VUE_EDIT = "jsp/paiement/edit";
     private final static String VUE_LIST = "jsp/paiement/list";
     private final static String VUE_VIEW = "jsp/paiement/view";
-    private final static String PATH_LIST = "/paiement/list";
+    private final static String PATH_LIST = "/start#!/paiements";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){

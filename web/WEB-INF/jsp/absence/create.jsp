@@ -6,6 +6,7 @@
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -34,10 +35,9 @@
             </div>
             <div class="field">
                 <label>Jour d'absence</label>
-                <input type="date" name="jourAbsence" required="true"/>
+                <input type="date" name="jourAbsence" value="<fmt:formatDate value="${date}" pattern="yyyy-MM-dd"/>" required="true"/>
             </div>
             <div class="field">
-                
                 <div class="two fields">
                     <div class="two wide field">
                         <label>Justifié ?</label>

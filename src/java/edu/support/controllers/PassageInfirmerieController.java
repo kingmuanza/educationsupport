@@ -32,7 +32,7 @@ import org.springframework.web.servlet.view.RedirectView;
  * @author N9-T
  */
 @Controller
-@RequestMapping("/passageInfirmerie")
+@RequestMapping("/passageinfirmerie")
 public class PassageInfirmerieController {
     
     @EJB(mappedName="java:app/edusupport/PassageInfirmerieFacade")
@@ -41,11 +41,11 @@ public class PassageInfirmerieController {
     @EJB(mappedName="java:app/edusupport/EleveFacade")
     private EleveFacadeLocal efl;
     
-    private final static String VUE_CREATE = "jsp/passageInfirmerie/create";
-    private final static String VUE_EDIT = "jsp/passageInfirmerie/edit";
-    private final static String VUE_LIST = "jsp/passageInfirmerie/list";
-    private final static String VUE_VIEW = "jsp/passageInfirmerie/view";
-    private final static String PATH_LIST = "/passageInfirmerie/list";
+    private final static String VUE_CREATE = "jsp/passageinfirmerie/create";
+    private final static String VUE_EDIT = "jsp/passageinfirmerie/edit";
+    private final static String VUE_LIST = "jsp/passageinfirmerie/list";
+    private final static String VUE_VIEW = "jsp/passageinfirmerie/view";
+    private final static String PATH_LIST = "/start#!/passageinfirmeries";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
@@ -62,16 +62,16 @@ public class PassageInfirmerieController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("passageInfirmerie")PassageInfirmerie passageInfirmerie,BindingResult result ,HttpServletRequest request ,@RequestParam Map <String,String> params) throws ParseException{
+    public Object postCreate(@Valid @ModelAttribute("passageinfirmerie")PassageInfirmerie passageinfirmerie,BindingResult result ,HttpServletRequest request ,@RequestParam Map <String,String> params) throws ParseException{
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-        passageInfirmerie.setCreated(new Date());
-        passageInfirmerie.setModified(new Date());
-        passageInfirmerie.setDateJour(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateJour")));
-        passageInfirmerie.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
-        pifl.create(passageInfirmerie);
+        passageinfirmerie.setCreated(new Date());
+        passageinfirmerie.setModified(new Date());
+        passageinfirmerie.setDateJour(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateJour")));
+        passageinfirmerie.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
+        pifl.create(passageinfirmerie);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -79,18 +79,18 @@ public class PassageInfirmerieController {
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("passageInfirmerie", pifl.find(id));
+        mv.addObject("passageinfirmerie", pifl.find(id));
         mv.addObject("eleves", efl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("passageInfirmerie")PassageInfirmerie passageInfirmerie  ,@RequestParam Map <String,String> params,HttpServletRequest request) throws ParseException{
-        passageInfirmerie.setModified(new Date());
-        passageInfirmerie.setCreated(pifl.find(Integer.parseInt(params.get("idpassageInfirmerie"))).getCreated());
-        passageInfirmerie.setDateJour(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateJour")));
-        passageInfirmerie.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
-        pifl.edit(passageInfirmerie);
+    public RedirectView postEdit(@Valid @ModelAttribute("passageinfirmerie")PassageInfirmerie passageinfirmerie  ,@RequestParam Map <String,String> params,HttpServletRequest request) throws ParseException{
+        passageinfirmerie.setModified(new Date());
+        passageinfirmerie.setCreated(pifl.find(Integer.parseInt(params.get("idpassageinfirmerie"))).getCreated());
+        passageinfirmerie.setDateJour(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateJour")));
+        passageinfirmerie.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
+        pifl.edit(passageinfirmerie);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -98,20 +98,20 @@ public class PassageInfirmerieController {
     @RequestMapping(value="/view/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("passageInfirmerie", pifl.find(id));
+        mv.addObject("passageinfirmerie", pifl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("passageInfirmeries", pifl.findAll());
+        mv.addObject("passageinfirmeries", pifl.findAll());
         return mv;
     }
     
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
-    public RedirectView delete(@RequestParam("idpassageInfirmerie")int id,HttpServletRequest request){
+    public RedirectView delete(@RequestParam("idpassageinfirmerie")int id,HttpServletRequest request){
         PassageInfirmerie c = pifl.find(id);
         pifl.remove(c);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);

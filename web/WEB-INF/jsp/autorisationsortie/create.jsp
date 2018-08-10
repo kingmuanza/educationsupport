@@ -6,6 +6,7 @@
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -14,39 +15,47 @@
         <title>AUTORISATION SORTIE | Create</title>
     </head>
     <body>
+        <h1 class="titre">
+            Enregistrement des autorisation de sortie
+        </h1>
+
         <form:errors path="autorisationsortie.*"/>
-        <form method="post" action="<c:url value="/autorisationsortie/create"/>">
-            
-            <table>
-                <tr>
-                    <td><label>Eleve autorisé à sortir</label></td>
-                            <td><select multiple="true" type="text" name="eleveIdeleve" required="true">
-                                    <option> -- SELECT --</option>
-                                    <c:forEach items="${eleves}" var="eleve">
-                                            <option value="${eleve.ideleve}">${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms}</option>
-                                        
-                                    </c:forEach>
-                        </select></td>
-                </tr>
-                <tr>
-                    <td><label>Code</label></td>
-                    <td><input type="text" name="code" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Date Jour</label></td>
-                    <td><input type="date" name="dateJour" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Date retour</label></td>
-                    <td><input type="date" name="dateRetour" required="true"/></td>
-                </tr>
-                <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+        <form method="post" class="ui form" action="<c:url value="/autorisationsortie/create"/>">
+
+
+            <div class="field">
+
+                <label>Eleves autorisés à sortir</label>
+                <div class="ui dropdown selection multiple">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Sélectionnez les élèves</div>
+                    <select id="multi-select" multiple="true" type="text" name="eleveIdeleve" required="true">
+                        <c:forEach items="${eleves}" var="eleve">
+                            <option value="${eleve.ideleve}">${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <label>Code</label>
+                <input type="text" name="code" required="true"/>
+            </div>
+            <div class="field">
+                <label>Date Jour</label>
+                <input type="date" value="<fmt:formatDate value="${date}" pattern="yyyy-MM-dd"/>" name="dateJour" required="true"/>
+            </div>
+            <div class="field">
+                <label>Date retour</label>
+                <input type="date" value="<fmt:formatDate value="${date}" pattern="yyyy-MM-dd"/>" name="dateRetour" required="true"/>
+            </div>
+            <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
+            <button class="ui button" type="submit">Enregistrer</button>
+
         </form>
-        
+        <script>
+            $(document).ready(function () {
+                $("#multi-select").dropdown("get value");
+            });
+        </script>
     </body>
 </html>

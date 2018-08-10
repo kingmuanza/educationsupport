@@ -45,7 +45,7 @@ public class RetardController {
     private final static String VUE_EDIT = "jsp/retard/edit";
     private final static String VUE_LIST = "jsp/retard/list";
     private final static String VUE_VIEW = "jsp/retard/view";
-    private final static String PATH_LIST = "/retard/list";
+    private final static String PATH_LIST = "/start#!/retards";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){

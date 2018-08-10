@@ -14,23 +14,22 @@
         <title>DROIT D'ACCES | Create</title>
     </head>
     <body>
+        <h1 class="titre">
+            Enregistrement des droits d'accès
+        </h1>
         <form:errors path="droitacces.*"/>
-        <form method="post" action="<c:url value="/droitacces/create"/>">
-            <table>
-                <tr>
-                    <td><label>Niveau</label></td>
-                    <td><input type="text" name="niveau" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Description</label></td>
-                    <td><input type="text" name="description" required="true"/></td>
-                </tr>
+        <form method="post" class="ui form" action="<c:url value="/droitacces/create"/>">
+            
+                <div class="field">
+                    <label>Niveau</label>
+                    <input type="text" name="niveau" required="true"/>
+                </div>
+                <div class="field">
+                    <label>Description</label>
+                    <input type="text" name="description" required="true"/>
+                </div>
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+                <button class="ui button" type="submit">Enregistrer</button>
         </form>
         
     </body>
