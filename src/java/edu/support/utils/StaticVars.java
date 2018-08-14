@@ -11,5 +11,5 @@ package edu.support.utils;
  */
 public class StaticVars {
     
-    public final static double FRAIS_EXIGIBLES = 10000.0;
+    public final static double FRAIS_EXIGIBLES = 200000.0;
 }

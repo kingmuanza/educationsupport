@@ -23,7 +23,7 @@
                     <div class="statistic" style="cursor: pointer" onclick="window.location.href = 'start#!/absences'">
                         
                             <div class="value  titre">
-                                85
+                                ${absences.size()}
                             </div>
                             <div class="label">
                                 Absences
@@ -32,7 +32,7 @@
                     </div>
                     <div class="statistic" style="cursor: pointer" onclick="window.location.href = 'start#!/retards'">
                         <div class="value  titre">
-                            318
+                            ${retards.size()}
                         </div>
                         <div class="label">
                             Retards
@@ -40,7 +40,7 @@
                     </div>
                     <div class="statistic" style="cursor: pointer" onclick="window.location.href = 'start#!/sanctions'">
                         <div class="value  titre">
-                            5
+                            ${sanctions.size()}
                         </div>
                         <div class="label">
                             Sanctions
@@ -48,7 +48,7 @@
                     </div>
                     <div class="statistic" style="cursor: pointer" onclick="window.location.href = 'start#!/permissions'">
                         <div class="value  titre">
-                            12
+                            ${autorisationsorties.size()}
                         </div>
                         <div class="label">
                             Permissions
