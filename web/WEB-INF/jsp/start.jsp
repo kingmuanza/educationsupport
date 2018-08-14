@@ -208,15 +208,6 @@
                                 <a class="item" href="#!/classes">Classes</a>
                             </div>
                         </div>
-                        <div class="item">
-                            <a class="title">
-                                <i class="dropdown icon"></i> 
-                                <b>Accueil</b>
-                            </a>
-                            <div class="content menu">
-                                <a class="item" href="#!/badges">Bagdes pour visiteur</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
 

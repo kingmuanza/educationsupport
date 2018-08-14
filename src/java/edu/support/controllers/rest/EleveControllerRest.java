@@ -25,6 +25,7 @@ import edu.support.services.impl.SolvabiliteServiceImpl;
 import edu.support.utils.EleveDetails;
 import edu.support.utils.StaticVars;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
@@ -239,13 +240,16 @@ public class EleveControllerRest {
     private EleveDetails initializeEleveDetails(EleveDetails ed){
         List<Absence> absences = (List)ed.getEleve().getIndividuIdindividu().getAbsenceCollection();
         for(Absence a : absences){
-            System.out.println(a.getDeleted());
+            System.out.println(a.getJourAbsence()+"  :  " +a.getMotif()+ "");
         }
         ed.setAbsences(absences);
         ed.setRetards((List)ed.getEleve().getIndividuIdindividu().getRetardCollection());
         ed.setSanctions((List)ed.getEleve().getSanctionCollection());
         ed.setPaiements((List)ed.getEleve().getPaiementCollection());
-        ed.setNotes((List)ed.getEleve().getNoteCollection());
+        Collection<Note> notes = ed.getEleve().getNoteCollection();
+        
+//        List list = new ArrayList(notes);
+//        ed.setNotes((List)ed.getEleve().getNoteCollection());
         ed.getSolvabilite().setIsSolvable(new SolvabiliteServiceImpl().isSolvable(ed.getEleve()));
         double som = 0.0;
         for(Paiement p: ed.getEleve().getPaiementCollection())
