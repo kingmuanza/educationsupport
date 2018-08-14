@@ -26,54 +26,74 @@
                     <th>Nom</th>
                     <th>Prenom</th>     
                     <th>Telephone</th>   
+                    <th>Matiere</th>   
                     <th>Edition</th>   
                 </tr>
             </thead>
 
             <tbody>
                 <c:forEach items="${enseignants}" var="enseignant">
-                <c:if test="${!enseignant.deleted}">
-                <tr class="pointeur" onclick="window.location.href='start#!/enseignant/${enseignant.idenseignant}'">
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${enseignant.individuIdindividu.matricule}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${enseignant.individuIdindividu.noms}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${enseignant.individuIdindividu.prenoms}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${enseignant.individuIdindividu.telephone}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                Crée le <fmt:formatDate value="${enseignant.created}" pattern="yyyy-MM-dd"/>
-                                <div class="sub header">
-                                    Modifié le <fmt:formatDate value="${enseignant.modified}" pattern="yyyy-MM-dd"/>
-                                </div>
-                            </div>
-                        </h4>
-                    </td>
-                </tr>
-                </c:if>
+                    <c:if test="${!enseignant.deleted}">
+                        <tr class="pointeur" onclick="window.location.href = 'start#!/enseignant/${enseignant.idenseignant}'">
+                            <td>
+                                <h4 class="ui image header">
+                                    <div class="content">
+                                        ${enseignant.individuIdindividu.matricule}</div>
+                                    </div>
+                                </h4>
+                            </td>
+                            <td>
+                                <h4 class="ui image header">
+                                    <div class="content">
+                                        ${enseignant.individuIdindividu.noms}</div>
+                                    </div>
+                                </h4>
+                            </td>
+                            <td>
+                                <h4 class="ui image header">
+                                    <div class="content">
+                                        ${enseignant.individuIdindividu.prenoms}</div>
+                                    </div>
+                                </h4>
+                            </td>
+                            <td>
+                                <h4 class="ui image header">
+                                    <div class="content">
+                                        ${enseignant.individuIdindividu.telephone}</div>
+                                    </div>
+                                </h4>
+                            </td>
+                            <td>
+                                <h4 class="ui image header">
+                                    <div class="content" id="muanza">
+                                        <c:forEach items="${enseignant.matieres}" var="courEn">
+                                            <span>
+                                                ${courEn.cours.matiere.libelle}&nbsp;
+                                            </span>
+                                        </c:forEach>
+                                        <div class="sub header">
+                                            <c:forEach items="${enseignant.coursEnseignants}" var="courEn">
+                                                <span>
+                                                    ${courEn.cours.classe.niveauEtude.code} 
+                                                    ${courEn.cours.classe.filiere.libelle}&nbsp;
+                                                </span>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </h4>
+                            </td>
+                            <td>
+                                <h4 class="ui image header">
+                                    <div class="content">
+                                        Crée le <fmt:formatDate value="${enseignant.created}" pattern="yyyy-MM-dd"/>
+                                        <div class="sub header">
+                                            Modifié le <fmt:formatDate value="${enseignant.modified}" pattern="yyyy-MM-dd"/>
+                                        </div>
+                                    </div>
+                                </h4>
+                            </td>
+                        </tr>
+                    </c:if>
                 </c:forEach>
             </tbody>
         </table>
@@ -91,63 +111,63 @@
         <script src="<c:url value="/resources/js/buttons.print.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/pdfmake.min.js"/>" type="text/javascript"></script>
         <script>
-            var titre = 'Enseignant';
-            $(document).ready(function () {
-                
-                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "enseignant");
-                
-                $('#dataTableUtilisateur').DataTable({
-                    
-                    dom: '<"top"fB>rt<"bottom"lp><"clear">',
-                    buttons: [
-                        {
-                            text: "Nouveau",
-                            title: titre,
-                            message: '',
-                            className: 'ui gris mini button',
-                            action: function (e, dt, node, config) {
-                                window.location.href='start#!/enseignant'
+                    var titre = 'Enseignant';
+                    $(document).ready(function () {
+
+                        //ouvrirMenuCorrespondant("#section_params", "bouton_params", "enseignant");
+
+                        $('#dataTableUtilisateur').DataTable({
+
+                            dom: '<"top"fB>rt<"bottom"lp><"clear">',
+                            buttons: [
+                                {
+                                    text: "Nouveau",
+                                    title: titre,
+                                    message: '',
+                                    className: 'ui gris mini button',
+                                    action: function (e, dt, node, config) {
+                                        window.location.href = 'start#!/enseignant'
+                                    }
+                                },
+                                {
+                                    extend: 'excelHtml5',
+                                    text: "Exporter vers Excel",
+                                    title: titre,
+                                    message: '',
+                                    className: 'ui gris mini basic button'
+                                },
+                                {
+                                    extend: 'pdfHtml5',
+                                    text: "Exporter en PDF",
+                                    title: titre,
+                                    message: '',
+                                    className: 'impressionPDF ui gris basic mini button'
+                                },
+                                {
+                                    extend: 'print',
+                                    text: "Imprimer",
+                                    title: titre,
+                                    message: '',
+                                    className: 'impression ui gris basic mini button'
+                                }
+                            ],
+                            "language": {
+                                "sEmptyTable": "Aucune donnée disponible",
+                                "sInfo": "Affiche _START_ à _END_ sur _TOTAL_ entrées",
+                                "sLengthMenu": "Afficher _MENU_ lignes par page",
+                                "sSearch": "Rechercher : ",
+                                "zeroRecords": "Aucun résultat",
+                                "info": "Page _PAGE_ sur _PAGES_",
+                                "infoEmpty": "Aucun résultat disponible",
+                                "sProcessing": "Veuillez patienter...",
+                                "infoFiltered": "(sur les _MAX_ disponibles)",
+                                "paginate": {
+                                    "previous": "Précédent",
+                                    "next": "Suivant"
+                                }
                             }
-                        },
-                        {
-                            extend: 'excelHtml5',
-                            text: "Exporter vers Excel",
-                            title: titre,
-                            message: '',
-                            className: 'ui gris mini basic button'
-                        },
-                        {
-                            extend: 'pdfHtml5',
-                            text: "Exporter en PDF",
-                            title: titre,
-                            message: '',
-                            className: 'impressionPDF ui gris basic mini button'
-                        },
-                        {
-                            extend: 'print',
-                            text: "Imprimer",
-                            title: titre,
-                            message: '',
-                            className: 'impression ui gris basic mini button'
-                        }
-                    ],
-                    "language": {
-                        "sEmptyTable": "Aucune donnée disponible",
-                        "sInfo": "Affiche _START_ à _END_ sur _TOTAL_ entrées",
-                        "sLengthMenu": "Afficher _MENU_ lignes par page",
-                        "sSearch": "Rechercher : ",
-                        "zeroRecords": "Aucun résultat",
-                        "info": "Page _PAGE_ sur _PAGES_",
-                        "infoEmpty": "Aucun résultat disponible",
-                        "sProcessing": "Veuillez patienter...",
-                        "infoFiltered": "(sur les _MAX_ disponibles)",
-                        "paginate": {
-                            "previous": "Précédent",
-                            "next": "Suivant"
-                        }
-                    }
-                });
-            });
+                        });
+                    });
         </script>
 
     </body>

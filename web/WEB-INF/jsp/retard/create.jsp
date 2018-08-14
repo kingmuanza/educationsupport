@@ -14,7 +14,7 @@
             Enregistrement des retards
         </h1>
         <form:errors path="retard.*"/>
-        <form method="post" class="ui form" action="create" style="padding-top: 20px;">
+        <form method="post" class="ui form" action="<c:url value="/retard/create"/>" style="padding-top: 20px;">
             
                 <div class="field">
                     <label>Individu en retard</label>

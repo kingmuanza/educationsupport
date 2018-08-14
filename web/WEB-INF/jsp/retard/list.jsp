@@ -46,14 +46,14 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${retard.marge}</div>
+                                ${retard.marge} H</div>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${retard.jourRetard}</div>
+                                <fmt:formatDate value="${retard.jourRetard}" pattern="yyyy-MM-dd"/>
                             </div>
                         </h4>
                     </td>

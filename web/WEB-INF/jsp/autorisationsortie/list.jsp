@@ -17,7 +17,7 @@
 
     </head>
     <body>
-        <h1 class="titre">Liste des Permissions de sorties</h1>
+        <h1 class="titre">Liste des permissions de sorties</h1>
 
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>

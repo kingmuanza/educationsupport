@@ -17,14 +17,14 @@
 
     </head>
     <body>
-        <h1 class="titre">Liste des eleves</h1>
+        <h1 class="titre">Liste des elèves</h1>
 
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
                     <th>Matricule</th>
                     <th>Nom</th>
-                    <th>Prenom</th>                    
+                    <th>Prénom</th>                    
                     <th>Classe</th>     
                     <th>Edition</th>     
                 </tr>

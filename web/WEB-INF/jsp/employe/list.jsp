@@ -17,7 +17,7 @@
 
     </head>
     <body>
-        <h1 class="titre">Liste des employes</h1>
+        <h1 class="titre">Liste des employés</h1>
 
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
@@ -25,7 +25,7 @@
                     <th>Matricule</th>
                     <th>Nom</th>
                     <th>Prenom</th>     
-                    <th>Telephone</th>     
+                    <th>Téléphone</th>     
                     <th>Edition</th>     
                 </tr>
             </thead>

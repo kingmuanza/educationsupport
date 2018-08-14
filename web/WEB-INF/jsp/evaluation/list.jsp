@@ -25,7 +25,6 @@
                     <th>Séquence</th>
                     <th>Matiere</th>
                     <th>Classe</th>
-                    <th>Edition</th>
                 </tr>
             </thead>
 
@@ -50,17 +49,7 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${evaluation.classe.code}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                Crée le <fmt:formatDate value="${evaluation.created}" pattern="yyyy-MM-dd"/>
-                                <div class="sub header">
-                                    Modifié le <fmt:formatDate value="${evaluation.modified}" pattern="yyyy-MM-dd"/>
-                                </div>
+                                ${evaluation.classeIdclasse.code}</div>
                             </div>
                         </h4>
                     </td>

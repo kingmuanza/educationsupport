@@ -117,7 +117,7 @@
                             </a>
                             <div class="active content menu">
                                 <a class="item" href="#!/reunions">Réunions des parents</a>
-                                <a class="item" href="#!/calendrier">Calendrier des examens</a>
+                                <a class="item" href="#!/evaluations">Calendrier des examens</a>
                             </div>
                         </div>
                         <div class="item active">
@@ -142,7 +142,7 @@
                                 <b>Liste des examens</b>
                             </a>
                             <div class="active content menu">
-                                <a class="item" href="#!/statistiques">Examen 1</a>
+                                <a class="item" href="#!/evaluations">Examen 1</a>
                             </div>
                         </div>
                     </div>

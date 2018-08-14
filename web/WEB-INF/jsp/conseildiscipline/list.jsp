@@ -23,9 +23,8 @@
             <thead>
                 <tr>
                     <th>Code</th>
-                    <th>Date Début</th>
-                    <th>Heure Début</th>
-                    <th>Date Fin</th>      
+                    <th>Date conseil</th>
+                    <th>Heure Début</th>     
                     <th>Heure Fin</th>      
                     <th>Edition</th>      
                 </tr>
@@ -45,7 +44,7 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                <fmt:formatDate value="${conseildiscipline.dateDebut}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                <fmt:formatDate value="${conseildiscipline.dateDebut}" pattern="yyyy-MM-dd"/>
                             </div>
                         </h4>
                     </td>
@@ -53,13 +52,6 @@
                         <h4 class="ui image header">
                             <div class="content">
                                 <fmt:formatDate value="${conseildiscipline.dateDebut}" pattern="HH:mm:ss"/>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                <fmt:formatDate value="${conseildiscipline.dateFin}" pattern="yyyy-MM-dd HH:mm:ss"/>
                             </div>
                         </h4>
                     </td>

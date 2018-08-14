@@ -23,7 +23,7 @@
             <thead>
                 <tr>
                     <th>Login</th>
-                    <th>Mot de passe</th>
+                    <th>Droit d'accès</th>
                     <th>Edition</th>
                 </tr>
             </thead>
@@ -42,7 +42,7 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${utilisateur.motDePasse}</div>
+                                ${utilisateur.droitAccesIddroitAcces.niveau}</div>
                             </div>
                         </h4>
                     </td>

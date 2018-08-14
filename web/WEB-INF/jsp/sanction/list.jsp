@@ -19,7 +19,7 @@
     <body>
         <h1 class="titre">Liste des sanctions</h1>
 
-        <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
+        <table id="dataTableUtilisateur" class="ui celled table responsive" style="width:100%">
             <thead>
                 <tr>
                     <th>Elève</th>
