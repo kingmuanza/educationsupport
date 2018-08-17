@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -26,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "note", catalog = "edusupport_db", schema = "")
@@ -59,10 +58,9 @@ public class Note implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Eleve eleveIdeleve;
     @JoinColumn(name = "evaluation_idevaluation", referencedColumnName = "idevaluation", nullable = false)
     @ManyToOne(optional = false)
@@ -75,7 +73,7 @@ public class Note implements Serializable {
         this.idnote = idnote;
     }
 
-    public Note(Integer idnote, double valeur, boolean deleted) {
+    public Note(Integer idnote, double valeur, short deleted) {
         this.idnote = idnote;
         this.valeur = valeur;
         this.deleted = deleted;
@@ -113,11 +111,11 @@ public class Note implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 

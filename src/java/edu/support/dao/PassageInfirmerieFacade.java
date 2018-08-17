@@ -5,13 +5,11 @@
  */
 package edu.support.dao;
 
-import edu.support.entities.Eleve;
 import edu.support.entities.PassageInfirmerie;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
@@ -33,30 +31,8 @@ public class PassageInfirmerieFacade extends AbstractFacade<PassageInfirmerie> i
     }
 
     @Override
-    public List<PassageInfirmerie> findByEleve(Eleve e) {
-        EntityManager entityManager = getEntityManager();
-        Query q;
-        try{
-            q = em.createNamedQuery("SELECT pi FROM PassageInfirmerie pi WHERE pi.eleveIdeleve.ideleve=:id");
-            q.setParameter("id", e.getIdeleve());
-            return q.getResultList();
-        }catch(Exception ex){
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
-    public List<PassageInfirmerie> findByDates(String d1, String d2) {
-        EntityManager entityManager = getEntityManager();
-        Query q;
-        try{
-            q = em.createQuery("SELECT pi FROM PassageInfirmerie pi WHERE pi.dateJour BETWEEN '"+d1+"' AND '"+d2+"'");
-            return q.getResultList();
-        }catch(Exception ex){
-            ex.printStackTrace();
-            return null;
-        }
+    public List<PassageInfirmerie> findByDates(String date1, String date2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

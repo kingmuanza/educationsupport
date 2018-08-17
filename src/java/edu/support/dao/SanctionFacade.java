@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Stateless
 public class SanctionFacade extends AbstractFacade<Sanction> implements SanctionFacadeLocal {

@@ -79,8 +79,8 @@ public class EvaluationController {
         }
         evaluation.setCreated(new Date());
         evaluation.setModified(new Date());
-        evaluation.setClasseIdclasse(cfl.find(Integer.parseInt(params.get("classeIdclasse"))));
-        evaluation.setMatiereIdmatiere(mfl.find(Integer.parseInt(params.get("matiereIdmatiere"))));
+//        evaluation.setClasseIdclasse(cfl.find(Integer.parseInt(params.get("classeIdclasse"))));
+//        evaluation.setMatiereIdmatiere(mfl.find(Integer.parseInt(params.get("matiereIdmatiere"))));
         evaluation.setSequenceIdsequence(sfl.find(Integer.parseInt(params.get("sequenceIdsequence"))));
         efl.create(evaluation);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
@@ -98,8 +98,8 @@ public class EvaluationController {
     public RedirectView postEdit(@Valid @ModelAttribute("evaluation")Evaluation evaluation ,@RequestParam Map<String,String> params, HttpServletRequest request){
         evaluation.setModified(new Date());
         evaluation.setCreated(efl.find(Integer.parseInt(params.get("idevaluation"))).getCreated());
-        evaluation.setClasseIdclasse(cfl.find(Integer.parseInt(params.get("classeIdclasse"))));
-        evaluation.setMatiereIdmatiere(mfl.find(Integer.parseInt(params.get("matiereIdmatiere"))));
+//        evaluation.setClasseIdclasse(cfl.find(Integer.parseInt(params.get("classeIdclasse"))));
+//        evaluation.setMatiereIdmatiere(mfl.find(Integer.parseInt(params.get("matiereIdmatiere"))));
         evaluation.setSequenceIdsequence(sfl.find(Integer.parseInt(params.get("sequenceIdsequence"))));
         efl.edit(evaluation);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);

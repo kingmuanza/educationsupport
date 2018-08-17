@@ -5,7 +5,7 @@
  */
 package edu.support.controllers;
 
-import edu.support.dao.ClasseFacadeLocal;
+import edu.support.dao.SalleDeClasseFacadeLocal;
 import edu.support.dao.EleveFacadeLocal;
 import edu.support.dao.IndividuFacadeLocal;
 import edu.support.entities.Eleve;
@@ -37,10 +37,10 @@ import org.springframework.web.servlet.view.RedirectView;
 public class EleveController {
     
     @EJB(mappedName="java:app/edusupport/EleveFacade")
-    private EleveFacadeLocal cfl;
+    private EleveFacadeLocal efl;
     
     @EJB(mappedName="java:app/edusupport/ClasseFacade")
-    private ClasseFacadeLocal classefl;
+    private SalleDeClasseFacadeLocal sclassefl;
     
     @EJB(mappedName="java:app/edusupport/IndividuFacade")
     private IndividuFacadeLocal ifl;
@@ -63,7 +63,7 @@ public class EleveController {
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
         
         mv.addObject("individus", ifl.findAll());
-        mv.addObject("classes", classefl.findAll());
+        mv.addObject("classes", sclassefl.findAll());
         
         return mv;
     }
@@ -76,9 +76,9 @@ public class EleveController {
         }
         eleve.setCreated(new Date());
         eleve.setModified(new Date());
-        eleve.setClasseIdclasse(classefl.find(Integer.parseInt(params.get("classeIdclasse"))));
+        eleve.setSalleDeClasseIdsalleDeClasse(sclassefl.find(Integer.parseInt(params.get("salleDeClasseIdsalleDeClasse"))));
         eleve.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
-        cfl.create(eleve);
+        efl.create(eleve);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -86,19 +86,19 @@ public class EleveController {
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("eleve", cfl.find(id));
+        mv.addObject("eleve", efl.find(id));
         mv.addObject("individus", ifl.findAll());
-        mv.addObject("classes", classefl.findAll());
+        mv.addObject("classes", sclassefl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
     public RedirectView postEdit(@Valid @ModelAttribute("eleve")Eleve eleve ,@RequestParam Map<String,String>params,HttpServletRequest request){
         eleve.setModified(new Date());
-        eleve.setCreated(cfl.find(params.get("ideleve")).getCreated());
-        eleve.setClasseIdclasse(classefl.find(Integer.parseInt(params.get("classeIclasse"))));
+        eleve.setCreated(efl.find(params.get("ideleve")).getCreated());
+        eleve.setSalleDeClasseIdsalleDeClasse(sclassefl.find(Integer.parseInt(params.get("salleDeClasseIdsalleDeClasse"))));
         eleve.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
-        cfl.edit(eleve);
+        efl.edit(eleve);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -106,22 +106,22 @@ public class EleveController {
     @RequestMapping(value="/view/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("eleve", cfl.find(id));
+        mv.addObject("eleve", efl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("eleves", cfl.findAll());
+        mv.addObject("eleves", efl.findAll());
         return mv;
     }
     
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
     public RedirectView delete(@RequestParam("ideleve")int id,HttpServletRequest request){
-        Eleve c = cfl.find(id);
-        cfl.remove(c);
+        Eleve c = efl.find(id);
+        efl.remove(c);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

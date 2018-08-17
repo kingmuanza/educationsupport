@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -26,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "retard", catalog = "edusupport_db", schema = "")
@@ -51,8 +50,7 @@ public class Retard implements Serializable {
     @NotNull
     @Column(name = "marge", nullable = false)
     private int marge;
-    @Basic(optional = false)
-    @Column(name = "jour_retard", nullable = false)
+    @Column(name = "jour_retard")
     @Temporal(TemporalType.TIMESTAMP)
     private Date jourRetard;
     @Column(name = "created")
@@ -64,11 +62,10 @@ public class Retard implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
-    @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
+    private short deleted;
+    @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
-    @JsonIgnore
-    private Individu individuIdindividu;
+    private Eleve eleveIdeleve;
 
     public Retard() {
     }
@@ -77,10 +74,9 @@ public class Retard implements Serializable {
         this.idretard = idretard;
     }
 
-    public Retard(Integer idretard, int marge, Date jourRetard, boolean deleted) {
+    public Retard(Integer idretard, int marge, short deleted) {
         this.idretard = idretard;
         this.marge = marge;
-        this.jourRetard = jourRetard;
         this.deleted = deleted;
     }
 
@@ -124,20 +120,20 @@ public class Retard implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 
-    public Individu getIndividuIdindividu() {
-        return individuIdindividu;
+    public Eleve getEleveIdeleve() {
+        return eleveIdeleve;
     }
 
-    public void setIndividuIdindividu(Individu individuIdindividu) {
-        this.individuIdindividu = individuIdindividu;
+    public void setEleveIdeleve(Eleve eleveIdeleve) {
+        this.eleveIdeleve = eleveIdeleve;
     }
 
     @Override

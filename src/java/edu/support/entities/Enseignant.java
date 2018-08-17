@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "enseignant", catalog = "edusupport_db", schema = "")
@@ -56,9 +57,9 @@ public class Enseignant implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
-    @OneToMany(mappedBy = "enseignantIdenseignant")
-    private Collection<Sanction> sanctionCollection;
+    private short deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "enseignantIdenseignant")
+    private Collection<EnseignantsClassesMatieres> enseignantsClassesMatieresCollection;
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
     @ManyToOne(optional = false)
     private Individu individuIdindividu;
@@ -70,7 +71,7 @@ public class Enseignant implements Serializable {
         this.idenseignant = idenseignant;
     }
 
-    public Enseignant(Integer idenseignant, boolean deleted) {
+    public Enseignant(Integer idenseignant, short deleted) {
         this.idenseignant = idenseignant;
         this.deleted = deleted;
     }
@@ -99,21 +100,21 @@ public class Enseignant implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 
     @XmlTransient
-    public Collection<Sanction> getSanctionCollection() {
-        return sanctionCollection;
+    public Collection<EnseignantsClassesMatieres> getEnseignantsClassesMatieresCollection() {
+        return enseignantsClassesMatieresCollection;
     }
 
-    public void setSanctionCollection(Collection<Sanction> sanctionCollection) {
-        this.sanctionCollection = sanctionCollection;
+    public void setEnseignantsClassesMatieresCollection(Collection<EnseignantsClassesMatieres> enseignantsClassesMatieresCollection) {
+        this.enseignantsClassesMatieresCollection = enseignantsClassesMatieresCollection;
     }
 
     public Individu getIndividuIdindividu() {

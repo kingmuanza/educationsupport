@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "conseil_discipline", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -39,11 +39,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ConseilDiscipline.findAll", query = "SELECT c FROM ConseilDiscipline c")
     , @NamedQuery(name = "ConseilDiscipline.findByIdconseilDiscipline", query = "SELECT c FROM ConseilDiscipline c WHERE c.idconseilDiscipline = :idconseilDiscipline")
     , @NamedQuery(name = "ConseilDiscipline.findByCode", query = "SELECT c FROM ConseilDiscipline c WHERE c.code = :code")
+    , @NamedQuery(name = "ConseilDiscipline.findByLibelle", query = "SELECT c FROM ConseilDiscipline c WHERE c.libelle = :libelle")
     , @NamedQuery(name = "ConseilDiscipline.findByDateDebut", query = "SELECT c FROM ConseilDiscipline c WHERE c.dateDebut = :dateDebut")
     , @NamedQuery(name = "ConseilDiscipline.findByDateFin", query = "SELECT c FROM ConseilDiscipline c WHERE c.dateFin = :dateFin")
     , @NamedQuery(name = "ConseilDiscipline.findByCreated", query = "SELECT c FROM ConseilDiscipline c WHERE c.created = :created")
     , @NamedQuery(name = "ConseilDiscipline.findByModified", query = "SELECT c FROM ConseilDiscipline c WHERE c.modified = :modified")
-    , @NamedQuery(name = "ConseilDiscipline.findByDeleted", query = "SELECT c FROM ConseilDiscipline c WHERE c.deleted = :deleted")})
+    , @NamedQuery(name = "ConseilDiscipline.findByBoolean1", query = "SELECT c FROM ConseilDiscipline c WHERE c.boolean1 = :boolean1")})
 public class ConseilDiscipline implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,14 +58,13 @@ public class ConseilDiscipline implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "date_debut", nullable = false)
+    @Size(max = 45)
+    @Column(name = "libelle", length = 45)
+    private String libelle;
+    @Column(name = "date_debut")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateDebut;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "date_fin", nullable = false)
+    @Column(name = "date_fin")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateFin;
     @Column(name = "created")
@@ -75,8 +75,8 @@ public class ConseilDiscipline implements Serializable {
     private Date modified;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    @Column(name = "boolean", nullable = false)
+    private short boolean1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "conseilDisciplineIdconseilDiscipline")
     private Collection<ElevesTraduits> elevesTraduitsCollection;
 
@@ -87,12 +87,10 @@ public class ConseilDiscipline implements Serializable {
         this.idconseilDiscipline = idconseilDiscipline;
     }
 
-    public ConseilDiscipline(Integer idconseilDiscipline, String code, Date dateDebut, Date dateFin, boolean deleted) {
+    public ConseilDiscipline(Integer idconseilDiscipline, String code, short boolean1) {
         this.idconseilDiscipline = idconseilDiscipline;
         this.code = code;
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
-        this.deleted = deleted;
+        this.boolean1 = boolean1;
     }
 
     public Integer getIdconseilDiscipline() {
@@ -109,6 +107,14 @@ public class ConseilDiscipline implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
     }
 
     public Date getDateDebut() {
@@ -143,12 +149,12 @@ public class ConseilDiscipline implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
+    public short getBoolean1() {
+        return boolean1;
     }
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public void setBoolean1(short boolean1) {
+        this.boolean1 = boolean1;
     }
 
     @XmlTransient

@@ -1,7 +1,7 @@
 package edu.support.controllers;
 
-import edu.support.dao.ClasseFacadeLocal;
-import edu.support.entities.Classe;
+import edu.support.dao.SalleDeClasseFacadeLocal;
+import edu.support.entities.SalleDeClasse;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -13,16 +13,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AujourdhuiController {
     
-    @EJB(mappedName="java:app/edusupport/ClasseFacade")
-    private ClasseFacadeLocal classeFacadeLocal;
+    @EJB(mappedName="java:app/edusupport/SalleDeClasseFacade")
+    private SalleDeClasseFacadeLocal salleDeClasseFacadeLocal;
     
     private final static String PATH_START = "jsp/aujourdhui";
     @RequestMapping(value = "/aujourdhui", method = {RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getViewStart(){
         ModelAndView mv = new ModelAndView(PATH_START);
-        List<Classe> classes = classeFacadeLocal.findAll();
+        List<SalleDeClasse> classes = salleDeClasseFacadeLocal.findAll();
         System.out.println(classes);
-        for(Classe c : classes){
+        for(SalleDeClasse c : classes){
         System.out.println(c.getEleveCollection().size());
             
         }

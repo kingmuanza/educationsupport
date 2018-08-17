@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -27,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "paiement", catalog = "edusupport_db", schema = "")
@@ -58,8 +57,7 @@ public class Paiement implements Serializable {
     @NotNull
     @Column(name = "montant", nullable = false)
     private double montant;
-    @Basic(optional = false)
-    @Column(name = "date_jour", nullable = false)
+    @Column(name = "date_jour")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateJour;
     @Column(name = "created")
@@ -71,10 +69,9 @@ public class Paiement implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Eleve eleveIdeleve;
 
     public Paiement() {
@@ -84,11 +81,10 @@ public class Paiement implements Serializable {
         this.idpaiement = idpaiement;
     }
 
-    public Paiement(Integer idpaiement, String code, double montant, Date dateJour, boolean deleted) {
+    public Paiement(Integer idpaiement, String code, double montant, short deleted) {
         this.idpaiement = idpaiement;
         this.code = code;
         this.montant = montant;
-        this.dateJour = dateJour;
         this.deleted = deleted;
     }
 
@@ -140,11 +136,11 @@ public class Paiement implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 

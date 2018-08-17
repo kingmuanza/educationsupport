@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -28,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "absence", catalog = "edusupport_db", schema = "")
@@ -37,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Absence.findAll", query = "SELECT a FROM Absence a")
     , @NamedQuery(name = "Absence.findByIdabsence", query = "SELECT a FROM Absence a WHERE a.idabsence = :idabsence")
     , @NamedQuery(name = "Absence.findByJourAbsence", query = "SELECT a FROM Absence a WHERE a.jourAbsence = :jourAbsence")
-    , @NamedQuery(name = "Absence.findByJustifee", query = "SELECT a FROM Absence a WHERE a.justifee = :justifee")
+    , @NamedQuery(name = "Absence.findByJustifee", query = "SELECT a FROM Absence a WHERE a.justifiee = :justifiee")
     , @NamedQuery(name = "Absence.findByCreated", query = "SELECT a FROM Absence a WHERE a.created = :created")
     , @NamedQuery(name = "Absence.findByModified", query = "SELECT a FROM Absence a WHERE a.modified = :modified")
     , @NamedQuery(name = "Absence.findByDeleted", query = "SELECT a FROM Absence a WHERE a.deleted = :deleted")})
@@ -50,31 +49,35 @@ public class Absence implements Serializable {
     @Column(name = "idabsence", nullable = false)
     private Integer idabsence;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "jour_absence", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date jourAbsence;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "justifee", nullable = false)
-    private boolean justifee;
+    @Column(name = "justifiee", nullable = false)
+    private boolean justifiee;
     @Lob
     @Size(max = 65535)
     @Column(name = "motif", length = 65535)
     private String motif;
-    @Column(name = "created")
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "created", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @Column(name = "modified")
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "modified", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
-    @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
+    @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
-    @JsonIgnore
-    private Individu individuIdindividu;
+    private Eleve eleveIdeleve;
 
     public Absence() {
     }
@@ -83,10 +86,12 @@ public class Absence implements Serializable {
         this.idabsence = idabsence;
     }
 
-    public Absence(Integer idabsence, Date jourAbsence, boolean justifee, boolean deleted) {
+    public Absence(Integer idabsence, Date jourAbsence, boolean justifiee, Date created, Date modified, boolean deleted) {
         this.idabsence = idabsence;
         this.jourAbsence = jourAbsence;
-        this.justifee = justifee;
+        this.justifiee = justifiee;
+        this.created = created;
+        this.modified = modified;
         this.deleted = deleted;
     }
 
@@ -106,12 +111,12 @@ public class Absence implements Serializable {
         this.jourAbsence = jourAbsence;
     }
 
-    public boolean getJustifee() {
-        return justifee;
+    public boolean getJustifiee() {
+        return justifiee;
     }
 
-    public void setJustifee(boolean justifee) {
-        this.justifee = justifee;
+    public void setJustifiee(boolean justifiee) {
+        this.justifiee = justifiee;
     }
 
     public String getMotif() {
@@ -146,12 +151,12 @@ public class Absence implements Serializable {
         this.deleted = deleted;
     }
 
-    public Individu getIndividuIdindividu() {
-        return individuIdindividu;
+    public Eleve getEleveIdeleve() {
+        return eleveIdeleve;
     }
 
-    public void setIndividuIdindividu(Individu individuIdindividu) {
-        this.individuIdindividu = individuIdindividu;
+    public void setEleveIdeleve(Eleve eleveIdeleve) {
+        this.eleveIdeleve = eleveIdeleve;
     }
 
     @Override

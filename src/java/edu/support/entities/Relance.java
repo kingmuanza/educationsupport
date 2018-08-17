@@ -10,8 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -27,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "relance", catalog = "edusupport_db", schema = "")
@@ -44,8 +42,8 @@ public class Relance implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "idrelance", nullable = false)
     private Integer idrelance;
     @Basic(optional = false)
@@ -72,7 +70,7 @@ public class Relance implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -84,7 +82,7 @@ public class Relance implements Serializable {
         this.idrelance = idrelance;
     }
 
-    public Relance(Integer idrelance, String motif, double montant, Date echeance, boolean deleted) {
+    public Relance(Integer idrelance, String motif, double montant, Date echeance, short deleted) {
         this.idrelance = idrelance;
         this.motif = motif;
         this.montant = montant;
@@ -140,11 +138,11 @@ public class Relance implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 

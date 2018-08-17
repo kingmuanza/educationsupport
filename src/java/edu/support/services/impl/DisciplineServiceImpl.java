@@ -24,12 +24,12 @@ public class DisciplineServiceImpl implements DisciplineService{
 
     @Override
     public List<Absence> getAbsences(Eleve e) {
-        return (List) e.getIndividuIdindividu().getAbsenceCollection();
+        return (List) e.getAbsenceCollection();
     }
 
     @Override
     public List<Retard> getRetards(Eleve e) {
-        return (List)e.getIndividuIdindividu().getRetardCollection();
+        return (List)e.getRetardCollection();
     }
 
     @Override

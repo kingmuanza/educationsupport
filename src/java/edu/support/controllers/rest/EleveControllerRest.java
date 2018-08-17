@@ -133,15 +133,15 @@ public class EleveControllerRest {
     @RequestMapping("/discipline/absences/{id}")
     public List<Absence> getEleveAbsences(@PathVariable("id") int id){
         Eleve e = efl.find(id);
-        return (List)e.getIndividuIdindividu().getAbsenceCollection();
+        return (List)e.getAbsenceCollection();
     }
     
     @RequestMapping("/discipline/nombreheureabsences/{id}")
     public int getEleveHeureAbsences(@PathVariable("id") int id){
         Eleve e = efl.find(id);
         int som =0;
-        for(Absence a: e.getIndividuIdindividu().getAbsenceCollection()){
-            if(!a.getJustifee())
+        for(Absence a: e.getAbsenceCollection()){
+            if(!a.getJustifiee())
                 som += a.getIdabsence();
         }
         return som;
@@ -150,7 +150,7 @@ public class EleveControllerRest {
     @RequestMapping("/discipline/retards/{id}")
     public List<Retard> getEleveRetards(@PathVariable("id") int id){
         Eleve e = efl.find(id);
-        return (List)e.getIndividuIdindividu().getRetardCollection();
+        return (List)e.getRetardCollection();
     }
     
     @RequestMapping("/discipline/convocations/{id}")
@@ -231,18 +231,18 @@ public class EleveControllerRest {
         int somCoef = 0;
         for(Note n: lesnotes){
             som += n.getValeur();
-            somCoef += n.getEvaluationIdevaluation().getMatiereIdmatiere().getCoefficient();
+            somCoef += n.getEvaluationIdevaluation().getClassesMatieresIdclassesMatieres().getCoefficient();
         }
         return som / somCoef;
     }
     
     private EleveDetails initializeEleveDetails(EleveDetails ed){
-        List<Absence> absences = (List)ed.getEleve().getIndividuIdindividu().getAbsenceCollection();
+        List<Absence> absences = (List)ed.getEleve().getAbsenceCollection();
         for(Absence a : absences){
             System.out.println(a.getDeleted());
         }
         ed.setAbsences(absences);
-        ed.setRetards((List)ed.getEleve().getIndividuIdindividu().getRetardCollection());
+        ed.setRetards((List)ed.getEleve().getRetardCollection());
         ed.setSanctions((List)ed.getEleve().getSanctionCollection());
         ed.setPaiements((List)ed.getEleve().getPaiementCollection());
         ed.setNotes((List)ed.getEleve().getNoteCollection());

@@ -12,8 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -28,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "trimestre", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -45,8 +43,8 @@ public class Trimestre implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "idtrimestre", nullable = false)
     private Integer idtrimestre;
     @Basic(optional = false)
@@ -62,7 +60,7 @@ public class Trimestre implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trimestreIdtrimestre")
     private Collection<Sequence> sequenceCollection;
 
@@ -73,7 +71,7 @@ public class Trimestre implements Serializable {
         this.idtrimestre = idtrimestre;
     }
 
-    public Trimestre(Integer idtrimestre, int numero, boolean deleted) {
+    public Trimestre(Integer idtrimestre, int numero, short deleted) {
         this.idtrimestre = idtrimestre;
         this.numero = numero;
         this.deleted = deleted;
@@ -111,11 +109,11 @@ public class Trimestre implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 

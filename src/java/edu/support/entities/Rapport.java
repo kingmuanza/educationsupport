@@ -10,8 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -28,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "rapport", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -46,8 +44,8 @@ public class Rapport implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "idrapport", nullable = false)
     private Integer idrapport;
     @Basic(optional = false)
@@ -60,11 +58,9 @@ public class Rapport implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "nom_fichier", nullable = false, length = 45)
     private String nomFichier;
-    @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
-    @Column(name = "url", nullable = false, length = 65535)
+    @Size(max = 65535)
+    @Column(name = "url", length = 65535)
     private String url;
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
@@ -75,7 +71,7 @@ public class Rapport implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @JoinColumn(name = "reunion_idreunion", referencedColumnName = "idreunion", nullable = false)
     @ManyToOne(optional = false)
     private Reunion reunionIdreunion;
@@ -87,11 +83,10 @@ public class Rapport implements Serializable {
         this.idrapport = idrapport;
     }
 
-    public Rapport(Integer idrapport, String code, String nomFichier, String url, boolean deleted) {
+    public Rapport(Integer idrapport, String code, String nomFichier, short deleted) {
         this.idrapport = idrapport;
         this.code = code;
         this.nomFichier = nomFichier;
-        this.url = url;
         this.deleted = deleted;
     }
 
@@ -143,11 +138,11 @@ public class Rapport implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 

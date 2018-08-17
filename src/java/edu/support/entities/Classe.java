@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -13,8 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,7 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -30,16 +26,17 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
-@Table(name = "classe", catalog = "edusupport_db", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"code"})})
+@Table(name = "classe", catalog = "edusupport_db", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Classe.findAll", query = "SELECT c FROM Classe c")
     , @NamedQuery(name = "Classe.findByIdclasse", query = "SELECT c FROM Classe c WHERE c.idclasse = :idclasse")
     , @NamedQuery(name = "Classe.findByCode", query = "SELECT c FROM Classe c WHERE c.code = :code")
+    , @NamedQuery(name = "Classe.findByLibelle", query = "SELECT c FROM Classe c WHERE c.libelle = :libelle")
+    , @NamedQuery(name = "Classe.findByFraisScolarite", query = "SELECT c FROM Classe c WHERE c.fraisScolarite = :fraisScolarite")
     , @NamedQuery(name = "Classe.findByCreated", query = "SELECT c FROM Classe c WHERE c.created = :created")
     , @NamedQuery(name = "Classe.findByModified", query = "SELECT c FROM Classe c WHERE c.modified = :modified")
     , @NamedQuery(name = "Classe.findByDeleted", query = "SELECT c FROM Classe c WHERE c.deleted = :deleted")})
@@ -47,8 +44,8 @@ public class Classe implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "idclasse", nullable = false)
     private Integer idclasse;
     @Basic(optional = false)
@@ -56,6 +53,13 @@ public class Classe implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
+    @Size(max = 45)
+    @Column(name = "libelle", length = 45)
+    private String libelle;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "frais_scolarite", nullable = false)
+    private double fraisScolarite;
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -65,13 +69,9 @@ public class Classe implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classeIdclasse")
-    @JsonIgnore
-    private Collection<Eleve> eleveCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classeIdclasse")
-    @JsonIgnore
-    private Collection<Evaluation> evaluationCollection;
+    private Collection<SalleDeClasse> salleDeClasseCollection;
 
     public Classe() {
     }
@@ -80,9 +80,10 @@ public class Classe implements Serializable {
         this.idclasse = idclasse;
     }
 
-    public Classe(Integer idclasse, String code, boolean deleted) {
+    public Classe(Integer idclasse, String code, double fraisScolarite, short deleted) {
         this.idclasse = idclasse;
         this.code = code;
+        this.fraisScolarite = fraisScolarite;
         this.deleted = deleted;
     }
 
@@ -102,6 +103,22 @@ public class Classe implements Serializable {
         this.code = code;
     }
 
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public double getFraisScolarite() {
+        return fraisScolarite;
+    }
+
+    public void setFraisScolarite(double fraisScolarite) {
+        this.fraisScolarite = fraisScolarite;
+    }
+
     public Date getCreated() {
         return created;
     }
@@ -118,30 +135,21 @@ public class Classe implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 
     @XmlTransient
-    public Collection<Eleve> getEleveCollection() {
-        return eleveCollection;
+    public Collection<SalleDeClasse> getSalleDeClasseCollection() {
+        return salleDeClasseCollection;
     }
 
-    public void setEleveCollection(Collection<Eleve> eleveCollection) {
-        this.eleveCollection = eleveCollection;
-    }
-
-    @XmlTransient
-    public Collection<Evaluation> getEvaluationCollection() {
-        return evaluationCollection;
-    }
-
-    public void setEvaluationCollection(Collection<Evaluation> evaluationCollection) {
-        this.evaluationCollection = evaluationCollection;
+    public void setSalleDeClasseCollection(Collection<SalleDeClasse> salleDeClasseCollection) {
+        this.salleDeClasseCollection = salleDeClasseCollection;
     }
 
     @Override

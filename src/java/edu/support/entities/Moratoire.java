@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -28,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "moratoire", catalog = "edusupport_db", schema = "")
@@ -37,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Moratoire.findAll", query = "SELECT m FROM Moratoire m")
     , @NamedQuery(name = "Moratoire.findByIdmoratoire", query = "SELECT m FROM Moratoire m WHERE m.idmoratoire = :idmoratoire")
     , @NamedQuery(name = "Moratoire.findByCode", query = "SELECT m FROM Moratoire m WHERE m.code = :code")
+    , @NamedQuery(name = "Moratoire.findByDateFinValidite", query = "SELECT m FROM Moratoire m WHERE m.dateFinValidite = :dateFinValidite")
     , @NamedQuery(name = "Moratoire.findByEtat", query = "SELECT m FROM Moratoire m WHERE m.etat = :etat")
     , @NamedQuery(name = "Moratoire.findByCreated", query = "SELECT m FROM Moratoire m WHERE m.created = :created")
     , @NamedQuery(name = "Moratoire.findByModified", query = "SELECT m FROM Moratoire m WHERE m.modified = :modified")
@@ -54,6 +54,9 @@ public class Moratoire implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
+    @Column(name = "date_fin_validite")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateFinValidite;
     @Lob
     @Size(max = 65535)
     @Column(name = "reponse", length = 65535)
@@ -71,10 +74,9 @@ public class Moratoire implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Eleve eleveIdeleve;
 
     public Moratoire() {
@@ -84,7 +86,7 @@ public class Moratoire implements Serializable {
         this.idmoratoire = idmoratoire;
     }
 
-    public Moratoire(Integer idmoratoire, String code, int etat, boolean deleted) {
+    public Moratoire(Integer idmoratoire, String code, int etat, short deleted) {
         this.idmoratoire = idmoratoire;
         this.code = code;
         this.etat = etat;
@@ -105,6 +107,14 @@ public class Moratoire implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public Date getDateFinValidite() {
+        return dateFinValidite;
+    }
+
+    public void setDateFinValidite(Date dateFinValidite) {
+        this.dateFinValidite = dateFinValidite;
     }
 
     public String getReponse() {
@@ -139,11 +149,11 @@ public class Moratoire implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 

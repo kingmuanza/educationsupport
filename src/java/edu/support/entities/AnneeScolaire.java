@@ -12,8 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -29,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "annee_scolaire", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -48,24 +46,20 @@ public class AnneeScolaire implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "idannee_scolaire", nullable = false)
     private Integer idanneeScolaire;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "date_debut", nullable = false, length = 45)
+    @Size(max = 45)
+    @Column(name = "date_debut", length = 45)
     private String dateDebut;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "date_fin", nullable = false, length = 45)
+    @Size(max = 45)
+    @Column(name = "date_fin", length = 45)
     private String dateFin;
     @Basic(optional = false)
     @NotNull
     @Column(name = "en_cours", nullable = false)
-    private boolean enCours;
+    private short enCours;
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -75,7 +69,7 @@ public class AnneeScolaire implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anneeScolaireIdanneeScolaire")
     private Collection<Sequence> sequenceCollection;
 
@@ -86,10 +80,8 @@ public class AnneeScolaire implements Serializable {
         this.idanneeScolaire = idanneeScolaire;
     }
 
-    public AnneeScolaire(Integer idanneeScolaire, String dateDebut, String dateFin, boolean enCours, boolean deleted) {
+    public AnneeScolaire(Integer idanneeScolaire, short enCours, short deleted) {
         this.idanneeScolaire = idanneeScolaire;
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
         this.enCours = enCours;
         this.deleted = deleted;
     }
@@ -118,11 +110,11 @@ public class AnneeScolaire implements Serializable {
         this.dateFin = dateFin;
     }
 
-    public boolean getEnCours() {
+    public short getEnCours() {
         return enCours;
     }
 
-    public void setEnCours(boolean enCours) {
+    public void setEnCours(short enCours) {
         this.enCours = enCours;
     }
 
@@ -142,11 +134,11 @@ public class AnneeScolaire implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 

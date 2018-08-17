@@ -5,7 +5,6 @@
  */
 package edu.support.dao;
 
-import edu.support.entities.Eleve;
 import edu.support.entities.PassageInfirmerie;
 import java.util.List;
 import javax.ejb.Local;
@@ -30,15 +29,6 @@ public interface PassageInfirmerieFacadeLocal {
     List<PassageInfirmerie> findRange(int[] range);
 
     int count();
-    
-    //custom methods
-    
-    /**
-     * retourne la liste des passages à l'infirmerie pour un étudiant donné
-     * @param e
-     * @return 
-     */
-    public List<PassageInfirmerie> findByEleve(Eleve e);
 
     public List<PassageInfirmerie> findByDates(String date1, String date2);
     

@@ -10,8 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "passage_infirmerie", catalog = "edusupport_db", schema = "")
@@ -43,8 +41,8 @@ public class PassageInfirmerie implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "idpassage_infirmerie", nullable = false)
     private Integer idpassageInfirmerie;
     @Basic(optional = false)
@@ -52,9 +50,7 @@ public class PassageInfirmerie implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "date_jour", nullable = false)
+    @Column(name = "date_jour")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateJour;
     @Column(name = "created")
@@ -66,10 +62,13 @@ public class PassageInfirmerie implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
+    @JoinColumn(name = "maladie_idmaladie", referencedColumnName = "idmaladie")
+    @ManyToOne
+    private Maladie maladieIdmaladie;
 
     public PassageInfirmerie() {
     }
@@ -78,10 +77,9 @@ public class PassageInfirmerie implements Serializable {
         this.idpassageInfirmerie = idpassageInfirmerie;
     }
 
-    public PassageInfirmerie(Integer idpassageInfirmerie, String code, Date dateJour, boolean deleted) {
+    public PassageInfirmerie(Integer idpassageInfirmerie, String code, short deleted) {
         this.idpassageInfirmerie = idpassageInfirmerie;
         this.code = code;
-        this.dateJour = dateJour;
         this.deleted = deleted;
     }
 
@@ -125,11 +123,11 @@ public class PassageInfirmerie implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 
@@ -139,6 +137,14 @@ public class PassageInfirmerie implements Serializable {
 
     public void setEleveIdeleve(Eleve eleveIdeleve) {
         this.eleveIdeleve = eleveIdeleve;
+    }
+
+    public Maladie getMaladieIdmaladie() {
+        return maladieIdmaladie;
+    }
+
+    public void setMaladieIdmaladie(Maladie maladieIdmaladie) {
+        this.maladieIdmaladie = maladieIdmaladie;
     }
 
     @Override

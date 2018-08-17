@@ -8,11 +8,11 @@ package edu.support.services.impl;
 import edu.support.dao.EleveFacadeLocal;
 import edu.support.dao.EleveMaladieFacadeLocal;
 import edu.support.dao.PassageInfirmerieFacadeLocal;
-import edu.support.entities.Classe;
 import edu.support.entities.Eleve;
 import edu.support.entities.EleveMaladie;
 import edu.support.entities.Maladie;
 import edu.support.entities.PassageInfirmerie;
+import edu.support.entities.SalleDeClasse;
 import edu.support.services.SanteService;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,9 +48,9 @@ public class SanteServiceImpl implements SanteService{
     }
 
     @Override
-    public List<Eleve> getElevesMaladesByClasse(Classe c) {
+    public List<Eleve> getElevesMaladesByClasse(SalleDeClasse sc) {
         List<Eleve> le = new ArrayList<>();
-        c.getEleveCollection().stream().filter((e) -> (isEleveMalade(e))).forEachOrdered((e) -> {
+        sc.getEleveCollection().stream().filter((e) -> (isEleveMalade(e))).forEachOrdered((e) -> {
             le.add(e);
         });
         return le;

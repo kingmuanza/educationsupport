@@ -5,20 +5,18 @@
  */
 package edu.support.controllers.rest;
 
-import edu.support.dao.ClasseFacadeLocal;
+import edu.support.dao.SalleDeClasseFacadeLocal;
 import edu.support.dao.EleveFacadeLocal;
 import edu.support.dao.EleveMaladieFacadeLocal;
 import edu.support.dao.MaladieFacadeLocal;
 import edu.support.dao.PassageInfirmerieFacadeLocal;
-import edu.support.entities.Classe;
+import edu.support.entities.SalleDeClasse;
 import edu.support.entities.Eleve;
 import edu.support.entities.EleveMaladie;
 import edu.support.entities.Maladie;
 import edu.support.entities.PassageInfirmerie;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,8 +33,8 @@ public class SanteController {
     @EJB(mappedName="java:app/edusupport/EleveMaladieFacade")
     private EleveMaladieFacadeLocal emfl;
     
-    @EJB(mappedName="java:app/edusupport/ClasseFacade")
-    private ClasseFacadeLocal cfl;
+    @EJB(mappedName="java:app/edusupport/SalleDeClasseFacade")
+    private SalleDeClasseFacadeLocal cfl;
     
     @EJB(mappedName="java:app/edusupport/MaladieFacade")
     private MaladieFacadeLocal mfl;
@@ -55,11 +53,10 @@ public class SanteController {
         return le;
     }
     
-    @RequestMapping(value = "/eleves-malades-par-classe/{idClasse}" , produces = {"application/json"})
-    public List<Eleve> getElevesMaladesByClasse(@PathVariable("idClasse")int idClasse) {
+    @RequestMapping(value = "/eleves-malades-par-classe/{idSalleDeClasse}" , produces = {"application/json"})
+    public List<Eleve> getElevesMaladesBySalleDeClasse(@PathVariable("idSalleDeClasse")int idSalleDeClasse) {
         List<Eleve> le = new ArrayList<>();
-        Classe c = cfl.find(idClasse);
-        System.out.println(c.getIdclasse()+"****"+c.getEleveCollection().isEmpty());
+        SalleDeClasse c = cfl.find(idSalleDeClasse);
         for(Eleve e: c.getEleveCollection()){
             if(!e.getEleveMaladieCollection().isEmpty())
                 le.add(e);

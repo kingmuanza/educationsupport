@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -32,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "sequence", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -72,18 +71,15 @@ public class Sequence implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sequenceIdsequence")
-    @JsonIgnore
     private Collection<Evaluation> evaluationCollection;
-    @JoinColumn(name = "annee_scolaire_idannee_scolaire", referencedColumnName = "idannee_scolaire", nullable = false)
-    @ManyToOne(optional = false)
-    @JsonIgnore
-    private AnneeScolaire anneeScolaireIdanneeScolaire;
     @JoinColumn(name = "trimestre_idtrimestre", referencedColumnName = "idtrimestre", nullable = false)
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Trimestre trimestreIdtrimestre;
+    @JoinColumn(name = "annee_scolaire_idannee_scolaire", referencedColumnName = "idannee_scolaire", nullable = false)
+    @ManyToOne(optional = false)
+    private AnneeScolaire anneeScolaireIdanneeScolaire;
 
     public Sequence() {
     }
@@ -92,7 +88,7 @@ public class Sequence implements Serializable {
         this.idsequence = idsequence;
     }
 
-    public Sequence(Integer idsequence, String code, int numero, boolean deleted) {
+    public Sequence(Integer idsequence, String code, int numero, short deleted) {
         this.idsequence = idsequence;
         this.code = code;
         this.numero = numero;
@@ -139,11 +135,11 @@ public class Sequence implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 
@@ -156,20 +152,20 @@ public class Sequence implements Serializable {
         this.evaluationCollection = evaluationCollection;
     }
 
-    public AnneeScolaire getAnneeScolaireIdanneeScolaire() {
-        return anneeScolaireIdanneeScolaire;
-    }
-
-    public void setAnneeScolaireIdanneeScolaire(AnneeScolaire anneeScolaireIdanneeScolaire) {
-        this.anneeScolaireIdanneeScolaire = anneeScolaireIdanneeScolaire;
-    }
-
     public Trimestre getTrimestreIdtrimestre() {
         return trimestreIdtrimestre;
     }
 
     public void setTrimestreIdtrimestre(Trimestre trimestreIdtrimestre) {
         this.trimestreIdtrimestre = trimestreIdtrimestre;
+    }
+
+    public AnneeScolaire getAnneeScolaireIdanneeScolaire() {
+        return anneeScolaireIdanneeScolaire;
+    }
+
+    public void setAnneeScolaireIdanneeScolaire(AnneeScolaire anneeScolaireIdanneeScolaire) {
+        this.anneeScolaireIdanneeScolaire = anneeScolaireIdanneeScolaire;
     }
 
     @Override

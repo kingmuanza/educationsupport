@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -28,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "autorisation_sortie", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -39,7 +38,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "AutorisationSortie.findByIdautorisationSortie", query = "SELECT a FROM AutorisationSortie a WHERE a.idautorisationSortie = :idautorisationSortie")
     , @NamedQuery(name = "AutorisationSortie.findByCode", query = "SELECT a FROM AutorisationSortie a WHERE a.code = :code")
     , @NamedQuery(name = "AutorisationSortie.findByDateJour", query = "SELECT a FROM AutorisationSortie a WHERE a.dateJour = :dateJour")
-    , @NamedQuery(name = "AutorisationSortie.findByDateRetour", query = "SELECT a FROM AutorisationSortie a WHERE a.dateRetour = :dateRetour")
     , @NamedQuery(name = "AutorisationSortie.findByCreated", query = "SELECT a FROM AutorisationSortie a WHERE a.created = :created")
     , @NamedQuery(name = "AutorisationSortie.findByModified", query = "SELECT a FROM AutorisationSortie a WHERE a.modified = :modified")
     , @NamedQuery(name = "AutorisationSortie.findByDeleted", query = "SELECT a FROM AutorisationSortie a WHERE a.deleted = :deleted")})
@@ -56,12 +54,10 @@ public class AutorisationSortie implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
-    @Basic(optional = false)
-    @Column(name = "date_jour", nullable = false)
+    @Column(name = "date_jour")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateJour;
-    @Basic(optional = false)
-    @Column(name = "date_retour", nullable = false)
+    @Column(name = "date_retour")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateRetour;
     @Column(name = "created")
@@ -73,15 +69,14 @@ public class AutorisationSortie implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Eleve eleveIdeleve;
-    @JoinColumn(name = "employe_idemploye", referencedColumnName = "idemploye", nullable = false)
-    @ManyToOne(optional = false)
-    @JsonIgnore
-    private Employe employeIdemploye;
+    @JoinColumn(name = "maladie_idmaladie", referencedColumnName = "idmaladie")
+    @ManyToOne
+    private Maladie maladieIdmaladie;
 
     public AutorisationSortie() {
     }
@@ -90,11 +85,9 @@ public class AutorisationSortie implements Serializable {
         this.idautorisationSortie = idautorisationSortie;
     }
 
-    public AutorisationSortie(Integer idautorisationSortie, String code, Date dateJour, Date dateRetour, boolean deleted) {
+    public AutorisationSortie(Integer idautorisationSortie, String code, Date deleted) {
         this.idautorisationSortie = idautorisationSortie;
         this.code = code;
-        this.dateJour = dateJour;
-        this.dateRetour = dateRetour;
         this.deleted = deleted;
     }
 
@@ -122,14 +115,6 @@ public class AutorisationSortie implements Serializable {
         this.dateJour = dateJour;
     }
 
-    public Date getDateRetour() {
-        return dateRetour;
-    }
-
-    public void setDateRetour(Date dateRetour) {
-        this.dateRetour = dateRetour;
-    }
-
     public Date getCreated() {
         return created;
     }
@@ -146,11 +131,11 @@ public class AutorisationSortie implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public Date getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(Date deleted) {
         this.deleted = deleted;
     }
 
@@ -162,13 +147,23 @@ public class AutorisationSortie implements Serializable {
         this.eleveIdeleve = eleveIdeleve;
     }
 
-    public Employe getEmployeIdemploye() {
-        return employeIdemploye;
+    public Maladie getMaladieIdmaladie() {
+        return maladieIdmaladie;
     }
 
-    public void setEmployeIdemploye(Employe employeIdemploye) {
-        this.employeIdemploye = employeIdemploye;
+    public void setMaladieIdmaladie(Maladie maladieIdmaladie) {
+        this.maladieIdmaladie = maladieIdmaladie;
     }
+
+    public Date getDateRetour() {
+        return dateRetour;
+    }
+
+    public void setDateRetour(Date dateRetour) {
+        this.dateRetour = dateRetour;
+    }
+    
+    
 
     @Override
     public int hashCode() {

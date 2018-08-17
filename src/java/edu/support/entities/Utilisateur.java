@@ -15,15 +15,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,17 +29,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
-@Table(name = "utilisateur", catalog = "edusupport_db", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"login", "mot_de_passe"})})
+@Table(name = "utilisateur", catalog = "edusupport_db", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u")
     , @NamedQuery(name = "Utilisateur.findByIdutilisateur", query = "SELECT u FROM Utilisateur u WHERE u.idutilisateur = :idutilisateur")
     , @NamedQuery(name = "Utilisateur.findByLogin", query = "SELECT u FROM Utilisateur u WHERE u.login = :login")
-    , @NamedQuery(name = "Utilisateur.findByMotDePasse", query = "SELECT u FROM Utilisateur u WHERE u.motDePasse = :motDePasse")
     , @NamedQuery(name = "Utilisateur.findByCreated", query = "SELECT u FROM Utilisateur u WHERE u.created = :created")
     , @NamedQuery(name = "Utilisateur.findByModified", query = "SELECT u FROM Utilisateur u WHERE u.modified = :modified")
     , @NamedQuery(name = "Utilisateur.findByDeleted", query = "SELECT u FROM Utilisateur u WHERE u.deleted = :deleted")})
@@ -60,8 +56,9 @@ public class Utilisateur implements Serializable {
     private String login;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 254)
-    @Column(name = "mot_de_passe", nullable = false, length = 254)
+    @Lob
+    @Size(min = 1, max = 65535)
+    @Column(name = "mot_de_passe", nullable = false, length = 65535)
     private String motDePasse;
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
@@ -72,10 +69,9 @@ public class Utilisateur implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
-    @JoinColumn(name = "droit_acces_iddroit_acces", referencedColumnName = "iddroit_acces", nullable = false)
-    @ManyToOne(optional = false)
-    private DroitAcces droitAccesIddroitAcces;
+    private short deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur")
+    private Collection<UtilisateursFonctionnalites> utilisateursFonctionnalitesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur")
     private Collection<Activite> activiteCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur")
@@ -88,7 +84,7 @@ public class Utilisateur implements Serializable {
         this.idutilisateur = idutilisateur;
     }
 
-    public Utilisateur(Integer idutilisateur, String login, String motDePasse, boolean deleted) {
+    public Utilisateur(Integer idutilisateur, String login, String motDePasse, short deleted) {
         this.idutilisateur = idutilisateur;
         this.login = login;
         this.motDePasse = motDePasse;
@@ -135,20 +131,21 @@ public class Utilisateur implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 
-    public DroitAcces getDroitAccesIddroitAcces() {
-        return droitAccesIddroitAcces;
+    @XmlTransient
+    public Collection<UtilisateursFonctionnalites> getUtilisateursFonctionnalitesCollection() {
+        return utilisateursFonctionnalitesCollection;
     }
 
-    public void setDroitAccesIddroitAcces(DroitAcces droitAccesIddroitAcces) {
-        this.droitAccesIddroitAcces = droitAccesIddroitAcces;
+    public void setUtilisateursFonctionnalitesCollection(Collection<UtilisateursFonctionnalites> utilisateursFonctionnalitesCollection) {
+        this.utilisateursFonctionnalitesCollection = utilisateursFonctionnalitesCollection;
     }
 
     @XmlTransient

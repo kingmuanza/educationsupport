@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "convocation", catalog = "edusupport_db", schema = "")
@@ -35,6 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Convocation.findAll", query = "SELECT c FROM Convocation c")
     , @NamedQuery(name = "Convocation.findByIdconvocation", query = "SELECT c FROM Convocation c WHERE c.idconvocation = :idconvocation")
+    , @NamedQuery(name = "Convocation.findByCode", query = "SELECT c FROM Convocation c WHERE c.code = :code")
+    , @NamedQuery(name = "Convocation.findByDateJour", query = "SELECT c FROM Convocation c WHERE c.dateJour = :dateJour")
     , @NamedQuery(name = "Convocation.findByCreated", query = "SELECT c FROM Convocation c WHERE c.created = :created")
     , @NamedQuery(name = "Convocation.findByModified", query = "SELECT c FROM Convocation c WHERE c.modified = :modified")
     , @NamedQuery(name = "Convocation.findByDeleted", query = "SELECT c FROM Convocation c WHERE c.deleted = :deleted")})
@@ -48,10 +50,18 @@ public class Convocation implements Serializable {
     private Integer idconvocation;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "code", nullable = false, length = 45)
+    private String code;
+    @Basic(optional = false)
+    @NotNull
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "motif", nullable = false, length = 65535)
     private String motif;
+    @Column(name = "date_jour")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateJour;
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -61,13 +71,10 @@ public class Convocation implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
-    @JoinColumn(name = "employe_idemploye", referencedColumnName = "idemploye", nullable = false)
-    @ManyToOne(optional = false)
-    private Employe employeIdemploye;
 
     public Convocation() {
     }
@@ -76,8 +83,9 @@ public class Convocation implements Serializable {
         this.idconvocation = idconvocation;
     }
 
-    public Convocation(Integer idconvocation, String motif, boolean deleted) {
+    public Convocation(Integer idconvocation, String code, String motif, short deleted) {
         this.idconvocation = idconvocation;
+        this.code = code;
         this.motif = motif;
         this.deleted = deleted;
     }
@@ -90,12 +98,28 @@ public class Convocation implements Serializable {
         this.idconvocation = idconvocation;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getMotif() {
         return motif;
     }
 
     public void setMotif(String motif) {
         this.motif = motif;
+    }
+
+    public Date getDateJour() {
+        return dateJour;
+    }
+
+    public void setDateJour(Date dateJour) {
+        this.dateJour = dateJour;
     }
 
     public Date getCreated() {
@@ -114,11 +138,11 @@ public class Convocation implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 
@@ -128,14 +152,6 @@ public class Convocation implements Serializable {
 
     public void setEleveIdeleve(Eleve eleveIdeleve) {
         this.eleveIdeleve = eleveIdeleve;
-    }
-
-    public Employe getEmployeIdemploye() {
-        return employeIdemploye;
-    }
-
-    public void setEmployeIdemploye(Employe employeIdemploye) {
-        this.employeIdemploye = employeIdemploye;
     }
 
     @Override

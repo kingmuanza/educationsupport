@@ -6,6 +6,7 @@
 package edu.support.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,20 +19,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "eleves_traduits", catalog = "edusupport_db", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ElevesTraduits.findAll", query = "SELECT e FROM ElevesTraduits e")
-    , @NamedQuery(name = "ElevesTraduits.findByIdelevesTraduits", query = "SELECT e FROM ElevesTraduits e WHERE e.idelevesTraduits = :idelevesTraduits")})
+    , @NamedQuery(name = "ElevesTraduits.findByIdelevesTraduits", query = "SELECT e FROM ElevesTraduits e WHERE e.idelevesTraduits = :idelevesTraduits")
+    , @NamedQuery(name = "ElevesTraduits.findByCreated", query = "SELECT e FROM ElevesTraduits e WHERE e.created = :created")
+    , @NamedQuery(name = "ElevesTraduits.findByModified", query = "SELECT e FROM ElevesTraduits e WHERE e.modified = :modified")
+    , @NamedQuery(name = "ElevesTraduits.findByDeleted", query = "SELECT e FROM ElevesTraduits e WHERE e.deleted = :deleted")})
 public class ElevesTraduits implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,12 +52,22 @@ public class ElevesTraduits implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "motif", nullable = false, length = 65535)
     private String motif;
-    @JoinColumn(name = "conseil_discipline_idconseil_discipline", referencedColumnName = "idconseil_discipline", nullable = false)
-    @ManyToOne(optional = false)
-    private ConseilDiscipline conseilDisciplineIdconseilDiscipline;
+    @Column(name = "created")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
+    @Column(name = "modified")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date modified;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private short deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
+    @JoinColumn(name = "conseil_discipline_idconseil_discipline", referencedColumnName = "idconseil_discipline", nullable = false)
+    @ManyToOne(optional = false)
+    private ConseilDiscipline conseilDisciplineIdconseilDiscipline;
 
     public ElevesTraduits() {
     }
@@ -60,9 +76,10 @@ public class ElevesTraduits implements Serializable {
         this.idelevesTraduits = idelevesTraduits;
     }
 
-    public ElevesTraduits(Integer idelevesTraduits, String motif) {
+    public ElevesTraduits(Integer idelevesTraduits, String motif, short deleted) {
         this.idelevesTraduits = idelevesTraduits;
         this.motif = motif;
+        this.deleted = deleted;
     }
 
     public Integer getIdelevesTraduits() {
@@ -81,12 +98,28 @@ public class ElevesTraduits implements Serializable {
         this.motif = motif;
     }
 
-    public ConseilDiscipline getConseilDisciplineIdconseilDiscipline() {
-        return conseilDisciplineIdconseilDiscipline;
+    public Date getCreated() {
+        return created;
     }
 
-    public void setConseilDisciplineIdconseilDiscipline(ConseilDiscipline conseilDisciplineIdconseilDiscipline) {
-        this.conseilDisciplineIdconseilDiscipline = conseilDisciplineIdconseilDiscipline;
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public short getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(short deleted) {
+        this.deleted = deleted;
     }
 
     public Eleve getEleveIdeleve() {
@@ -95,6 +128,14 @@ public class ElevesTraduits implements Serializable {
 
     public void setEleveIdeleve(Eleve eleveIdeleve) {
         this.eleveIdeleve = eleveIdeleve;
+    }
+
+    public ConseilDiscipline getConseilDisciplineIdconseilDiscipline() {
+        return conseilDisciplineIdconseilDiscipline;
+    }
+
+    public void setConseilDisciplineIdconseilDiscipline(ConseilDiscipline conseilDisciplineIdconseilDiscipline) {
+        this.conseilDisciplineIdconseilDiscipline = conseilDisciplineIdconseilDiscipline;
     }
 
     @Override

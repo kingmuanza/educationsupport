@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "eleve_maladie", catalog = "edusupport_db", schema = "")
@@ -53,7 +53,7 @@ public class EleveMaladie implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -68,7 +68,7 @@ public class EleveMaladie implements Serializable {
         this.ideleveMaladie = ideleveMaladie;
     }
 
-    public EleveMaladie(Integer ideleveMaladie, boolean deleted) {
+    public EleveMaladie(Integer ideleveMaladie, short deleted) {
         this.ideleveMaladie = ideleveMaladie;
         this.deleted = deleted;
     }
@@ -97,11 +97,11 @@ public class EleveMaladie implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 

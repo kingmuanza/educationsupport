@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -31,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "individu", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -70,10 +69,8 @@ public class Individu implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "noms", nullable = false, length = 45)
     private String noms;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "prenoms", nullable = false, length = 45)
+    @Size(max = 45)
+    @Column(name = "prenoms", length = 45)
     private String prenoms;
     @Basic(optional = false)
     @NotNull
@@ -113,24 +110,14 @@ public class Individu implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
-    @JsonIgnore
-    private Collection<Absence> absenceCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
-    @JsonIgnore
     private Collection<Eleve> eleveCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
-    @JsonIgnore
-    private Collection<Retard> retardCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
-    @JsonIgnore
     private Collection<Employe> employeCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
-    @JsonIgnore
     private Collection<IndividuUtilisateur> individuUtilisateurCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
-    @JsonIgnore
     private Collection<Enseignant> enseignantCollection;
 
     public Individu() {
@@ -140,11 +127,10 @@ public class Individu implements Serializable {
         this.idindividu = idindividu;
     }
 
-    public Individu(Integer idindividu, String matricule, String noms, String prenoms, Date dateNaissance, String lieuNaissance, String sexe, String residence, boolean deleted) {
+    public Individu(Integer idindividu, String matricule, String noms, Date dateNaissance, String lieuNaissance, String sexe, String residence, short deleted) {
         this.idindividu = idindividu;
         this.matricule = matricule;
         this.noms = noms;
-        this.prenoms = prenoms;
         this.dateNaissance = dateNaissance;
         this.lieuNaissance = lieuNaissance;
         this.sexe = sexe;
@@ -248,21 +234,12 @@ public class Individu implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
-    }
-
-    @XmlTransient
-    public Collection<Absence> getAbsenceCollection() {
-        return absenceCollection;
-    }
-
-    public void setAbsenceCollection(Collection<Absence> absenceCollection) {
-        this.absenceCollection = absenceCollection;
     }
 
     @XmlTransient
@@ -272,15 +249,6 @@ public class Individu implements Serializable {
 
     public void setEleveCollection(Collection<Eleve> eleveCollection) {
         this.eleveCollection = eleveCollection;
-    }
-
-    @XmlTransient
-    public Collection<Retard> getRetardCollection() {
-        return retardCollection;
-    }
-
-    public void setRetardCollection(Collection<Retard> retardCollection) {
-        this.retardCollection = retardCollection;
     }
 
     @XmlTransient

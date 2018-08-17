@@ -12,8 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
@@ -29,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "maladie", catalog = "edusupport_db", schema = "")
@@ -44,8 +42,8 @@ public class Maladie implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "idmaladie", nullable = false)
     private Integer idmaladie;
     @Basic(optional = false)
@@ -75,9 +73,13 @@ public class Maladie implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "maladieIdmaladie")
     private Collection<EleveMaladie> eleveMaladieCollection;
+    @OneToMany(mappedBy = "maladieIdmaladie")
+    private Collection<PassageInfirmerie> passageInfirmerieCollection;
+    @OneToMany(mappedBy = "maladieIdmaladie")
+    private Collection<AutorisationSortie> autorisationSortieCollection;
 
     public Maladie() {
     }
@@ -86,7 +88,7 @@ public class Maladie implements Serializable {
         this.idmaladie = idmaladie;
     }
 
-    public Maladie(Integer idmaladie, String nom, String description, String typeMaladie, boolean deleted) {
+    public Maladie(Integer idmaladie, String nom, String description, String typeMaladie, short deleted) {
         this.idmaladie = idmaladie;
         this.nom = nom;
         this.description = description;
@@ -142,11 +144,11 @@ public class Maladie implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 
@@ -157,6 +159,24 @@ public class Maladie implements Serializable {
 
     public void setEleveMaladieCollection(Collection<EleveMaladie> eleveMaladieCollection) {
         this.eleveMaladieCollection = eleveMaladieCollection;
+    }
+
+    @XmlTransient
+    public Collection<PassageInfirmerie> getPassageInfirmerieCollection() {
+        return passageInfirmerieCollection;
+    }
+
+    public void setPassageInfirmerieCollection(Collection<PassageInfirmerie> passageInfirmerieCollection) {
+        this.passageInfirmerieCollection = passageInfirmerieCollection;
+    }
+
+    @XmlTransient
+    public Collection<AutorisationSortie> getAutorisationSortieCollection() {
+        return autorisationSortieCollection;
+    }
+
+    public void setAutorisationSortieCollection(Collection<AutorisationSortie> autorisationSortieCollection) {
+        this.autorisationSortieCollection = autorisationSortieCollection;
     }
 
     @Override

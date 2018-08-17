@@ -12,8 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -29,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "reunion", catalog = "edusupport_db", schema = "", uniqueConstraints = {
@@ -39,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Reunion.findAll", query = "SELECT r FROM Reunion r")
     , @NamedQuery(name = "Reunion.findByIdreunion", query = "SELECT r FROM Reunion r WHERE r.idreunion = :idreunion")
     , @NamedQuery(name = "Reunion.findByCode", query = "SELECT r FROM Reunion r WHERE r.code = :code")
+    , @NamedQuery(name = "Reunion.findByLibelle", query = "SELECT r FROM Reunion r WHERE r.libelle = :libelle")
     , @NamedQuery(name = "Reunion.findByEtat", query = "SELECT r FROM Reunion r WHERE r.etat = :etat")
     , @NamedQuery(name = "Reunion.findByDateJour", query = "SELECT r FROM Reunion r WHERE r.dateJour = :dateJour")
     , @NamedQuery(name = "Reunion.findByCreated", query = "SELECT r FROM Reunion r WHERE r.created = :created")
@@ -48,8 +47,8 @@ public class Reunion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "idreunion", nullable = false)
     private Integer idreunion;
     @Basic(optional = false)
@@ -57,6 +56,11 @@ public class Reunion implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "libelle", nullable = false, length = 45)
+    private String libelle;
     @Basic(optional = false)
     @NotNull
     @Column(name = "etat", nullable = false)
@@ -75,7 +79,7 @@ public class Reunion implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reunionIdreunion")
     private Collection<Rapport> rapportCollection;
 
@@ -86,9 +90,10 @@ public class Reunion implements Serializable {
         this.idreunion = idreunion;
     }
 
-    public Reunion(Integer idreunion, String code, int etat, Date dateJour, boolean deleted) {
+    public Reunion(Integer idreunion, String code, String libelle, int etat, Date dateJour, short deleted) {
         this.idreunion = idreunion;
         this.code = code;
+        this.libelle = libelle;
         this.etat = etat;
         this.dateJour = dateJour;
         this.deleted = deleted;
@@ -108,6 +113,14 @@ public class Reunion implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
     }
 
     public int getEtat() {
@@ -142,11 +155,11 @@ public class Reunion implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 

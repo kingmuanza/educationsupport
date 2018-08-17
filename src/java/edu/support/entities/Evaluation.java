@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -30,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "evaluation", catalog = "edusupport_db", schema = "")
@@ -38,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Evaluation.findAll", query = "SELECT e FROM Evaluation e")
     , @NamedQuery(name = "Evaluation.findByIdevaluation", query = "SELECT e FROM Evaluation e WHERE e.idevaluation = :idevaluation")
+    , @NamedQuery(name = "Evaluation.findByDateJour", query = "SELECT e FROM Evaluation e WHERE e.dateJour = :dateJour")
     , @NamedQuery(name = "Evaluation.findByCreated", query = "SELECT e FROM Evaluation e WHERE e.created = :created")
     , @NamedQuery(name = "Evaluation.findByModified", query = "SELECT e FROM Evaluation e WHERE e.modified = :modified")
     , @NamedQuery(name = "Evaluation.findByDeleted", query = "SELECT e FROM Evaluation e WHERE e.deleted = :deleted")})
@@ -49,19 +49,9 @@ public class Evaluation implements Serializable {
     @Basic(optional = false)
     @Column(name = "idevaluation", nullable = false)
     private Integer idevaluation;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluationIdevaluation")
-    @JsonIgnore
-    private Collection<Note> noteCollection;
-    @JoinColumn(name = "classe_idclasse", referencedColumnName = "idclasse", nullable = false)
-    @ManyToOne(optional = false)
-    @JsonIgnore
-    private Classe classeIdclasse;
-    @JoinColumn(name = "matiere_idmatiere", referencedColumnName = "idmatiere", nullable = false)
-    @ManyToOne(optional = false)
-    private Matiere matiereIdmatiere;
-    @JoinColumn(name = "sequence_idsequence", referencedColumnName = "idsequence", nullable = false)
-    @ManyToOne(optional = false)
-    private Sequence sequenceIdsequence;
+    @Column(name = "date_jour")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateJour;
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -71,13 +61,26 @@ public class Evaluation implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluationIdevaluation")
+    private Collection<Note> noteCollection;
+    @JoinColumn(name = "sequence_idsequence", referencedColumnName = "idsequence", nullable = false)
+    @ManyToOne(optional = false)
+    private Sequence sequenceIdsequence;
+    @JoinColumn(name = "classes_matieres_idclasses_matieres", referencedColumnName = "idclasses_matieres", nullable = false)
+    @ManyToOne(optional = false)
+    private ClassesMatieres classesMatieresIdclassesMatieres;
 
     public Evaluation() {
     }
 
     public Evaluation(Integer idevaluation) {
         this.idevaluation = idevaluation;
+    }
+
+    public Evaluation(Integer idevaluation, short deleted) {
+        this.idevaluation = idevaluation;
+        this.deleted = deleted;
     }
 
     public Integer getIdevaluation() {
@@ -88,37 +91,12 @@ public class Evaluation implements Serializable {
         this.idevaluation = idevaluation;
     }
 
-    @XmlTransient
-    public Collection<Note> getNoteCollection() {
-        return noteCollection;
+    public Date getDateJour() {
+        return dateJour;
     }
 
-    public void setNoteCollection(Collection<Note> noteCollection) {
-        this.noteCollection = noteCollection;
-    }
-
-    public Classe getClasseIdclasse() {
-        return classeIdclasse;
-    }
-
-    public void setClasseIdclasse(Classe classeIdclasse) {
-        this.classeIdclasse = classeIdclasse;
-    }
-
-    public Matiere getMatiereIdmatiere() {
-        return matiereIdmatiere;
-    }
-
-    public void setMatiereIdmatiere(Matiere matiereIdmatiere) {
-        this.matiereIdmatiere = matiereIdmatiere;
-    }
-
-    public Sequence getSequenceIdsequence() {
-        return sequenceIdsequence;
-    }
-
-    public void setSequenceIdsequence(Sequence sequenceIdsequence) {
-        this.sequenceIdsequence = sequenceIdsequence;
+    public void setDateJour(Date dateJour) {
+        this.dateJour = dateJour;
     }
 
     public Date getCreated() {
@@ -137,15 +115,39 @@ public class Evaluation implements Serializable {
         this.modified = modified;
     }
 
-    public boolean isDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 
-    
+    @XmlTransient
+    public Collection<Note> getNoteCollection() {
+        return noteCollection;
+    }
+
+    public void setNoteCollection(Collection<Note> noteCollection) {
+        this.noteCollection = noteCollection;
+    }
+
+    public Sequence getSequenceIdsequence() {
+        return sequenceIdsequence;
+    }
+
+    public void setSequenceIdsequence(Sequence sequenceIdsequence) {
+        this.sequenceIdsequence = sequenceIdsequence;
+    }
+
+    public ClassesMatieres getClassesMatieresIdclassesMatieres() {
+        return classesMatieresIdclassesMatieres;
+    }
+
+    public void setClassesMatieresIdclassesMatieres(ClassesMatieres classesMatieresIdclassesMatieres) {
+        this.classesMatieresIdclassesMatieres = classesMatieresIdclassesMatieres;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

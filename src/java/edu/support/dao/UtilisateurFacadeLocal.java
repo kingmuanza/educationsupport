@@ -29,14 +29,7 @@ public interface UtilisateurFacadeLocal {
     List<Utilisateur> findRange(int[] range);
 
     int count();
+
+    public Utilisateur findByCredentials(String login, String pwd);
     
-    //
-    
-    /**
-     * retourne un utilisateur en fonction des ses login et password
-     * @param login
-     * @param motDePasse
-     * @return 
-     */
-    public Utilisateur findByCredentials(String login, String motDePasse);    
 }

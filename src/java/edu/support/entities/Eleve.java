@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -30,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "eleve", catalog = "edusupport_db", schema = "")
@@ -58,38 +57,34 @@ public class Eleve implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
-    @JsonIgnore
     private Collection<Note> noteCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
-    @JsonIgnore
     private Collection<Paiement> paiementCollection;
-    @JoinColumn(name = "classe_idclasse", referencedColumnName = "idclasse", nullable = false)
-    @ManyToOne(optional = false)
-    private Classe classeIdclasse;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
+    private Collection<Absence> absenceCollection;
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
     @ManyToOne(optional = false)
     private Individu individuIdindividu;
+    @JoinColumn(name = "salle_de_classe_idsalle_de_classe", referencedColumnName = "idsalle_de_classe", nullable = false)
+    @ManyToOne(optional = false)
+    private SalleDeClasse salleDeClasseIdsalleDeClasse;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
-    @JsonIgnore
     private Collection<EleveMaladie> eleveMaladieCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
-    @JsonIgnore
     private Collection<Sanction> sanctionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
-    @JsonIgnore
     private Collection<Relance> relanceCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
-    @JsonIgnore
     private Collection<PassageInfirmerie> passageInfirmerieCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
-    @JsonIgnore
+    private Collection<Retard> retardCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     private Collection<Convocation> convocationCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     private Collection<AutorisationSortie> autorisationSortieCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
-    @JsonIgnore
     private Collection<ElevesTraduits> elevesTraduitsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     private Collection<Moratoire> moratoireCollection;
@@ -101,7 +96,7 @@ public class Eleve implements Serializable {
         this.ideleve = ideleve;
     }
 
-    public Eleve(Integer ideleve, boolean deleted) {
+    public Eleve(Integer ideleve, short deleted) {
         this.ideleve = ideleve;
         this.deleted = deleted;
     }
@@ -130,11 +125,11 @@ public class Eleve implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 
@@ -156,12 +151,13 @@ public class Eleve implements Serializable {
         this.paiementCollection = paiementCollection;
     }
 
-    public Classe getClasseIdclasse() {
-        return classeIdclasse;
+    @XmlTransient
+    public Collection<Absence> getAbsenceCollection() {
+        return absenceCollection;
     }
 
-    public void setClasseIdclasse(Classe classeIdclasse) {
-        this.classeIdclasse = classeIdclasse;
+    public void setAbsenceCollection(Collection<Absence> absenceCollection) {
+        this.absenceCollection = absenceCollection;
     }
 
     public Individu getIndividuIdindividu() {
@@ -170,6 +166,14 @@ public class Eleve implements Serializable {
 
     public void setIndividuIdindividu(Individu individuIdindividu) {
         this.individuIdindividu = individuIdindividu;
+    }
+
+    public SalleDeClasse getSalleDeClasseIdsalleDeClasse() {
+        return salleDeClasseIdsalleDeClasse;
+    }
+
+    public void setSalleDeClasseIdsalleDeClasse(SalleDeClasse salleDeClasseIdsalleDeClasse) {
+        this.salleDeClasseIdsalleDeClasse = salleDeClasseIdsalleDeClasse;
     }
 
     @XmlTransient
@@ -206,6 +210,15 @@ public class Eleve implements Serializable {
 
     public void setPassageInfirmerieCollection(Collection<PassageInfirmerie> passageInfirmerieCollection) {
         this.passageInfirmerieCollection = passageInfirmerieCollection;
+    }
+
+    @XmlTransient
+    public Collection<Retard> getRetardCollection() {
+        return retardCollection;
+    }
+
+    public void setRetardCollection(Collection<Retard> retardCollection) {
+        this.retardCollection = retardCollection;
     }
 
     @XmlTransient

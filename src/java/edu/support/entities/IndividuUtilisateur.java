@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "individu_utilisateur", catalog = "edusupport_db", schema = "")
@@ -53,13 +53,13 @@ public class IndividuUtilisateur implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
-    @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
-    @ManyToOne(optional = false)
-    private Individu individuIdindividu;
+    private short deleted;
     @JoinColumn(name = "utilisateur_idutilisateur", referencedColumnName = "idutilisateur", nullable = false)
     @ManyToOne(optional = false)
     private Utilisateur utilisateurIdutilisateur;
+    @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
+    @ManyToOne(optional = false)
+    private Individu individuIdindividu;
 
     public IndividuUtilisateur() {
     }
@@ -68,7 +68,7 @@ public class IndividuUtilisateur implements Serializable {
         this.idindividuUtilisateur = idindividuUtilisateur;
     }
 
-    public IndividuUtilisateur(Integer idindividuUtilisateur, boolean deleted) {
+    public IndividuUtilisateur(Integer idindividuUtilisateur, short deleted) {
         this.idindividuUtilisateur = idindividuUtilisateur;
         this.deleted = deleted;
     }
@@ -97,20 +97,12 @@ public class IndividuUtilisateur implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
-    }
-
-    public Individu getIndividuIdindividu() {
-        return individuIdindividu;
-    }
-
-    public void setIndividuIdindividu(Individu individuIdindividu) {
-        this.individuIdindividu = individuIdindividu;
     }
 
     public Utilisateur getUtilisateurIdutilisateur() {
@@ -119,6 +111,14 @@ public class IndividuUtilisateur implements Serializable {
 
     public void setUtilisateurIdutilisateur(Utilisateur utilisateurIdutilisateur) {
         this.utilisateurIdutilisateur = utilisateurIdutilisateur;
+    }
+
+    public Individu getIndividuIdindividu() {
+        return individuIdindividu;
+    }
+
+    public void setIndividuIdindividu(Individu individuIdindividu) {
+        this.individuIdindividu = individuIdindividu;
     }
 
     @Override

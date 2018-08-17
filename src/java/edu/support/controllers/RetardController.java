@@ -5,7 +5,7 @@
  */
 package edu.support.controllers;
 
-import edu.support.dao.IndividuFacadeLocal;
+import edu.support.dao.EleveFacadeLocal;
 import edu.support.dao.RetardFacadeLocal;
 import edu.support.entities.Retard;
 import java.text.ParseException;
@@ -38,8 +38,8 @@ public class RetardController {
     @EJB(mappedName="java:app/edusupport/RetardFacade")
     private RetardFacadeLocal rfl;
     
-    @EJB(mappedName="java:app/edusupport/IndividuFacade")
-    private IndividuFacadeLocal ifl;
+    @EJB(mappedName="java:app/edusupport/EleveFacade")
+    private EleveFacadeLocal ifl;
     
     private final static String VUE_CREATE = "jsp/retard/create";
     private final static String VUE_EDIT = "jsp/retard/edit";
@@ -49,7 +49,7 @@ public class RetardController {
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified","jourRetard","individuIdindividu"});
+        binder.setDisallowedFields(new String[]{"created","modified","jourRetard","eleveIdeleve"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -57,22 +57,22 @@ public class RetardController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
-        mv.addObject("individus", ifl.findAll());
+        mv.addObject("eleves", ifl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("retard")Retard retard,BindingResult result ,HttpServletRequest request,@RequestParam("individuIdindividu")String[]individuIdindividu, @RequestParam Map <String,String> params) throws ParseException{
+    public Object postCreate(@Valid @ModelAttribute("retard")Retard retard,BindingResult result ,HttpServletRequest request,@RequestParam("eleveIdeleve")String[]eleveIdeleve, @RequestParam Map <String,String> params) throws ParseException{
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-        String individus[] = individuIdindividu;
-        for(String s: individus){
+        String eleves[] = eleveIdeleve;
+        for(String s: eleves){
             retard.setCreated(new Date());
             retard.setModified(new Date());
             retard.setJourRetard(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("jourRetard")));
-            retard.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
+            retard.setEleveIdeleve(ifl.find(Integer.parseInt(params.get("eleveIdeleve"))));
             rfl.create(retard);
         }
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
@@ -83,18 +83,18 @@ public class RetardController {
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
         mv.addObject("retard", rfl.find(id));
-        mv.addObject("individus", ifl.findAll());
+        mv.addObject("eleves", ifl.findAll());
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("retard")Retard retard ,@RequestParam("individuIdindividu")String[]individuIdindividu,@RequestParam Map<String,String> params,HttpServletRequest request) throws ParseException{
-        String individus[] = individuIdindividu;
-        for(String s: individus){
+    public RedirectView postEdit(@Valid @ModelAttribute("retard")Retard retard ,@RequestParam("eleveIdeleve")String[]eleveIdeleve,@RequestParam Map<String,String> params,HttpServletRequest request) throws ParseException{
+        String eleves[] = eleveIdeleve;
+        for(String s: eleves){
             retard.setCreated(new Date());
             retard.setModified(new Date());
             retard.setJourRetard(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("jourRetard")));
-            retard.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
+            retard.setEleveIdeleve(ifl.find(Integer.parseInt(params.get("eleveIdeleve"))));
             rfl.create(retard);
         }
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);

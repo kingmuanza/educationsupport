@@ -5,9 +5,9 @@
  */
 package edu.support.controllers;
 import edu.support.dao.AbsenceFacadeLocal;
-import edu.support.dao.IndividuFacadeLocal;
+import edu.support.dao.EleveFacadeLocal;
 import edu.support.entities.Absence;
-import edu.support.entities.Individu;
+import edu.support.entities.Eleve;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -40,8 +40,8 @@ public class AbsenceController {
     @EJB(mappedName="java:app/edusupport/AbsenceFacade")
     private AbsenceFacadeLocal afl;
     
-    @EJB(mappedName="java:app/edusupport/IndividuFacade")
-    private IndividuFacadeLocal ifl;
+    @EJB(mappedName="java:app/edusupport/EleveFacade")
+    private EleveFacadeLocal efl;
     
     private final static String VUE_CREATE = "jsp/absence/create";
     private final static String VUE_EDIT = "jsp/absence/edit";
@@ -51,7 +51,7 @@ public class AbsenceController {
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"jourAbsence","created","modified","individuIdindividu"});
+        binder.setDisallowedFields(new String[]{"jourAbsence","created","modified","eleveIdeleve"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -59,22 +59,22 @@ public class AbsenceController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
-        List<Individu> li = ifl.findAll();
-        Collections.sort(li, (a,b) -> (a.getNoms()).compareTo(b.getNoms()) < 0 ? -1 : (a.getNoms()).compareTo(b.getNoms()) == 0 ? 0 : 1);
-        mv.addObject("individus", li);
+        List<Eleve> li = efl.findAll();
+        Collections.sort(li, (a,b) -> (a.getIndividuIdindividu().getNoms()).compareTo(b.getIndividuIdindividu().getNoms()) < 0 ? -1 : (a.getIndividuIdindividu().getNoms()).compareTo(b.getIndividuIdindividu().getNoms()) == 0 ? 0 : 1);
+        mv.addObject("eleves", li);
         return mv;
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("absence")Absence absence,BindingResult result ,HttpServletRequest request,@RequestParam("individuIdindividu")String[]individuIdindividu, @RequestParam Map<String,String> params) throws ParseException{
+    public Object postCreate(@Valid @ModelAttribute("absence")Absence absence,BindingResult result ,HttpServletRequest request,@RequestParam("eleveIdeleve")String[]eleveIdeleve, @RequestParam Map<String,String> params) throws ParseException{
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-        String individus[] = individuIdindividu;
-        for(String s: individus){
+        String eleves[] = eleveIdeleve;
+        for(String s: eleves){
             absence.setJourAbsence(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("jourAbsence")));
-            absence.setIndividuIdindividu(ifl.find(Integer.parseInt(s)));
+            absence.setEleveIdeleve(efl.find(Integer.parseInt(s)));
             absence.setCreated(new Date());
             absence.setModified(new Date());
             afl.create(absence);
@@ -87,18 +87,18 @@ public class AbsenceController {
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
         mv.addObject("absence", afl.find(id));
-        List<Individu> li = ifl.findAll();
-        Collections.sort(li, (a,b) -> (a.getNoms()).compareTo(b.getNoms()) < 0 ? -1 : (a.getNoms()).compareTo(b.getNoms()) == 0 ? 0 : 1);
-        mv.addObject("individus", li);
+        List<Eleve> li = efl.findAll();
+        Collections.sort(li, (a,b) -> (a.getIndividuIdindividu().getNoms()).compareTo(b.getIndividuIdindividu().getNoms()) < 0 ? -1 : (a.getIndividuIdindividu().getNoms()).compareTo(b.getIndividuIdindividu().getNoms()) == 0 ? 0 : 1);
+        mv.addObject("eleves", li);
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("absence")Absence absence ,HttpServletRequest request,@RequestParam("individuIdindividu")String[]individuIdindividu, @RequestParam Map<String,String> params) throws ParseException{
-        String individus[] = individuIdindividu;
-        for(String s: individus){
+    public RedirectView postEdit(@Valid @ModelAttribute("absence")Absence absence ,HttpServletRequest request,@RequestParam("eleveIdeleve")String[]eleveIdeleve, @RequestParam Map<String,String> params) throws ParseException{
+        String eleves[] = eleveIdeleve;
+        for(String s: eleves){
             absence.setJourAbsence(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("jourAbsence")));
-            absence.setIndividuIdindividu(ifl.find(Integer.parseInt(s)));
+            absence.setEleveIdeleve(efl.find(Integer.parseInt(s)));
             absence.setCreated(new Date());
             absence.setModified(new Date());
             afl.create(absence);

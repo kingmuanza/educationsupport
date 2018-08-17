@@ -5,7 +5,6 @@
  */
 package edu.support.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -26,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "sanction", catalog = "edusupport_db", schema = "")
@@ -34,7 +33,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Sanction.findAll", query = "SELECT s FROM Sanction s")
     , @NamedQuery(name = "Sanction.findByIdsanction", query = "SELECT s FROM Sanction s WHERE s.idsanction = :idsanction")
+    , @NamedQuery(name = "Sanction.findByCode", query = "SELECT s FROM Sanction s WHERE s.code = :code")
     , @NamedQuery(name = "Sanction.findByDescription", query = "SELECT s FROM Sanction s WHERE s.description = :description")
+    , @NamedQuery(name = "Sanction.findByDateJour", query = "SELECT s FROM Sanction s WHERE s.dateJour = :dateJour")
     , @NamedQuery(name = "Sanction.findByCreated", query = "SELECT s FROM Sanction s WHERE s.created = :created")
     , @NamedQuery(name = "Sanction.findByModified", query = "SELECT s FROM Sanction s WHERE s.modified = :modified")
     , @NamedQuery(name = "Sanction.findByDeleted", query = "SELECT s FROM Sanction s WHERE s.deleted = :deleted")})
@@ -49,8 +50,16 @@ public class Sanction implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
+    @Column(name = "code", nullable = false, length = 45)
+    private String code;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "description", nullable = false, length = 45)
     private String description;
+    @Column(name = "date_jour")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateJour;
     @Basic(optional = false)
     @NotNull
     @Lob
@@ -66,19 +75,10 @@ public class Sanction implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
+    private short deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
-    @JsonIgnore
     private Eleve eleveIdeleve;
-    @JoinColumn(name = "employe_idemploye", referencedColumnName = "idemploye")
-    @ManyToOne
-    @JsonIgnore
-    private Employe employeIdemploye;
-    @JoinColumn(name = "enseignant_idenseignant", referencedColumnName = "idenseignant")
-    @ManyToOne
-    @JsonIgnore
-    private Enseignant enseignantIdenseignant;
 
     public Sanction() {
     }
@@ -87,8 +87,9 @@ public class Sanction implements Serializable {
         this.idsanction = idsanction;
     }
 
-    public Sanction(Integer idsanction, String description, String motif, boolean deleted) {
+    public Sanction(Integer idsanction, String code, String description, String motif, short deleted) {
         this.idsanction = idsanction;
+        this.code = code;
         this.description = description;
         this.motif = motif;
         this.deleted = deleted;
@@ -102,12 +103,28 @@ public class Sanction implements Serializable {
         this.idsanction = idsanction;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getDateJour() {
+        return dateJour;
+    }
+
+    public void setDateJour(Date dateJour) {
+        this.dateJour = dateJour;
     }
 
     public String getMotif() {
@@ -134,11 +151,11 @@ public class Sanction implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
     }
 
@@ -148,22 +165,6 @@ public class Sanction implements Serializable {
 
     public void setEleveIdeleve(Eleve eleveIdeleve) {
         this.eleveIdeleve = eleveIdeleve;
-    }
-
-    public Employe getEmployeIdemploye() {
-        return employeIdemploye;
-    }
-
-    public void setEmployeIdemploye(Employe employeIdemploye) {
-        this.employeIdemploye = employeIdemploye;
-    }
-
-    public Enseignant getEnseignantIdenseignant() {
-        return enseignantIdenseignant;
-    }
-
-    public void setEnseignantIdenseignant(Enseignant enseignantIdenseignant) {
-        this.enseignantIdenseignant = enseignantIdenseignant;
     }
 
     @Override

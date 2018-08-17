@@ -5,17 +5,17 @@
  */
 package edu.support.dao;
 
-import edu.support.entities.DroitAcces;
+import edu.support.entities.Serie;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Stateless
-public class DroitAccesFacade extends AbstractFacade<DroitAcces> implements DroitAccesFacadeLocal {
+public class SerieFacade extends AbstractFacade<Serie> implements SerieFacadeLocal {
 
     @PersistenceContext(unitName = "edusupportPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class DroitAccesFacade extends AbstractFacade<DroitAcces> implements Droi
         return em;
     }
 
-    public DroitAccesFacade() {
-        super(DroitAcces.class);
+    public SerieFacade() {
+        super(Serie.class);
     }
     
 }

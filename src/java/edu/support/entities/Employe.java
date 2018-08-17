@@ -6,10 +6,8 @@
 package edu.support.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,17 +17,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author zos hall
+ * @author N9-T
  */
 @Entity
 @Table(name = "employe", catalog = "edusupport_db", schema = "")
@@ -57,16 +53,10 @@ public class Employe implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private boolean deleted;
-    @OneToMany(mappedBy = "employeIdemploye")
-    private Collection<Sanction> sanctionCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeIdemploye")
-    private Collection<Convocation> convocationCollection;
+    private short deleted;
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
     @ManyToOne(optional = false)
     private Individu individuIdindividu;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeIdemploye")
-    private Collection<AutorisationSortie> autorisationSortieCollection;
 
     public Employe() {
     }
@@ -75,7 +65,7 @@ public class Employe implements Serializable {
         this.idemploye = idemploye;
     }
 
-    public Employe(Integer idemploye, boolean deleted) {
+    public Employe(Integer idemploye, short deleted) {
         this.idemploye = idemploye;
         this.deleted = deleted;
     }
@@ -104,30 +94,12 @@ public class Employe implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
+    public short getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(short deleted) {
         this.deleted = deleted;
-    }
-
-    @XmlTransient
-    public Collection<Sanction> getSanctionCollection() {
-        return sanctionCollection;
-    }
-
-    public void setSanctionCollection(Collection<Sanction> sanctionCollection) {
-        this.sanctionCollection = sanctionCollection;
-    }
-
-    @XmlTransient
-    public Collection<Convocation> getConvocationCollection() {
-        return convocationCollection;
-    }
-
-    public void setConvocationCollection(Collection<Convocation> convocationCollection) {
-        this.convocationCollection = convocationCollection;
     }
 
     public Individu getIndividuIdindividu() {
@@ -136,15 +108,6 @@ public class Employe implements Serializable {
 
     public void setIndividuIdindividu(Individu individuIdindividu) {
         this.individuIdindividu = individuIdindividu;
-    }
-
-    @XmlTransient
-    public Collection<AutorisationSortie> getAutorisationSortieCollection() {
-        return autorisationSortieCollection;
-    }
-
-    public void setAutorisationSortieCollection(Collection<AutorisationSortie> autorisationSortieCollection) {
-        this.autorisationSortieCollection = autorisationSortieCollection;
     }
 
     @Override

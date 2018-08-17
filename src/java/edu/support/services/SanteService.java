@@ -5,10 +5,10 @@
  */
 package edu.support.services;
 
-import edu.support.entities.Classe;
 import edu.support.entities.Eleve;
 import edu.support.entities.Maladie;
 import edu.support.entities.PassageInfirmerie;
+import edu.support.entities.SalleDeClasse;
 import java.util.List;
 
 /**
@@ -29,7 +29,7 @@ public interface SanteService {
     /*
     retourne la liste des élèves d'une même classe qui ont déclarés une maladie
     */
-    public List<Eleve> getElevesMaladesByClasse(Classe c);
+    public List<Eleve> getElevesMaladesByClasse(SalleDeClasse sc);
     
     /*
     retourne la liste des élèves qui ont déclarés une maladie donnée
