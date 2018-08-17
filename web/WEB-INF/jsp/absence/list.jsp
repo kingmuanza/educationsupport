@@ -22,7 +22,7 @@
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>Individu</th>
+                    <th>Elève</th>
                     <th>Date</th>
                     <th>Justifié</th>                    
                     <th>Motif</th>  

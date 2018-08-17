@@ -17,87 +17,49 @@
 
     </head>
     <body>
-        <h1 class="titre">Liste des Permissions de sorties</h1>
+        <h1 class="titre">Liste des matières classes</h1>
 
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>Code</th>
-                    <th>Elève</th>
-                    <th>Maladie</th>
-                    <th>Date Début</th>
-                    <th>Heure Début</th>
-                    <th>Date Fin</th>           
-                    <th>Heure Fin</th>           
-                    <th>Edition</th>           
+                    <th>Classe</th>
+                    <th>Matière</th>     
+                    <th>Coefficient</th>     
+                    <th>Edition</th>     
                 </tr>
             </thead>
 
             <tbody>
-                <c:forEach items="${autorisationsorties}" var="autorisationsortie">
-                <c:if test="${!autorisationsortie.deleted}">
-                <tr class="pointeur" onclick="window.location.href='start#!/autorisationsortie/${autorisationsortie.idautorisationSortie}'">
+                <c:forEach items="${classeMatieres}" var="classe">
+                <c:if test="${!classe.deleted}">    
+                <tr class="pointeur" onclick="window.location.href='start#!/classematiere/${classematiere.idclassematiere}'">
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${autorisationsortie.code}</div>
+                                ${classe.code}</div>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${autorisationsortie.eleveIdeleve.individuIdindividu.noms}
+                                ${classe.libelle}</div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                ${classe.fraisScolarite}</div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                Crée le <fmt:formatDate value="${classe.created}" pattern="yyyy-MM-dd"/>
                                 <div class="sub header">
-                                    ${autorisationsortie.eleveIdeleve.individuIdindividu.prenoms}
-                                </div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${autorisationsortie.maladieIdmaladie.nom}
-                                <div class="sub header">
-                                    ${autorisationsortie.maladieIdmaladie.description}
-                                </div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                <fmt:formatDate value="${autorisationsortie.dateJour}" pattern="yyyy-MM-dd"/>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                <fmt:formatDate value="${autorisationsortie.dateJour}" pattern="HH:mm:ss"/>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                <fmt:formatDate value="${autorisationsortie.dateRetour}" pattern="yyyy-MM-dd"/>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                <fmt:formatDate value="${autorisationsortie.dateRetour}" pattern="HH:mm:ss"/>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                Crée le <fmt:formatDate value="${autorisationsortie.created}" pattern="yyyy-MM-dd"/>
-                                <div class="sub header">
-                                    Modifié le <fmt:formatDate value="${autorisationsortie.modified}" pattern="yyyy-MM-dd"/>
+                                    Modifié le <fmt:formatDate value="${classe.modified}" pattern="yyyy-MM-dd"/>
                                 </div>
                             </div>
                         </h4>
@@ -105,7 +67,6 @@
                 </tr>
                 </c:if>
                 </c:forEach>
-
             </tbody>
         </table>
 
@@ -125,7 +86,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "autorisationsortie");
+                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "classe");
                 
                 $('#dataTableUtilisateur').DataTable({
                     
@@ -137,7 +98,7 @@
                             message: '',
                             className: 'ui gris mini button',
                             action: function (e, dt, node, config) {
-                                window.location.href='start#!/autorisationsortie'
+                                window.location.href='start#!/classe'
                             }
                         },
                         {
