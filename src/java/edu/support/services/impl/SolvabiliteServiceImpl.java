@@ -24,7 +24,7 @@ public class SolvabiliteServiceImpl implements SolvabiliteService{
         double som = 0.0;
         for(Paiement p: e.getPaiementCollection())
             som += p.getMontant();
-        return StaticVars.FRAIS_EXIGIBLES <= som;
+        return e.getSalleDeClasseIdsalleDeClasse().getClasseIdclasse().getFraisScolarite() <= som;
     }
 
     @Override
