@@ -5,8 +5,10 @@
  */
 package edu.support.controllers;
 
-import edu.support.dao.ClasseFacadeLocal;
-import edu.support.entities.Classe;
+import edu.support.dao.ClassesMatieresFacadeLocal;
+import edu.support.dao.EnseignantsClassesMatieresFacadeLocal;
+import edu.support.entities.ClassesMatieres;
+import edu.support.entities.EnseignantsClassesMatieres;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,21 +32,24 @@ import org.springframework.web.servlet.view.RedirectView;
  * @author N9-T
  */
 @Controller
-@RequestMapping("/classe")
-public class ClasseController {
+@RequestMapping("/enseignantclassematiere")
+public class EnseignantClasseMatiereController {
     
-    @EJB(mappedName="java:app/edusupport/ClasseFacade")
-    private ClasseFacadeLocal cfl;
+    @EJB(mappedName="java:app/edusupport/ClassesMatieresFacade")
+    private ClassesMatieresFacadeLocal cmfl;
     
-    private final static String VUE_CREATE = "jsp/classe/create";
-    private final static String VUE_EDIT = "jsp/classe/edit";
-    private final static String VUE_LIST = "jsp/classe/list";
-    private final static String VUE_VIEW = "jsp/classe/view";
-    private final static String PATH_LIST = "/start#!/fonctionnalites";
+    @EJB(mappedName="java:app/edusupport/EnseignantsClassesMatieresFacade")
+    private EnseignantsClassesMatieresFacadeLocal ecmfl;
+    
+    private final static String VUE_CREATE = "jsp/enseignantclassematiere/create";
+    private final static String VUE_EDIT = "jsp/enseignantclassematiere/edit";
+    private final static String VUE_LIST = "jsp/enseignantclassematiere/list";
+    private final static String VUE_VIEW = "jsp/enseignantclassematiere/view";
+    private final static String PATH_LIST = "/start#!/enseignantsclassesmatieres";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","classesMatieresIdclassesMatieres","enseignantIdenseignant"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -56,14 +61,18 @@ public class ClasseController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("classe")Classe classe,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("enseignantClasseMatiere")EnseignantsClassesMatieres ecm,BindingResult result ,HttpServletRequest request){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-        classe.setCreated(new Date());
-        classe.setModified(new Date());
-        cfl.create(classe);
+        String[] classesMatieres = request.getParameterValues("classesMatieresIdclassesMatieres");
+        for(String m: classesMatieres){
+            ecm.setClassesMatieresIdclassesMatieres(cmfl.find(Integer.parseInt(m)));
+            ecm.setCreated(new Date());
+            ecm.setModified(new Date());
+            ecmfl.create(ecm);
+        }
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -71,38 +80,38 @@ public class ClasseController {
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("classe", cfl.find(id));
+        mv.addObject("enseignantClasseMatiere", ecmfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("classe")Classe classe ,@RequestParam("idclasse")int id,HttpServletRequest request){
-        classe.setModified(new Date());
-        classe.setCreated(cfl.find(id).getCreated());
-        cfl.edit(classe);
+    public RedirectView postEdit(@Valid @ModelAttribute("enseignantClasseMatiere")EnseignantsClassesMatieres ecm ,@RequestParam("idclassesMatieres")int id,HttpServletRequest request){
+        ecm.setModified(new Date());
+        ecm.setCreated(ecmfl.find(id).getCreated());
+        ecm.setClassesMatieresIdclassesMatieres(cmfl.find(Integer.parseInt(request.getParameter("classesMatieresIdclassesMatieres"))));
+        ecmfl.edit(ecm);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
     
     @RequestMapping(value="/view/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
-    public ModelAndView getView(@PathVariable("id")int id){
+    public ModelAndView getView(@PathVariable("idenseignantClasseMatiere")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("classe", cfl.find(id));
+        mv.addObject("enseignantClasseMatiere", ecmfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("classes", cfl.findAll());
+        mv.addObject("enseignantsClassesMatieres", ecmfl.findAll());
         return mv;
     }
     
-    
     @RequestMapping(value="/delete", method=RequestMethod.POST)
-    public RedirectView delete(@RequestParam("idclasse")int id,HttpServletRequest request){
-        Classe c = cfl.find(id);
-        cfl.remove(c);
+    public RedirectView delete(@RequestParam("idenseignantsClassesMatieres")int id,HttpServletRequest request){
+        EnseignantsClassesMatieres ecm = ecmfl.find(id);
+        ecmfl.remove(ecm);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

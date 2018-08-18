@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Absence.findAll", query = "SELECT a FROM Absence a")
     , @NamedQuery(name = "Absence.findByIdabsence", query = "SELECT a FROM Absence a WHERE a.idabsence = :idabsence")
     , @NamedQuery(name = "Absence.findByJourAbsence", query = "SELECT a FROM Absence a WHERE a.jourAbsence = :jourAbsence")
-    , @NamedQuery(name = "Absence.findByJustifee", query = "SELECT a FROM Absence a WHERE a.justifiee = :justifiee")
+    , @NamedQuery(name = "Absence.findByJustifiee", query = "SELECT a FROM Absence a WHERE a.justifiee = :justifiee")
     , @NamedQuery(name = "Absence.findByCreated", query = "SELECT a FROM Absence a WHERE a.created = :created")
     , @NamedQuery(name = "Absence.findByModified", query = "SELECT a FROM Absence a WHERE a.modified = :modified")
     , @NamedQuery(name = "Absence.findByDeleted", query = "SELECT a FROM Absence a WHERE a.deleted = :deleted")})

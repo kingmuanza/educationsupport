@@ -5,8 +5,10 @@
  */
 package edu.support.controllers;
 
-import edu.support.dao.ClasseFacadeLocal;
-import edu.support.entities.Classe;
+import edu.support.dao.ClassesMatieresFacadeLocal;
+import edu.support.dao.MatiereFacadeLocal;
+import edu.support.dao.SalleDeClasseFacadeLocal;
+import edu.support.entities.ClassesMatieres;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,21 +32,27 @@ import org.springframework.web.servlet.view.RedirectView;
  * @author N9-T
  */
 @Controller
-@RequestMapping("/classe")
-public class ClasseController {
+@RequestMapping("/classematiere")
+public class ClasseMatiereController {
     
-    @EJB(mappedName="java:app/edusupport/ClasseFacade")
-    private ClasseFacadeLocal cfl;
+    @EJB(mappedName="java:app/edusupport/ClassesMatieresFacade")
+    private ClassesMatieresFacadeLocal cmfl;
     
-    private final static String VUE_CREATE = "jsp/classe/create";
-    private final static String VUE_EDIT = "jsp/classe/edit";
-    private final static String VUE_LIST = "jsp/classe/list";
-    private final static String VUE_VIEW = "jsp/classe/view";
-    private final static String PATH_LIST = "/start#!/fonctionnalites";
+    @EJB(mappedName="java:app/edusupport/SalleDeClasseFacade")
+    private SalleDeClasseFacadeLocal scfl;
+    
+    @EJB(mappedName="java:app/edusupport/MatiereFacade")
+    private MatiereFacadeLocal mfl;
+    
+    private final static String VUE_CREATE = "jsp/classematiere/create";
+    private final static String VUE_EDIT = "jsp/classematiere/edit";
+    private final static String VUE_LIST = "jsp/classematiere/list";
+    private final static String VUE_VIEW = "jsp/classematiere/view";
+    private final static String PATH_LIST = "/start#!/classesmatieres";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","matiereIdmatiere","salleDeClasseIdsalleDeClasse"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -56,14 +64,20 @@ public class ClasseController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("classe")Classe classe,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("classeMatiere")ClassesMatieres classeMatiere,BindingResult result ,HttpServletRequest request){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-        classe.setCreated(new Date());
-        classe.setModified(new Date());
-        cfl.create(classe);
+        String salleDeClasse = request.getParameter("salleDeClasseIdsalleDeClasse");
+        String[] matieres = request.getParameterValues("matiereIdmatiere");
+        classeMatiere.setSalleDeClasseIdsalleDeClasse(scfl.find(Integer.parseInt(salleDeClasse)));
+        for(String m: matieres){
+            classeMatiere.setMatiereIdmatiere(mfl.find(Integer.parseInt(m)));
+            classeMatiere.setCreated(new Date());
+            classeMatiere.setModified(new Date());
+            cmfl.create(classeMatiere);
+        }
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -71,38 +85,38 @@ public class ClasseController {
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("classe", cfl.find(id));
+        mv.addObject("classeMatiere", cmfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("classe")Classe classe ,@RequestParam("idclasse")int id,HttpServletRequest request){
-        classe.setModified(new Date());
-        classe.setCreated(cfl.find(id).getCreated());
-        cfl.edit(classe);
+    public RedirectView postEdit(@Valid @ModelAttribute("classeMatiere")ClassesMatieres classeMatiere ,@RequestParam("idclassesMatieres")int id,HttpServletRequest request){
+        classeMatiere.setModified(new Date());
+        classeMatiere.setCreated(cmfl.find(id).getCreated());
+        classeMatiere.setMatiereIdmatiere(mfl.find(Integer.parseInt(request.getParameter("matiereIdmatiere"))));
+        cmfl.edit(classeMatiere);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
     
     @RequestMapping(value="/view/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
-    public ModelAndView getView(@PathVariable("id")int id){
+    public ModelAndView getView(@PathVariable("idclassesMatieres")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("classe", cfl.find(id));
+        mv.addObject("classeMatiere", cmfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("classes", cfl.findAll());
+        mv.addObject("classesMatieres", cmfl.findAll());
         return mv;
     }
     
-    
     @RequestMapping(value="/delete", method=RequestMethod.POST)
-    public RedirectView delete(@RequestParam("idclasse")int id,HttpServletRequest request){
-        Classe c = cfl.find(id);
-        cfl.remove(c);
+    public RedirectView delete(@RequestParam("idclassesMatieres")int id,HttpServletRequest request){
+        ClassesMatieres cm = cmfl.find(id);
+        cmfl.remove(cm);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

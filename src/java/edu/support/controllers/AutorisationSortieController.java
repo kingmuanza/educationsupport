@@ -7,6 +7,7 @@ package edu.support.controllers;
 
 import edu.support.dao.AutorisationSortieFacadeLocal;
 import edu.support.dao.EleveFacadeLocal;
+import edu.support.dao.MaladieFacadeLocal;
 import edu.support.entities.AutorisationSortie;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,6 +42,9 @@ public class AutorisationSortieController {
     @EJB(mappedName="java:app/edusupport/EleveFacade")
     private EleveFacadeLocal efl;
     
+    @EJB(mappedName="java:app/edusupport/MaladieFacade")
+    private MaladieFacadeLocal mfl;
+    
     private final static String VUE_CREATE = "jsp/autorisationsortie/create";
     private final static String VUE_EDIT = "jsp/autorisationsortie/edit";
     private final static String VUE_LIST = "jsp/autorisationsortie/list";
@@ -49,7 +53,7 @@ public class AutorisationSortieController {
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified","dateJour","dateRetour","eleveIdeleve","employeIdemploye"});
+        binder.setDisallowedFields(new String[]{"created","modified","dateJour","dateRetour","eleveIdeleve","maladieIdmaladie"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -74,6 +78,8 @@ public class AutorisationSortieController {
             autorisationsortie.setCreated(new Date());
             autorisationsortie.setModified(new Date());
             autorisationsortie.setEleveIdeleve(efl.find(Integer.parseInt(s)));
+            if(params.get("maladieIdmaladie") != null || !params.get("maladieIdmaladie").isEmpty())
+                autorisationsortie.setMaladieIdmaladie(mfl.find(Integer.parseInt(params.get("maladieIdmaladie"))));
             asfl.create(autorisationsortie);
         }
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
