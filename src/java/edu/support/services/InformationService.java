@@ -15,7 +15,7 @@ import java.util.List;
 public interface InformationService {
     
     /**
-     * méthode qui va retourner les examens de l'année en cours
+     * méthode qui va retourner les evaluations de l'année en cours
      * @return 
      */
     List<Evaluation> getExamens();
