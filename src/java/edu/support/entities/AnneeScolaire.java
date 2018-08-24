@@ -59,7 +59,7 @@ public class AnneeScolaire implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "en_cours", nullable = false)
-    private short enCours;
+    private boolean enCours;
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -69,7 +69,7 @@ public class AnneeScolaire implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anneeScolaireIdanneeScolaire")
     private Collection<Sequence> sequenceCollection;
 
@@ -80,7 +80,7 @@ public class AnneeScolaire implements Serializable {
         this.idanneeScolaire = idanneeScolaire;
     }
 
-    public AnneeScolaire(Integer idanneeScolaire, short enCours, short deleted) {
+    public AnneeScolaire(Integer idanneeScolaire, boolean enCours, boolean deleted) {
         this.idanneeScolaire = idanneeScolaire;
         this.enCours = enCours;
         this.deleted = deleted;
@@ -110,11 +110,11 @@ public class AnneeScolaire implements Serializable {
         this.dateFin = dateFin;
     }
 
-    public short getEnCours() {
+    public boolean getEnCours() {
         return enCours;
     }
 
-    public void setEnCours(short enCours) {
+    public void setEnCours(boolean enCours) {
         this.enCours = enCours;
     }
 
@@ -134,11 +134,11 @@ public class AnneeScolaire implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

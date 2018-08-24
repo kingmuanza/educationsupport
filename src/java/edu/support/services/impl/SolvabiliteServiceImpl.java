@@ -42,4 +42,5 @@ public class SolvabiliteServiceImpl implements SolvabiliteService{
         return (List)e.getRelanceCollection();
     }
     
+    
 }

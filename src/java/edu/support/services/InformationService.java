@@ -19,4 +19,6 @@ public interface InformationService {
      * @return 
      */
     List<Evaluation> getExamens();
+    
+    
 }

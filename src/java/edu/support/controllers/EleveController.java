@@ -32,14 +32,14 @@ import org.springframework.web.servlet.view.RedirectView;
  *
  * @author N9-T
  */
-@Controller()
+@Controller
 @RequestMapping("/eleve")
 public class EleveController {
     
     @EJB(mappedName="java:app/edusupport/EleveFacade")
     private EleveFacadeLocal efl;
     
-    @EJB(mappedName="java:app/edusupport/ClasseFacade")
+    @EJB(mappedName="java:app/edusupport/SalleDeClasseFacade")
     private SalleDeClasseFacadeLocal sclassefl;
     
     @EJB(mappedName="java:app/edusupport/IndividuFacade")

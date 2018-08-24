@@ -9,6 +9,7 @@ import edu.support.entities.Utilisateur;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -31,7 +32,17 @@ public class UtilisateurFacade extends AbstractFacade<Utilisateur> implements Ut
 
     @Override
     public Utilisateur findByCredentials(String login, String pwd) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntityManager entityManager = getEntityManager();
+        Query q;
+        try{
+            q = entityManager.createQuery("from Utilisateur u where u.login =:login and u.motDePasse=:motDePasse");
+            q.setParameter("login", login);
+            q.setParameter("motDePasse", pwd);
+            return (Utilisateur) q.getSingleResult();
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
     
 }

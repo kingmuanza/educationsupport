@@ -71,7 +71,7 @@ public class Sequence implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sequenceIdsequence")
     private Collection<Evaluation> evaluationCollection;
     @JoinColumn(name = "trimestre_idtrimestre", referencedColumnName = "idtrimestre", nullable = false)
@@ -88,7 +88,7 @@ public class Sequence implements Serializable {
         this.idsequence = idsequence;
     }
 
-    public Sequence(Integer idsequence, String code, int numero, short deleted) {
+    public Sequence(Integer idsequence, String code, int numero, boolean deleted) {
         this.idsequence = idsequence;
         this.code = code;
         this.numero = numero;
@@ -135,11 +135,11 @@ public class Sequence implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
