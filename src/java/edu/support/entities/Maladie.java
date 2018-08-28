@@ -73,7 +73,7 @@ public class Maladie implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "maladieIdmaladie")
     private Collection<EleveMaladie> eleveMaladieCollection;
     @OneToMany(mappedBy = "maladieIdmaladie")
@@ -88,7 +88,7 @@ public class Maladie implements Serializable {
         this.idmaladie = idmaladie;
     }
 
-    public Maladie(Integer idmaladie, String nom, String description, String typeMaladie, short deleted) {
+    public Maladie(Integer idmaladie, String nom, String description, String typeMaladie, boolean deleted) {
         this.idmaladie = idmaladie;
         this.nom = nom;
         this.description = description;
@@ -144,11 +144,11 @@ public class Maladie implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

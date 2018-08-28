@@ -69,7 +69,7 @@ public class Paiement implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -81,7 +81,7 @@ public class Paiement implements Serializable {
         this.idpaiement = idpaiement;
     }
 
-    public Paiement(Integer idpaiement, String code, double montant, short deleted) {
+    public Paiement(Integer idpaiement, String code, double montant, boolean deleted) {
         this.idpaiement = idpaiement;
         this.code = code;
         this.montant = montant;
@@ -136,11 +136,11 @@ public class Paiement implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

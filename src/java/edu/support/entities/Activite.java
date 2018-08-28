@@ -58,7 +58,7 @@ public class Activite implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "utilisateur_idutilisateur", referencedColumnName = "idutilisateur", nullable = false)
     @ManyToOne(optional = false)
     private Utilisateur utilisateurIdutilisateur;
@@ -70,7 +70,7 @@ public class Activite implements Serializable {
         this.idactivite = idactivite;
     }
 
-    public Activite(Integer idactivite, int action, short deleted) {
+    public Activite(Integer idactivite, int action, boolean deleted) {
         this.idactivite = idactivite;
         this.action = action;
         this.deleted = deleted;
@@ -108,11 +108,11 @@ public class Activite implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

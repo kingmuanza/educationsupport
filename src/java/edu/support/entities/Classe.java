@@ -69,7 +69,7 @@ public class Classe implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classeIdclasse")
     private Collection<SalleDeClasse> salleDeClasseCollection;
 
@@ -80,7 +80,7 @@ public class Classe implements Serializable {
         this.idclasse = idclasse;
     }
 
-    public Classe(Integer idclasse, String code, double fraisScolarite, short deleted) {
+    public Classe(Integer idclasse, String code, double fraisScolarite, boolean deleted) {
         this.idclasse = idclasse;
         this.code = code;
         this.fraisScolarite = fraisScolarite;
@@ -135,11 +135,11 @@ public class Classe implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

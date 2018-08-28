@@ -61,7 +61,7 @@ public class ElevesTraduits implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -76,7 +76,7 @@ public class ElevesTraduits implements Serializable {
         this.idelevesTraduits = idelevesTraduits;
     }
 
-    public ElevesTraduits(Integer idelevesTraduits, String motif, short deleted) {
+    public ElevesTraduits(Integer idelevesTraduits, String motif, boolean deleted) {
         this.idelevesTraduits = idelevesTraduits;
         this.motif = motif;
         this.deleted = deleted;
@@ -114,11 +114,11 @@ public class ElevesTraduits implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

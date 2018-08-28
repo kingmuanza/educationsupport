@@ -57,7 +57,7 @@ public class Enseignant implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "enseignantIdenseignant")
     private Collection<EnseignantsClassesMatieres> enseignantsClassesMatieresCollection;
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
@@ -71,7 +71,7 @@ public class Enseignant implements Serializable {
         this.idenseignant = idenseignant;
     }
 
-    public Enseignant(Integer idenseignant, short deleted) {
+    public Enseignant(Integer idenseignant, boolean deleted) {
         this.idenseignant = idenseignant;
         this.deleted = deleted;
     }
@@ -100,11 +100,11 @@ public class Enseignant implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

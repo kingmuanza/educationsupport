@@ -79,7 +79,7 @@ public class Reunion implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reunionIdreunion")
     private Collection<Rapport> rapportCollection;
 
@@ -90,7 +90,7 @@ public class Reunion implements Serializable {
         this.idreunion = idreunion;
     }
 
-    public Reunion(Integer idreunion, String code, String libelle, int etat, Date dateJour, short deleted) {
+    public Reunion(Integer idreunion, String code, String libelle, int etat, Date dateJour, boolean deleted) {
         this.idreunion = idreunion;
         this.code = code;
         this.libelle = libelle;
@@ -155,11 +155,11 @@ public class Reunion implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

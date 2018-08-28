@@ -70,7 +70,7 @@ public class Matiere implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "matiereIdmatiere")
     private Collection<ClassesMatieres> classesMatieresCollection;
 
@@ -81,7 +81,7 @@ public class Matiere implements Serializable {
         this.idmatiere = idmatiere;
     }
 
-    public Matiere(Integer idmatiere, String code, String libelle, short deleted) {
+    public Matiere(Integer idmatiere, String code, String libelle, boolean deleted) {
         this.idmatiere = idmatiere;
         this.code = code;
         this.libelle = libelle;
@@ -128,11 +128,11 @@ public class Matiere implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

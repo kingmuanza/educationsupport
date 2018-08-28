@@ -58,7 +58,7 @@ public class Note implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -73,7 +73,7 @@ public class Note implements Serializable {
         this.idnote = idnote;
     }
 
-    public Note(Integer idnote, double valeur, short deleted) {
+    public Note(Integer idnote, double valeur, boolean deleted) {
         this.idnote = idnote;
         this.valeur = valeur;
         this.deleted = deleted;
@@ -111,11 +111,11 @@ public class Note implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

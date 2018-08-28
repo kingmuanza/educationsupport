@@ -53,7 +53,7 @@ public class UtilisateursFonctionnalites implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "utilisateur_idutilisateur", referencedColumnName = "idutilisateur", nullable = false)
     @ManyToOne(optional = false)
     private Utilisateur utilisateurIdutilisateur;
@@ -68,7 +68,7 @@ public class UtilisateursFonctionnalites implements Serializable {
         this.idutilisateursFonctionnalites = idutilisateursFonctionnalites;
     }
 
-    public UtilisateursFonctionnalites(Integer idutilisateursFonctionnalites, short deleted) {
+    public UtilisateursFonctionnalites(Integer idutilisateursFonctionnalites, boolean deleted) {
         this.idutilisateursFonctionnalites = idutilisateursFonctionnalites;
         this.deleted = deleted;
     }
@@ -97,11 +97,11 @@ public class UtilisateursFonctionnalites implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

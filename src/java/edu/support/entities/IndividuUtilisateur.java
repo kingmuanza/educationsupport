@@ -53,7 +53,7 @@ public class IndividuUtilisateur implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "utilisateur_idutilisateur", referencedColumnName = "idutilisateur", nullable = false)
     @ManyToOne(optional = false)
     private Utilisateur utilisateurIdutilisateur;
@@ -68,7 +68,7 @@ public class IndividuUtilisateur implements Serializable {
         this.idindividuUtilisateur = idindividuUtilisateur;
     }
 
-    public IndividuUtilisateur(Integer idindividuUtilisateur, short deleted) {
+    public IndividuUtilisateur(Integer idindividuUtilisateur, boolean deleted) {
         this.idindividuUtilisateur = idindividuUtilisateur;
         this.deleted = deleted;
     }
@@ -97,11 +97,11 @@ public class IndividuUtilisateur implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

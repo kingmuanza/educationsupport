@@ -63,7 +63,7 @@ public class Serie implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @OneToMany(mappedBy = "serieIdserie")
     private Collection<SalleDeClasse> salleDeClasseCollection;
 
@@ -74,7 +74,7 @@ public class Serie implements Serializable {
         this.idserie = idserie;
     }
 
-    public Serie(Integer idserie, String code, short deleted) {
+    public Serie(Integer idserie, String code, boolean deleted) {
         this.idserie = idserie;
         this.code = code;
         this.deleted = deleted;
@@ -120,11 +120,11 @@ public class Serie implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

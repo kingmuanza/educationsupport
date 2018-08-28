@@ -76,7 +76,7 @@ public class ConseilDiscipline implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "boolean", nullable = false)
-    private short boolean1;
+    private boolean boolean1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "conseilDisciplineIdconseilDiscipline")
     private Collection<ElevesTraduits> elevesTraduitsCollection;
 
@@ -87,7 +87,7 @@ public class ConseilDiscipline implements Serializable {
         this.idconseilDiscipline = idconseilDiscipline;
     }
 
-    public ConseilDiscipline(Integer idconseilDiscipline, String code, short boolean1) {
+    public ConseilDiscipline(Integer idconseilDiscipline, String code, boolean boolean1) {
         this.idconseilDiscipline = idconseilDiscipline;
         this.code = code;
         this.boolean1 = boolean1;
@@ -149,11 +149,11 @@ public class ConseilDiscipline implements Serializable {
         this.modified = modified;
     }
 
-    public short getBoolean1() {
+    public boolean getBoolean1() {
         return boolean1;
     }
 
-    public void setBoolean1(short boolean1) {
+    public void setBoolean1(boolean boolean1) {
         this.boolean1 = boolean1;
     }
 

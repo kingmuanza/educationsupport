@@ -62,7 +62,7 @@ public class ClassesMatieres implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classesMatieresIdclassesMatieres")
     private Collection<Evaluation> evaluationCollection;
     @JoinColumn(name = "salle_de_classe_idsalle_de_classe", referencedColumnName = "idsalle_de_classe", nullable = false)
@@ -81,7 +81,7 @@ public class ClassesMatieres implements Serializable {
         this.idclassesMatieres = idclassesMatieres;
     }
 
-    public ClassesMatieres(Integer idclassesMatieres, int coefficient, short deleted) {
+    public ClassesMatieres(Integer idclassesMatieres, int coefficient, boolean deleted) {
         this.idclassesMatieres = idclassesMatieres;
         this.coefficient = coefficient;
         this.deleted = deleted;
@@ -119,11 +119,11 @@ public class ClassesMatieres implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

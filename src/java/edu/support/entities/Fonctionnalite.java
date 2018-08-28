@@ -70,7 +70,7 @@ public class Fonctionnalite implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fonctionnaliteIdfonctionnalite")
     private Collection<UtilisateursFonctionnalites> utilisateursFonctionnalitesCollection;
 
@@ -81,7 +81,7 @@ public class Fonctionnalite implements Serializable {
         this.idfonctionnalite = idfonctionnalite;
     }
 
-    public Fonctionnalite(Integer idfonctionnalite, String code, String libelle, short deleted) {
+    public Fonctionnalite(Integer idfonctionnalite, String code, String libelle, boolean deleted) {
         this.idfonctionnalite = idfonctionnalite;
         this.code = code;
         this.libelle = libelle;
@@ -128,11 +128,11 @@ public class Fonctionnalite implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

@@ -75,7 +75,7 @@ public class Sanction implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -87,7 +87,7 @@ public class Sanction implements Serializable {
         this.idsanction = idsanction;
     }
 
-    public Sanction(Integer idsanction, String code, String description, String motif, short deleted) {
+    public Sanction(Integer idsanction, String code, String description, String motif, boolean deleted) {
         this.idsanction = idsanction;
         this.code = code;
         this.description = description;
@@ -151,11 +151,11 @@ public class Sanction implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

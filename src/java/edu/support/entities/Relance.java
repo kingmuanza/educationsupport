@@ -70,7 +70,7 @@ public class Relance implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -82,7 +82,7 @@ public class Relance implements Serializable {
         this.idrelance = idrelance;
     }
 
-    public Relance(Integer idrelance, String motif, double montant, Date echeance, short deleted) {
+    public Relance(Integer idrelance, String motif, double montant, Date echeance, boolean deleted) {
         this.idrelance = idrelance;
         this.motif = motif;
         this.montant = montant;
@@ -138,11 +138,11 @@ public class Relance implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

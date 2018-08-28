@@ -53,7 +53,7 @@ public class EnseignantsClassesMatieres implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "enseignant_idenseignant", referencedColumnName = "idenseignant", nullable = false)
     @ManyToOne(optional = false)
     private Enseignant enseignantIdenseignant;
@@ -68,7 +68,7 @@ public class EnseignantsClassesMatieres implements Serializable {
         this.idenseignantsClassesMatieres = idenseignantsClassesMatieres;
     }
 
-    public EnseignantsClassesMatieres(Integer idenseignantsClassesMatieres, short deleted) {
+    public EnseignantsClassesMatieres(Integer idenseignantsClassesMatieres, boolean deleted) {
         this.idenseignantsClassesMatieres = idenseignantsClassesMatieres;
         this.deleted = deleted;
     }
@@ -97,11 +97,11 @@ public class EnseignantsClassesMatieres implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

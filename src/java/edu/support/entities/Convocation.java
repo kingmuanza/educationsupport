@@ -71,7 +71,7 @@ public class Convocation implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -83,7 +83,7 @@ public class Convocation implements Serializable {
         this.idconvocation = idconvocation;
     }
 
-    public Convocation(Integer idconvocation, String code, String motif, short deleted) {
+    public Convocation(Integer idconvocation, String code, String motif, boolean deleted) {
         this.idconvocation = idconvocation;
         this.code = code;
         this.motif = motif;
@@ -138,11 +138,11 @@ public class Convocation implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

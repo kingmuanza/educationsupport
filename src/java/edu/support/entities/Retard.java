@@ -62,7 +62,7 @@ public class Retard implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -74,7 +74,7 @@ public class Retard implements Serializable {
         this.idretard = idretard;
     }
 
-    public Retard(Integer idretard, int marge, short deleted) {
+    public Retard(Integer idretard, int marge, boolean deleted) {
         this.idretard = idretard;
         this.marge = marge;
         this.deleted = deleted;
@@ -120,11 +120,11 @@ public class Retard implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

@@ -71,7 +71,7 @@ public class Rapport implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "reunion_idreunion", referencedColumnName = "idreunion", nullable = false)
     @ManyToOne(optional = false)
     private Reunion reunionIdreunion;
@@ -83,7 +83,7 @@ public class Rapport implements Serializable {
         this.idrapport = idrapport;
     }
 
-    public Rapport(Integer idrapport, String code, String nomFichier, short deleted) {
+    public Rapport(Integer idrapport, String code, String nomFichier, boolean deleted) {
         this.idrapport = idrapport;
         this.code = code;
         this.nomFichier = nomFichier;
@@ -138,11 +138,11 @@ public class Rapport implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

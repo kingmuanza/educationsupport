@@ -69,8 +69,7 @@ public class AutorisationSortie implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -85,7 +84,7 @@ public class AutorisationSortie implements Serializable {
         this.idautorisationSortie = idautorisationSortie;
     }
 
-    public AutorisationSortie(Integer idautorisationSortie, String code, Date deleted) {
+    public AutorisationSortie(Integer idautorisationSortie, String code, boolean deleted) {
         this.idautorisationSortie = idautorisationSortie;
         this.code = code;
         this.deleted = deleted;
@@ -131,11 +130,11 @@ public class AutorisationSortie implements Serializable {
         this.modified = modified;
     }
 
-    public Date getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Date deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

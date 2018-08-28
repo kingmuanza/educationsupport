@@ -62,7 +62,7 @@ public class PassageInfirmerie implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -77,7 +77,7 @@ public class PassageInfirmerie implements Serializable {
         this.idpassageInfirmerie = idpassageInfirmerie;
     }
 
-    public PassageInfirmerie(Integer idpassageInfirmerie, String code, short deleted) {
+    public PassageInfirmerie(Integer idpassageInfirmerie, String code, boolean deleted) {
         this.idpassageInfirmerie = idpassageInfirmerie;
         this.code = code;
         this.deleted = deleted;
@@ -123,11 +123,11 @@ public class PassageInfirmerie implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

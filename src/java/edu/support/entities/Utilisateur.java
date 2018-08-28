@@ -69,7 +69,7 @@ public class Utilisateur implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur")
     private Collection<UtilisateursFonctionnalites> utilisateursFonctionnalitesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur")
@@ -84,7 +84,7 @@ public class Utilisateur implements Serializable {
         this.idutilisateur = idutilisateur;
     }
 
-    public Utilisateur(Integer idutilisateur, String login, String motDePasse, short deleted) {
+    public Utilisateur(Integer idutilisateur, String login, String motDePasse, boolean deleted) {
         this.idutilisateur = idutilisateur;
         this.login = login;
         this.motDePasse = motDePasse;
@@ -131,11 +131,11 @@ public class Utilisateur implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

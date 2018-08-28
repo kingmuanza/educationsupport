@@ -110,7 +110,7 @@ public class Individu implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
+    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
     private Collection<Eleve> eleveCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
@@ -127,7 +127,7 @@ public class Individu implements Serializable {
         this.idindividu = idindividu;
     }
 
-    public Individu(Integer idindividu, String matricule, String noms, Date dateNaissance, String lieuNaissance, String sexe, String residence, short deleted) {
+    public Individu(Integer idindividu, String matricule, String noms, Date dateNaissance, String lieuNaissance, String sexe, String residence, boolean deleted) {
         this.idindividu = idindividu;
         this.matricule = matricule;
         this.noms = noms;
@@ -234,11 +234,11 @@ public class Individu implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 
