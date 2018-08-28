@@ -24,6 +24,7 @@
                 <tr>
                     <th>Elève</th>
                     <th>Code</th>
+                    <th>CodDate Fin Validité</th>
                     <th>Reponse</th>
                     <th>Etat</th>
                     <th>Edition</th>
@@ -48,6 +49,13 @@
                         <h4 class="ui image header">
                             <div class="content">
                                 ${moratoire.code}</div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                ${moratoire.dateFinValidite}</div>
                             </div>
                         </h4>
                     </td>

@@ -22,7 +22,7 @@
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>Individu</th>
+                    <th>Elève</th>
                     <th>Marge</th>
                     <th>Date Retard</th>
                     <th>Edition</th>
@@ -36,9 +36,9 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${retard.individuIdindividu.noms}
+                                ${retard.eleveIdeleve.individuIdindividu.noms}
                                 <div class="sub header">
-                                    ${retard.individuIdindividu.prenoms}
+                                    ${retard.eleveIdeleve.individuIdindividu.prenoms}
                                 </div>
                             </div>
                         </h4>
@@ -53,7 +53,7 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${retard.jourRetard}</div>
+                                <fmt:formatDate value="${retard.jourRetard}" pattern="yyyy-MM-dd"/>
                             </div>
                         </h4>
                     </td>

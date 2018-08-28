@@ -24,7 +24,6 @@
                 <tr>
                     <th>Code</th>
                     <th>Libelle</th>
-                    <th>Coefficient</th>
                     <th>Edition</th>
                 </tr>
             </thead>
@@ -44,13 +43,6 @@
                         <h4 class="ui image header">
                             <div class="content">
                                 ${matiere.libelle}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${matiere.coefficient}</div>
                             </div>
                         </h4>
                     </td>

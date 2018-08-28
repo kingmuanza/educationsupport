@@ -58,7 +58,7 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${eleve.classeIdclasse.code}
+                                ${eleve.salleDeClasseIdsalleDeClasse.code}
                             </div>
                         </h4>
                     </td>

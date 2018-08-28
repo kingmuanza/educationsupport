@@ -37,9 +37,9 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${absence.individuIdindividu.noms}
+                                ${absence.eleveIdeleve.individuIdindividu.noms}
                                 <div class="sub header">
-                                    ${absence.individuIdindividu.prenoms}
+                                    ${absence.eleveIdeleve.individuIdindividu.prenoms}
                                 </div>
                             </div>
                         </h4>
@@ -54,7 +54,7 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${absence.justifee}</div>
+                                ${absence.justifiee}</div>
                             </div>
                         </h4>
                     </td>
@@ -95,7 +95,7 @@
         <script src="<c:url value="/resources/js/buttons.print.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/pdfmake.min.js"/>" type="text/javascript"></script>
         <script>
-            var titre = 'Bonjour';
+            var titre = 'Absence';
             $(document).ready(function () {
                 
                 //ouvrirMenuCorrespondant("#section_params", "bouton_params", "absence");
