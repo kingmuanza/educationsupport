@@ -11,31 +11,59 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>ABSENCE | Create</title>
+        <title>TRIMESTRE | Create</title>
     </head>
     <body>
-        <form:errors path="absence.*"/>
-        <form method="post" action="create">
-            <table>
-                <tr>
-                    <td><label>Jour Absence</label></td>
-                    <td><input type="text" name="jourAbsence" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Justifier ?</label></td>
-                    <td><input type="text" name="justifee" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Motif</label></td>
-                    <td><input type="text" name="motif" required="true"/></td>
-                </tr>
+        <h1 class="titre">
+            Enregistrement des individus
+        </h1>
+        <form:errors path="individu.*"/>
+        <form method="post" class="ui form" action="<c:url value="/individu/create"/>">
+            
+                <div class="field">
+                    <label>Matricule</label>
+                    <input type="text" name="matricule" required="true"/>
+                </div>
+                <div class="field">
+                    <label>Nom</label>
+                    <input type="text" name="noms" required="true"/>
+                </div>
+                <div class="field">
+                    <label>Prenom</label>
+                    <input type="text" name="prenoms" required="true"/>
+                </div>
+                <div class="field">
+                    <label>Date Naissance</label>
+                    <input type="date" name="dateNaissance" required="true"/>
+                </div>
+                <div class="field">
+                    <label>Lieu Naissance</label>
+                    <input type="text" name="lieuNaissance" required="true"/>
+                </div>
+                <div class="field">
+                    <label>E-mail</label>
+                    <input type="email" name="numero" required="true"/>
+                </div>
+                <div class="field">
+                    <label>Sexe</label>
+                    <input type="text" name="sexe" required="true"/>
+                </div>
+                <div class="field">
+                    <label>Telephone</label>
+                    <input type="number" name="telephone" required="true"/>
+                </div>
+                <div class="field">
+                    <label>Residence</label>
+                    <input type="text" name="residence" required="true"/>
+                </div>
+                
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+                <button class="ui button" type="submit">Enregistrer</button>
         </form>
-        
+        <script>
+            $(document).ready(function () {
+                $("#multi-select").dropdown("get value");
+            });
+        </script>
     </body>
 </html>

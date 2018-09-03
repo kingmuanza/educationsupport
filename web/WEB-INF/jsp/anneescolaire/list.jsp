@@ -30,36 +30,36 @@
             </thead>
 
             <tbody>
-                <c:forEach items="${anneeScolaires}" var="anneescolaire">
+                <c:forEach items="${anneesscolaires}" var="annee">
                 <c:if test="${!anneescolaire.deleted}">
-                <tr class="pointeur" onclick="window.location.href='start#!/anneescolaire/${anneescolaire.idanneeScolaire}'">
+                <tr class="pointeur" onclick="window.location.href='start#!/anneescolaire/${annee.idanneeScolaire}'">
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                <fmt:formatDate value="${anneescolaire.dateDebut}" pattern="yyyy-MM-dd"/>
+                                <fmt:formatDate value="${annee.dateDebut}" pattern="yyyy-MM-dd"/>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                <fmt:formatDate value="${anneescolaire.dateFin}" pattern="yyyy-MM-dd"/></div>
+                                <fmt:formatDate value="${annee.dateFin}" pattern="yyyy-MM-dd"/></div>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${anneescolaire.enCours}</div>
+                                ${annee.enCours}</div>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                Crée le <fmt:formatDate value="${anneescolaire.created}" pattern="yyyy-MM-dd"/>
+                                Crée le <fmt:formatDate value="${annee.created}" pattern="yyyy-MM-dd"/>
                                 <div class="sub header">
-                                    Modifié le <fmt:formatDate value="${anneescolaire.modified}" pattern="yyyy-MM-dd"/>
+                                    Modifié le <fmt:formatDate value="${annee.modified}" pattern="yyyy-MM-dd"/>
                                 </div>
                             </div>
                         </h4>

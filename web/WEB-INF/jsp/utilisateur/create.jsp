@@ -26,7 +26,7 @@
             </div>
             <div class="field">
                 <label>Mot de passe</label>
-                <input type="passxord" name="motDePasse" required="true"/>
+                <input type="password" name="motDePasse" required="true"/>
             </div>
             <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
             <button class="ui button" type="submit">Enregistrer</button>

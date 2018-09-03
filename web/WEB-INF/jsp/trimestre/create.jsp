@@ -22,9 +22,8 @@
             
                 <div class="field">
                     <label>Numero</label>
-                    <input type="numero" name="numero" required="true"/>
+                    <input type="number" name="numero" required="true"/>
                 </div>
-                
                 
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
                 <button class="ui button" type="submit">Enregistrer</button>
