@@ -14,14 +14,14 @@
             Enregistrement des retards
         </h1>
         <form:errors path="retard.*"/>
-        <form method="post" class="ui form" action="create" style="padding-top: 20px;">
+        <form method="post" class="ui form" action="<c:url value="/retard/create"/>" style="padding-top: 20px;">
             
                 <div class="field">
-                    <label>Individu en retard</label>
-                            <select id="multi-select" name="individuIdindividu" multiple="true" required="true">
-                                    <option> Sélectionnez l'individu </option>
-                                    <c:forEach items="${individus}" var="individu">
-                                        <option value="${individu.idindividu}">${individu.prenoms} ${individu.noms }</option>
+                    <label>Elève (s) en retard</label>
+                            <select id="multi-select" name="eleveIdeleve" multiple="true" required="true">
+                                    <option> Sélectionnez l'élève </option>
+                                    <c:forEach items="${eleves}" var="eleve">
+                                        <option value="${eleve.ideleve}">${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms }</option>
                                     </c:forEach>
                         </select>
                 </div>

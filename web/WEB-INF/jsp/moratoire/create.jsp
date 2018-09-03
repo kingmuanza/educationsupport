@@ -14,10 +14,11 @@
         <title>MORATOIRE | Create</title>
     </head>
     <body>
-        <form:errors path="moratoire.*"/>
         <h1 class="titre">
             Enregistrement des demandes de moratoire
         </h1>
+        <form:errors path="moratoire.*"/>
+        
         <form method="post" class="ui form" action="<c:url value="/moratoire/create"/>">
 
             <div class="field">
@@ -34,6 +35,10 @@
             <div class="field">
                 <label>Code</label>
                 <input type="text" name="code" required="true"/>
+            </div>
+            <div class="field">
+                <label>Date de fin de validité</label>
+                <input type="date" name="dateFinJour" required="true" value="${date}"/>
             </div>
             <div class="field">
                 <label>Reponse </label>

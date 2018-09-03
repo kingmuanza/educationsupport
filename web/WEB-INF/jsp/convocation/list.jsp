@@ -23,8 +23,8 @@
             <thead>
                 <tr>
                     <th>Elève</th>
-                    <th>Employé</th>                    
-                    <th>Motif</th>    
+                    <th>Motif</th>                    
+                    <th>Date</th>    
                     <th>Edition</th>    
                 </tr>
             </thead>
@@ -46,17 +46,14 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.employeIdemploye.individuIdindividu.noms}
-                                <div class="sub header">
-                                    ${convocation.employeIdemploye.individuIdindividu.prenoms}
-                                </div>
+                                ${convocation.motif}</div>
                             </div>
                         </h4>
                     </td>
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.motif}</div>
+                                ${convocation.dateJour}</div>
                             </div>
                         </h4>
                     </td>

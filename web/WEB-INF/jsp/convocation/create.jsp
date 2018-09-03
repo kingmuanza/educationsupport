@@ -19,11 +19,10 @@
         </h1>
         
         <form:errors path="convocation.*"/>
-        <form method="post" class="ui form" action="create">
+        <form method="post" class="ui form" action="<c:url value="/convocation/create"/>">
 
             <div class="field">
                 <label>Eleve convoqué</label>
-                    <div class="default text">Sélectionnez l'élève</div>
                     <select id="multi-select" type="text" name="eleveIdeleve" required="true">
                         <option>Sélectionnez l'élève</option>
                         <c:forEach items="${eleves}" var="eleve">
@@ -40,6 +39,10 @@
             <div class="field">
                 <label>Motif</label>
                 <input type="text" name="motif" required="true"/>
+            </div>
+            <div class="field">
+                <label>Date jour</label>
+                <input type="date" value="<fmt:formatDate value="${date}" pattern="yyyy-MM-dd"/>
             </div>
             <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
             <button class="ui button" type="submit">Enregistrer</button>

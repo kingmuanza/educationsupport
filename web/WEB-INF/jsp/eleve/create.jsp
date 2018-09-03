@@ -30,11 +30,11 @@
                         </select>
                 </div>
                 <div class="field">
-                    <label>Classe</label>
-                        <select class="select" name="classeIdclasse">
-                            <option>Sélectionnez la classe</option>
+                    <label>Salle de classe</label>
+                        <select class="select" name="salleDeClasseIdsalleDeClasse">
+                            <option>Sélectionnez la salle de classe</option>
                             <c:forEach items="${classes}" var="classe">
-                                <option value="${classe.idclasse}">${classe.code}</option>
+                                <option value="${classe.idsalleDeClasse}">${classe.code}-${classe.serieIdserie.code}</option>
                             </c:forEach>
                         </select>
                 </div>

@@ -22,13 +22,13 @@
         <form:errors path="absence.*"/>
         <form method="post"class="ui form" action="<c:url value="/absence/create"/>" style="padding-top: 20px;">
             <div class="field">
-                <label>Individus absents</label>
+                <label>Elèves absents</label>
                 <div class="ui dropdown selection multiple">
                     <i class="dropdown icon"></i>
-                    <div class="default text">Sélectionnez les individus</div>
-                    <select id="multi-select" name="individuIdindividu" multiple="true" required="true">
-                        <c:forEach items="${individus}" var="individu">
-                            <option value="${individu.idindividu}" >${individu.prenoms} ${individu.noms}</option>
+                    <div class="default text">Sélectionnez les élèves</div>
+                    <select id="multi-select" name="eleveIdeleve" multiple="true" required="true">
+                        <c:forEach items="${eleves}" var="eleve">
+                            <option value="${eleve.ideleve}" >${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms}</option>
                         </c:forEach>
                     </select>
                 </div>

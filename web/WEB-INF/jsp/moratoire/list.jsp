@@ -24,7 +24,7 @@
                 <tr>
                     <th>Elève</th>
                     <th>Code</th>
-                    <th>CodDate Fin Validité</th>
+                    <th>Date Fin Validité</th>
                     <th>Reponse</th>
                     <th>Etat</th>
                     <th>Edition</th>

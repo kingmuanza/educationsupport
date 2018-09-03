@@ -23,9 +23,9 @@
             <thead>
                 <tr>
                     <th>Elève</th>
-                    <th>Employé</th>
-                    <th>Enseignant</th>
+                    <th>Code</th>
                     <th>Description</th>
+                    <th>Date</th>
                     <th>Motif</th>
                     <th>Edition</th>
                 </tr>
@@ -48,20 +48,7 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${sanction.employeIdemploye.individuIdindividu.noms}
-                                <div class="sub header">
-                                    ${sanction.employeIdemploye.individuIdindividu.prenoms}
-                                </div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${sanction.enseignantIdenseignant.individuIdindividu.noms}
-                                <div class="sub header">
-                                    ${sanction.enseignantIdenseignant.individuIdindividu.prenoms}
-                                </div>
+                                ${sanction.code}
                             </div>
                         </h4>
                     </td>
@@ -69,6 +56,13 @@
                         <h4 class="ui image header">
                             <div class="content">
                                 ${sanction.description}
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                ${sanction.dateJour}
                             </div>
                         </h4>
                     </td>

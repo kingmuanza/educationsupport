@@ -61,7 +61,7 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${paiement.dateJour}</div>
+                                <fmt:formatDate value="${paiement.dateJour}" pattern="yyyy-MM-dd HH:mm:ss"/>
                             </div>
                         </h4>
                     </td>

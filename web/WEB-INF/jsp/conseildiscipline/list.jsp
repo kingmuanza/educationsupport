@@ -23,9 +23,9 @@
             <thead>
                 <tr>
                     <th>Code</th>
-                    <th>Date Début</th>
-                    <th>Heure Début</th>
-                    <th>Date Fin</th>      
+                    <th>Libelle</th>
+                    <th>Date</th>
+                    <th>Heure Début</th>     
                     <th>Heure Fin</th>      
                     <th>Edition</th>      
                 </tr>
@@ -33,12 +33,18 @@
 
             <tbody>
                 <c:forEach items="${conseildisciplines}" var="conseildiscipline">
-                <c:if test="${!conseildiscipline.deleted}">
                 <tr class="pointeur" onclick="window.location.href='start#!/conseildiscipline/${conseildiscipline.idconseilDiscipline}'">
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
                                 ${conseildiscipline.code}</div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                ${conseildiscipline.libelle}</div>
                             </div>
                         </h4>
                     </td>
@@ -53,13 +59,6 @@
                         <h4 class="ui image header">
                             <div class="content">
                                 <fmt:formatDate value="${conseildiscipline.dateDebut}" pattern="HH:mm:ss"/>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                <fmt:formatDate value="${conseildiscipline.dateFin}" pattern="yyyy-MM-dd HH:mm:ss"/>
                             </div>
                         </h4>
                     </td>
@@ -81,7 +80,6 @@
                         </h4>
                     </td>
                 </tr>
-                </c:if>
                 </c:forEach>
 
             </tbody>

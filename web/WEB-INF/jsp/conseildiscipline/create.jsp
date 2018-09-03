@@ -19,11 +19,15 @@
             Enregistrement des conseils de discipline
         </h1>
         <form:errors path="conseildiscipline.*"/>
-        <form method="post" class="ui form" action="create">
+        <form method="post" class="ui form" action="<c:url value="/conseildiscipline/create"/>">
 
             <div class="field">
                 <label>Code</label>
                 <input type="text" name="code" required="true"/>
+            </div>
+            <div class="field">
+                <label>Libelle</label>
+                <input type="text" name="libelle" required="true"/>
             </div>
             <div class="field">
                 <label>Date de Début</label>

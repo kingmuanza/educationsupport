@@ -18,11 +18,19 @@
             Enregistrement des classes
         </h1>
         <form:errors path="classe.*"/>
-        <form method="post" class="ui form" action="create">
+        <form method="post" class="ui form" action="<c:url value="/classe/create"/>">
 
             <div class="field">
                 <label>Code</label>
                 <input type="text" name="code" required="true"/>
+            </div>
+            <div class="field">
+                <label>Libelle</label>
+                <input type="text" name="libelle" required="true"/>
+            </div>
+            <div class="field">
+                <label>Frais scolarité</label>
+                <input type="text" name="fraisScolarite" required="true"/>
             </div>
             <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
             <button class="ui button" type="submit">Enregistrer</button>

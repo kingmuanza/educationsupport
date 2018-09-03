@@ -36,6 +36,20 @@
                     </select>
                 </div>
             </div>
+            
+            <div class="field">
+
+                <label>Maladie (s)</label>
+                <div class="ui dropdown selection multiple">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Sélectionnez les maladies</div>
+                    <select id="multi-select" multiple="true" type="text" name="maladieIdmaladie" required="true">
+                        <c:forEach items="${maladies}" var="maladie">
+                            <option value="${maladie.idmaladie}">${maladie.nom} (${maladie.typeMaladie})</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
             <div class="field">
                 <label>Code</label>
                 <input type="text" name="code" required="true"/>

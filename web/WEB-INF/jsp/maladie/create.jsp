@@ -18,7 +18,7 @@
             Enregistrement des maladies
         </h1>
         <form:errors path="maladie.*"/>
-        <form method="post" class="ui form" action="create">
+        <form method="post" class="ui form" action="<c:url value="/maladie/create"/>" style="padding-top: 20px;">
             
                 <div class="field">
                     <label>Nom</label>

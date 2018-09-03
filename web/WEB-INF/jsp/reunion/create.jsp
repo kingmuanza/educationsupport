@@ -25,6 +25,10 @@
                 <input type="text" name="code" required="true"/>
             </div>
             <div class="field">
+                <label>Libelle</label>
+                <input type="text" name="libelle" required="true"/>
+            </div>
+            <div class="field">
                 <label>Etat</label>
                 <input type="text" name="etat" required="true"/>
             </div>

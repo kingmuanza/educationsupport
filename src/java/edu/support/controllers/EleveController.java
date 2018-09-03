@@ -53,7 +53,7 @@ public class EleveController {
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified","individuIdindividu","classeIdclasse"});
+        binder.setDisallowedFields(new String[]{"created","modified","individuIdindividu","${salleDeClasseIdsalleDeClasse}"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
