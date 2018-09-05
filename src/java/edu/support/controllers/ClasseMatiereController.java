@@ -60,6 +60,8 @@ public class ClasseMatiereController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
+        mv.addObject("salleDeClasses", scfl.findAll());
+        mv.addObject("matieres", mfl.findAll());
         return mv;
     }
     

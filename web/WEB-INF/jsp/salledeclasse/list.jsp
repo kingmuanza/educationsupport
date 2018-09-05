@@ -17,49 +17,63 @@
 
     </head>
     <body>
-        <h1 class="titre">Liste des matières classes</h1>
+        <h1 class="titre">Liste des salles de classes</h1>
 
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
                     <th>Classe</th>
-                    <th>Matière</th>     
-                    <th>Coefficient</th>     
-                    <th>Edition</th>     
+                    <th>Série</th>
+                    <th>Code</th>
+                    <th>Libelle</th>
+                    <th>Edition</th>
                 </tr>
             </thead>
 
             <tbody>
-                <c:forEach items="${classeMatieres}" var="classe">
-                <c:if test="${!classe.deleted}">    
-                <tr class="pointeur" onclick="window.location.href='start#!/classematiere/${classematiere.idclassematiere}'">
+                <c:forEach items="${salleDeClasses}" var="salledeclasse">
+                <c:if test="${!salledeclasse.deleted}">
+                <tr class="pointeur" onclick="window.location.href='start#!/salledeclasse/${salledeclasse.idsalleDeClasse}'">
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${classe.code}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${classe.libelle}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${classe.fraisScolarite}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                Crée le <fmt:formatDate value="${classe.created}" pattern="yyyy-MM-dd"/>
+                                ${salledeclasse.classeIdclasse.code}
                                 <div class="sub header">
-                                    Modifié le <fmt:formatDate value="${classe.modified}" pattern="yyyy-MM-dd"/>
+                                    ${salledeclasse.classeIdclasse.libelle}
+                                </div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                ${salledeclasse.serieIdserie.code}
+                                <div class="sub header">
+                                    ${salledeclasse.serieIdserie.libelle}
+                                </div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                ${salledeclasse.code}</div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                ${salledeclasse.libelle}</div>
+                            </div>
+                        </h4>
+                    </td>
+                    <td>
+                        <h4 class="ui image header">
+                            <div class="content">
+                                Crée le <fmt:formatDate value="${salledeclasse.created}" pattern="yyyy-MM-dd"/>
+                                <div class="sub header">
+                                    Modifié le <fmt:formatDate value="${salledeclasse.modified}" pattern="yyyy-MM-dd"/>
                                 </div>
                             </div>
                         </h4>
@@ -83,10 +97,10 @@
         <script src="<c:url value="/resources/js/buttons.print.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/pdfmake.min.js"/>" type="text/javascript"></script>
         <script>
-            var titre = 'Bonjour';
+            var titre = 'Salle de classes';
             $(document).ready(function () {
                 
-                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "classe");
+                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "salledeclasse");
                 
                 $('#dataTableUtilisateur').DataTable({
                     
@@ -98,7 +112,7 @@
                             message: '',
                             className: 'ui gris mini button',
                             action: function (e, dt, node, config) {
-                                window.location.href='start#!/classe'
+                                window.location.href='start#!/salledeclasse'
                             }
                         },
                         {

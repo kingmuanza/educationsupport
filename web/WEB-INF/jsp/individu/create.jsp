@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>TRIMESTRE | Create</title>
+        <title>INDIVIDU | Create</title>
     </head>
     <body>
         <h1 class="titre">

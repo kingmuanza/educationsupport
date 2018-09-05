@@ -142,7 +142,7 @@
                                 <b>Liste des examens</b>
                             </a>
                             <div class="active content menu">
-                                <a class="item" href="#!/statistiques">Examen 1</a>
+                                <a class="item" href="#!/notes">Notes</a>
                             </div>
                         </div>
                     </div>
@@ -206,6 +206,9 @@
                                 <a class="item" href="#!/sequences">Séquences</a>
                                 <a class="item" href="#!/matieres">Matières</a>
                                 <a class="item" href="#!/classes">Classes</a>
+                                <a class="item" href="#!/classesmatieres">Classes matières</a>
+                                <a class="item" href="#!/enseignantsclassesmatieres">Enseignants classes matières</a>
+                                <a class="item" href="#!/sallesdeclasses">Salles de classes</a>
                             </div>
                         </div>
                         <div class="item">

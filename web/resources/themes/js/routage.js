@@ -64,6 +64,17 @@ app.config(function ($routeProvider) {
                     return UrlExists("classe/edit")+"?id=" + params.id
                 }
             })
+            .when("/classesmatieres", {
+                templateUrl: UrlExists("classematiere/list ")
+            })
+            .when("/classematiere", {
+                templateUrl: UrlExists("classematiere/create ")
+            })
+            .when("/classematiere/:id", {
+                templateUrl: function (params) {
+                    return UrlExists("classematiere/edit")+"?id=" + params.id
+                }
+            })
             .when("/conseildisciplines", {
                 templateUrl: UrlExists("conseildiscipline/list ")
             })
@@ -148,9 +159,20 @@ app.config(function ($routeProvider) {
                 templateUrl: UrlExists("enseignant/create ")
             })
             
-            .when("/employe/:id", {
+            .when("/enseignant/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("employe/edit")+"?id=" + params.id
+                    return UrlExists("enseignant/edit")+"?id=" + params.id
+                }
+            })
+            .when("/enseignantsclassesmatieres", {
+                templateUrl: UrlExists("enseignantclassematiere/list ")
+            })
+            .when("/enseignantclassematiere", {
+                templateUrl: UrlExists("enseignantclassematiere/create ")
+            })
+            .when("/enseignantclassematiere/:id", {
+                templateUrl: function (params) {
+                    return UrlExists("enseignantclassematiere/edit")+"?id=" + params.id
                 }
             })
             .when("/evaluations", {
@@ -207,6 +229,17 @@ app.config(function ($routeProvider) {
             .when("/moratoire/:id", {
                 templateUrl: function (params) {
                     return UrlExists("moratoire/edit")+"?id=" + params.id
+                }
+            })
+            .when("/notes", {
+                templateUrl: UrlExists("note/list ")
+            })
+            .when("/note", {
+                templateUrl: UrlExists("note/create ")
+            })
+            .when("/note/:id", {
+                templateUrl: function (params) {
+                    return UrlExists("note/edit")+"?id=" + params.id
                 }
             })
             .when("/paiements", {
@@ -286,6 +319,17 @@ app.config(function ($routeProvider) {
             .when("/sanction/:id", {
                 templateUrl: function (params) {
                     return UrlExists("sanction/edit")+"?id=" + params.id
+                }
+            })
+            .when("/sallesdeclasses", {
+                templateUrl: UrlExists("salledeclasse/list ")
+            })
+            .when("/salledeclasse", {
+                templateUrl: UrlExists("salledeclasse/create ")
+            })
+            .when("/salledeclasse/:id", {
+                templateUrl: function (params) {
+                    return UrlExists("salledeclasse/edit")+"?id=" + params.id
                 }
             })
             .when("/sequences", {

@@ -6,6 +6,7 @@
 package edu.support.controllers;
 
 import edu.support.dao.ClassesMatieresFacadeLocal;
+import edu.support.dao.EnseignantFacadeLocal;
 import edu.support.dao.EnseignantsClassesMatieresFacadeLocal;
 import edu.support.entities.ClassesMatieres;
 import edu.support.entities.EnseignantsClassesMatieres;
@@ -38,6 +39,9 @@ public class EnseignantClasseMatiereController {
     @EJB(mappedName="java:app/edusupport/ClassesMatieresFacade")
     private ClassesMatieresFacadeLocal cmfl;
     
+    @EJB(mappedName="java:app/edusupport/EnseignantFacade")
+    private EnseignantFacadeLocal ensfl;
+    
     @EJB(mappedName="java:app/edusupport/EnseignantsClassesMatieresFacade")
     private EnseignantsClassesMatieresFacadeLocal ecmfl;
     
@@ -57,6 +61,8 @@ public class EnseignantClasseMatiereController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
+        mv.addObject("classesMatieres", cmfl.findAll());
+        mv.addObject("enseignants", ensfl.findAll());
         return mv;
     }
     
