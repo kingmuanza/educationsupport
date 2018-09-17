@@ -16,7 +16,7 @@
         <div class="ui grid">
             <div class="noir" style="width: 6vw; height: 110vh; margin: 0px!important; padding: 0px;important">
                 <div style="padding-top: 5vw;">
-                    <div id="accueil" onclick="accueillir(this)" class="section_bouton">
+                    <div id="accueil" onclick="accueillir('#section_home', this)" class="section_bouton active">
                         <div style="position: relative;top: 50%; left: 30%;transform: translateY(-50%);">
                             <i class="home big icon fg-white" style="z-index: 45177777;"></i>
                         </div>
@@ -31,7 +31,7 @@
                             <i class="money bill alternate big icon fg-white" style="z-index: 45177777;"></i>
                         </div>
                     </div>
-                    <div id="bouton_accueil" onclick="gestionnaireSections('#section_accueil', this)" class="section_bouton active">
+                    <div id="bouton_accueil" onclick="gestionnaireSections('#section_accueil', this)" class="section_bouton">
                         <div style="position: relative;top: 50%; left: 30%;transform: translateY(-50%);">
                             <i class="info circle big icon fg-white" style="z-index: 45177777;"></i>
                         </div>
