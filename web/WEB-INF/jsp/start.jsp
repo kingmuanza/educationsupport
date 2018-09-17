@@ -9,13 +9,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Education Support</title>
         <link href="<c:url value="/resources/css/semantic.css"/>" rel="stylesheet">
-        <link href="<c:url value="/resources/css/myapp.css?id=1"/>" rel="stylesheet">
+        <link href="<c:url value="/resources/css/myapp.css?id=123"/>" rel="stylesheet">
         <link href="<c:url value="/resources/css/Semantic-UI-Alert.css"/>" rel="stylesheet">
     </head>
     <body ng-app="myApp" style="height: 100vh; overflow-y: hidden; ">
         <div class="ui grid">
             <div class="noir" style="width: 6vw; height: 110vh; margin: 0px!important; padding: 0px;important">
                 <div style="padding-top: 5vw;">
+                    <div id="accueil" onclick="accueillir(this)" class="section_bouton">
+                        <div style="position: relative;top: 50%; left: 30%;transform: translateY(-50%);">
+                            <i class="home big icon fg-white" style="z-index: 45177777;"></i>
+                        </div>
+                    </div>
                     <div id="bouton_profil" onclick="gestionnaireSections('#section_profil', this)" class="section_bouton">
                         <div style="position: relative;top: 50%; left: 30%;transform: translateY(-50%);">
                             <i class="calendar times outline big icon fg-white" style="z-index: 45177777;"></i>
@@ -51,8 +56,36 @@
                 </div>
             </div>
 
-            <div class="gris" style="width: 18vw; height: 110vh; padding-top: 25px;">
+            <div id="colonne_sousmenu" class="gris" style="width: 18vw; height: 110vh; padding-top: 25px;">
 
+                <div style="padding-left: 10px; padding-right : 10px;" id="section_home"  class="section_muanza">
+                    <h1>Accueil</h1>
+                    <div class="ui accordion vertical fluid following text menu">
+                        <div class="item">
+                            <a class="title">
+                                <i class="dropdown icon"></i> 
+                                <b>Abscences et retards</b>
+                            </a>
+                            <div class="active content menu">
+                                <a class="item active" href="#!/absences">Absences </a>
+                                <a class="item active" href="#!/retards">Retards </a>
+                                <a class="item active" href="#!/autorisationsorties">Permissions </a>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <a class="title">
+                                <i class="dropdown icon"></i> 
+                                <b>Conduite</b>
+                            </a>
+                            <div class="active content menu">
+                                <a class="item active" href="#!/sanctions">Sanctions </a>
+                                <a class="item active" href="#!/convocations">Convocations </a>
+                                <a class="item active" href="#!/conseildisciplines">Conseils de disciplines </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
                 <div style="padding-left: 10px; padding-right : 10px;" id="section_profil"  class="section_muanza">
                     <h1>Discipline</h1>
                     <div class="ui accordion vertical fluid following text menu">
@@ -142,7 +175,7 @@
                                 <b>Liste des examens</b>
                             </a>
                             <div class="active content menu">
-                                <a class="item" href="#!/notes">Notes</a>
+                                <a class="item" href="#!/statistiques">Examen 1</a>
                             </div>
                         </div>
                     </div>
@@ -206,9 +239,6 @@
                                 <a class="item" href="#!/sequences">Séquences</a>
                                 <a class="item" href="#!/matieres">Matières</a>
                                 <a class="item" href="#!/classes">Classes</a>
-                                <a class="item" href="#!/classesmatieres">Classes matières</a>
-                                <a class="item" href="#!/enseignantsclassesmatieres">Enseignants classes matières</a>
-                                <a class="item" href="#!/sallesdeclasses">Salles de classes</a>
                             </div>
                         </div>
                         <div class="item">
@@ -225,7 +255,7 @@
 
 
             </div>
-            <div style="width: 76vw; height: 100vh; overflow-x: hidden; overflow-y: hidden; padding-top: 20px; padding-right: 5px!important;margin-right: 10px!important;">
+            <div id="colonne_contenu" style="width: 76vw; height: 100vh; overflow-x: hidden; overflow-y: hidden; padding-top: 20px; padding-right: 5px!important;margin-right: 10px!important;">
                 <div class="ui secondary  menu">
                     <a class="item teal">
                         <i id="bouton_internet" class="circle icon titre"></i>
@@ -279,8 +309,8 @@
         <script src="<c:url value="/resources/js/Semantic-UI-Alert.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/angular.min.js"/>" type="text/javascript"></script>
         <script src="<c:url value="/resources/js/angular-route.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/resources/js/myapp.js"/>" type="text/javascript"></script>
-        <script src="<c:url value="/resources/js/routage.js?id=484"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/myapp.js?id=52"/>" type="text/javascript"></script>
+        <script src="<c:url value="/resources/js/routage.js?id=123456"/>" type="text/javascript"></script>
 
         <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
         <!-- Add additional services that you want to use -->
@@ -361,9 +391,9 @@
                                     }
                                 });
 
-                                var myVar = setInterval(function () {
-                                    checkInternet();
-                                }, 10000);
+//                                var myVar = setInterval(function () {
+//                                    checkInternet();
+//                                }, 10000);
 
 
                                 $('.ui.dropdown').dropdown();

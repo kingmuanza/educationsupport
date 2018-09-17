@@ -29,7 +29,7 @@ $(document).ready(function () {
 
     $('.section_muanza').css("display", "none");
 
-    $('#section_accueil').css("display", "block");
+    $('#section_home').css("display", "block");
 
     $('.section_muanza').on('click', function () {
 
@@ -40,15 +40,28 @@ $(document).ready(function () {
 function gestionnaireSections(id, elem) {
     //id de la section à ouvrir
     $('.section_muanza').css("display", "none");
+//    $('#colonne_sousmenu').css("display", "block");
+//    $('#colonne_contenu').css("width", "76vw");
     $('.section_bouton').removeClass("active");
     console.log(elem);
     elem.classList.add("active");
     $('.ui.accordion').accordion();
-
-
     $(id).css("display", "block");
 
 }
+
+function accueillir(id, elem){
+    //id de la section à ouvrir
+    $('.section_muanza').css("display", "none");
+//    $('#colonne_sousmenu').css("display", "none");
+//    $('#colonne_contenu').css("width", "94vw");
+    $('.section_bouton').removeClass("active");
+    console.log(elem);
+    elem.classList.add("active");
+    $(id).css("display", "block");
+    window.location.href='#!/';
+}
+
 
 function ouvrirMenuCorrespondant(id, elemID, ref) {
     var elem = document.getElementById(elemID);

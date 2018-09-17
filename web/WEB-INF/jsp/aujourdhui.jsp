@@ -13,22 +13,24 @@
         <h1 class="titre" style="font-size: 3.0em">
             Tableau de bord
         </h1>
-        <div style="padding-left: 5px; padding-bottom: 20px; font-size: 1.2em; opacity: 0.8; margin-top: -15px">
-            Aujourd'hui, le <fmt:formatDate type = "date" dateStyle="long" value = "${aujourdhui}" /> 
+        <div style="color : #ce352c; padding-left: 5px; padding-bottom: 20px; font-size: 1.2em; opacity: 1; margin-top: -15px">
+            <b> 
+                Aujourd'hui, le <fmt:formatDate type = "date" dateStyle="long" value = "${aujourdhui}" /> 
+            </b>
         </div>
 
         <div  style="background-color: #f8f8f8; border-radius: 5px; border: 1px solid #004d6f">
             <div style="padding-top: 25px; padding-bottom : 25px">
                 <div class="ui four statistics">
                     <div class="statistic" style="cursor: pointer" onclick="window.location.href = 'start#!/absences'">
-                        
-                            <div class="value  titre">
-                                85
-                            </div>
-                            <div class="label">
-                                Absences
-                            </div>
-                        
+
+                        <div class="value  titre">
+                            85
+                        </div>
+                        <div class="label">
+                            Absences
+                        </div>
+
                     </div>
                     <div class="statistic" style="cursor: pointer" onclick="window.location.href = 'start#!/retards'">
                         <div class="value  titre">
@@ -69,7 +71,7 @@
         <div class="ui three cards" style="padding-top: 20px;">
 
             <c:forEach items="${classes}" var="classe">
-                <div class="ui card" style="cursor: pointer" onclick="window.location.href = 'start#!/aujourdhuiclasse/${classe.idclasse}'">
+                <div class="ui card" style="cursor: pointer" onclick="window.location.href = 'start#!/aujourdhuiclasse/${classe.idsalleDeClasse}'">
                     <div class="content">
                         <div class="ui black ribbon label" style="background-color: #004d6f!important">
                             ${classe.code}

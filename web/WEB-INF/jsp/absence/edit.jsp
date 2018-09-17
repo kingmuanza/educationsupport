@@ -19,7 +19,7 @@
             <table>
                 <tr>
                     <td><input type="text" name="jourAbsence" value="${absence.jourAbsence}" required="true"/></td>
-                    <td><input type="text" name="justifee" value="${absence.justifee}" required="true"/></td>
+                    <td><input type="text" name="justifee" value="${absence.justifiee}" required="true"/></td>
                     <td><input type="text" name="motif" value="${absence.motif}" required="true"/></td>
                 </tr>
                 <tr>

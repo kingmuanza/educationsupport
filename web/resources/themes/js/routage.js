@@ -18,7 +18,7 @@ var app = angular.module("myApp", ["ngRoute"]);
 app.config(function ($routeProvider) {
     $routeProvider
             .when("/", {
-                templateUrl: UrlExists("aujourdhui")
+                templateUrl: UrlExists("accueil")
             })
             .when("/absences", {
                 templateUrl: UrlExists("absence/list ")
