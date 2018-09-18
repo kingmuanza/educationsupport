@@ -24,6 +24,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -49,17 +50,18 @@ public class Convocation implements Serializable {
     @Column(name = "idconvocation", nullable = false)
     private Integer idconvocation;
     @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
     @Basic(optional = false)
-    @NotNull
+    
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "motif", nullable = false, length = 65535)
     private String motif;
     @Column(name = "date_jour")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateJour;
     @Column(name = "created")
@@ -69,7 +71,7 @@ public class Convocation implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)

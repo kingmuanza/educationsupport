@@ -76,8 +76,10 @@ public class ConvocationController {
     }
     
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
-    public ModelAndView getEdit(@PathVariable("id")int id){
+    public ModelAndView getEdit(@PathVariable("id")int id) throws ParseException{
         ModelAndView mv = new ModelAndView(VUE_EDIT);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        mv.addObject("date", sdf.parse(sdf.format(new Date())));
         mv.addObject("convocation", cfl.find(id));
         mv.addObject("eleves", efl.findAll());
         return mv;

@@ -60,12 +60,12 @@ public class Individu implements Serializable {
     @Column(name = "idindividu", nullable = false)
     private Integer idindividu;
     @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 254)
     @Column(name = "matricule", nullable = false, length = 254)
     private String matricule;
     @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 45)
     @Column(name = "noms", nullable = false, length = 45)
     private String noms;
@@ -73,12 +73,12 @@ public class Individu implements Serializable {
     @Column(name = "prenoms", length = 45)
     private String prenoms;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "date_naissance", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateNaissance;
     @Basic(optional = false)
-    @NotNull
+    
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "lieu_naissance", nullable = false, length = 65535)
@@ -88,7 +88,7 @@ public class Individu implements Serializable {
     @Column(name = "email", length = 254)
     private String email;
     @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 1)
     @Column(name = "sexe", nullable = false, length = 1)
     private String sexe;
@@ -96,7 +96,7 @@ public class Individu implements Serializable {
     @Column(name = "telephone", length = 45)
     private String telephone;
     @Basic(optional = false)
-    @NotNull
+    
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "residence", nullable = false, length = 65535)
@@ -108,7 +108,7 @@ public class Individu implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")

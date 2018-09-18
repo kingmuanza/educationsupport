@@ -37,7 +37,7 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${conseildiscipline.code}</div>
+                                ${conseildiscipline.code} (${conseildiscipline.elevesTraduitsCollection.size()})</div>
                             </div>
                         </h4>
                     </td>
@@ -51,7 +51,7 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                <fmt:formatDate value="${conseildiscipline.dateDebut}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                <fmt:formatDate value="${conseildiscipline.dateDebut}" pattern="yyyy-MM-dd"/>
                             </div>
                         </h4>
                     </td>

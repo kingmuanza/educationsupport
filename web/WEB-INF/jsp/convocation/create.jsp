@@ -6,6 +6,7 @@
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -42,7 +43,7 @@
             </div>
             <div class="field">
                 <label>Date jour</label>
-                <input type="date" value="<fmt:formatDate value="${date}" pattern="yyyy-MM-dd"/>
+                <input type="date" name="dateJour" value="<fmt:formatDate value="${date}" pattern="yyyy-MM-dd"/>"/>
             </div>
             <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
             <button class="ui button" type="submit">Enregistrer</button>

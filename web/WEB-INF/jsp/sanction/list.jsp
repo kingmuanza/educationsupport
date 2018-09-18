@@ -62,7 +62,7 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${sanction.dateJour}
+                                <fmt:formatDate value="${sanction.dateJour}" pattern="yyyy-MM-dd"/>
                             </div>
                         </h4>
                     </td>

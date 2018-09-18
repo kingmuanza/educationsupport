@@ -49,7 +49,7 @@ public class SanctionController {
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
+        binder.setDisallowedFields(new String[]{"created","modified","eleveIdeleve"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -76,8 +76,10 @@ public class SanctionController {
     }
     
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
-    public ModelAndView getEdit(@PathVariable("id")int id){
+    public ModelAndView getEdit(@PathVariable("id")int id) throws ParseException{
         ModelAndView mv = new ModelAndView(VUE_EDIT);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        mv.addObject("date", sdf.parse(sdf.format(new Date())));
         mv.addObject("sanction", sfl.find(id));
         mv.addObject("eleves", efl.findAll());
         return mv;
@@ -86,7 +88,6 @@ public class SanctionController {
     @RequestMapping(value="/edit", method=RequestMethod.POST)
     public RedirectView postEdit(@Valid @ModelAttribute("sanction")Sanction sanction ,@RequestParam Map<String,String> params,HttpServletRequest request){
         sanction.setModified(new Date());
-        sanction.setCreated(sfl.find(Integer.parseInt(params.get("iddsanction"))).getCreated());
         sanction.setEleveIdeleve(efl.find(Integer.parseInt(params.get("eleveIdeleve"))));
         sfl.edit(sanction);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);

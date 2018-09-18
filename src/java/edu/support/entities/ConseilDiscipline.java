@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "ConseilDiscipline.findByDateFin", query = "SELECT c FROM ConseilDiscipline c WHERE c.dateFin = :dateFin")
     , @NamedQuery(name = "ConseilDiscipline.findByCreated", query = "SELECT c FROM ConseilDiscipline c WHERE c.created = :created")
     , @NamedQuery(name = "ConseilDiscipline.findByModified", query = "SELECT c FROM ConseilDiscipline c WHERE c.modified = :modified")
-    , @NamedQuery(name = "ConseilDiscipline.findByBoolean1", query = "SELECT c FROM ConseilDiscipline c WHERE c.boolean1 = :boolean1")})
+    , @NamedQuery(name = "ConseilDiscipline.findByDeleted", query = "SELECT c FROM ConseilDiscipline c WHERE c.deleted = :deleted")})
 public class ConseilDiscipline implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,7 +54,7 @@ public class ConseilDiscipline implements Serializable {
     @Column(name = "idconseil_discipline", nullable = false)
     private Integer idconseilDiscipline;
     @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
@@ -74,9 +74,9 @@ public class ConseilDiscipline implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "boolean", nullable = false)
-    private boolean boolean1;
+    
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "conseilDisciplineIdconseilDiscipline")
     private Collection<ElevesTraduits> elevesTraduitsCollection;
 
@@ -87,10 +87,10 @@ public class ConseilDiscipline implements Serializable {
         this.idconseilDiscipline = idconseilDiscipline;
     }
 
-    public ConseilDiscipline(Integer idconseilDiscipline, String code, boolean boolean1) {
+    public ConseilDiscipline(Integer idconseilDiscipline, String code, boolean deleted) {
         this.idconseilDiscipline = idconseilDiscipline;
         this.code = code;
-        this.boolean1 = boolean1;
+        this.deleted = deleted;
     }
 
     public Integer getIdconseilDiscipline() {
@@ -149,12 +149,12 @@ public class ConseilDiscipline implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getBoolean1() {
-        return boolean1;
+    public boolean getDeleted() {
+        return deleted;
     }
 
-    public void setBoolean1(boolean boolean1) {
-        this.boolean1 = boolean1;
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @XmlTransient

@@ -62,6 +62,7 @@ public class AutorisationSortieController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
         mv.addObject("eleves", efl.findAll());
+        mv.addObject("maladies", mfl.findAll());
         return mv;
     }
     
@@ -78,7 +79,10 @@ public class AutorisationSortieController {
             autorisationsortie.setCreated(new Date());
             autorisationsortie.setModified(new Date());
             autorisationsortie.setEleveIdeleve(efl.find(Integer.parseInt(s)));
-            if(params.get("maladieIdmaladie") != null || !params.get("maladieIdmaladie").isEmpty())
+            String idmaladie = "";
+            if(params.get("maladieIdmaladie") != null)
+                idmaladie = params.get("maladieIdmaladie");
+            if(idmaladie != null && !idmaladie.isEmpty())
                 autorisationsortie.setMaladieIdmaladie(mfl.find(Integer.parseInt(params.get("maladieIdmaladie"))));
             asfl.create(autorisationsortie);
         }
@@ -90,6 +94,8 @@ public class AutorisationSortieController {
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
         mv.addObject("autorisationsortie", asfl.find(id));
+        mv.addObject("eleves", efl.findAll());
+        mv.addObject("maladies", mfl.findAll());
         return mv;
     }
     
@@ -102,7 +108,7 @@ public class AutorisationSortieController {
             autorisationsortie.setCreated(new Date());
             autorisationsortie.setModified(new Date());
             autorisationsortie.setEleveIdeleve(efl.find(Integer.parseInt(s)));
-            asfl.create(autorisationsortie);
+            asfl.edit(autorisationsortie);
         }
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

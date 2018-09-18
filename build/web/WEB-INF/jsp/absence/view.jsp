@@ -22,7 +22,7 @@
                 </tr>
                 <tr>
                     <td><label>Absence Justifié</label></td>
-                    <td><input type="text" name="justifee" value="${absence.justifee}" readonly="true"/></td>
+                    <td><input type="text" name="justifee" value="${absence.justifiee}" readonly="true"/></td>
                 </tr>
                 <tr>
                     <td><label>Motif</label></td>

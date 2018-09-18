@@ -49,7 +49,6 @@ public class Absence implements Serializable {
     @Column(name = "idabsence", nullable = false)
     private Integer idabsence;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "jour_absence", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date jourAbsence;
@@ -62,17 +61,14 @@ public class Absence implements Serializable {
     @Column(name = "motif", length = 65535)
     private String motif;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "created", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "modified", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)

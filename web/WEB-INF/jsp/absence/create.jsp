@@ -41,14 +41,14 @@
                 <div class="two fields">
                     <div class="two wide field">
                         <label>Justifié ?</label>
-                        <select name="justifee" required="true">
+                        <select name="justifiee" required="true">
                             <option value="0"> Non  </option>
                             <option value="1"> Oui </option>
                         </select>
                     </div>
                     <div class="fourteen wide field">
                         <label>Motif</label>
-                        <input type="text" name="motif" required="true"/>
+                        <input type="text" name="motif" />
                     </div>
                 </div>
             </div>

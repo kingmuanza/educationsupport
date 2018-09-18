@@ -50,7 +50,7 @@ public class Moratoire implements Serializable {
     @Column(name = "idmoratoire", nullable = false)
     private Integer idmoratoire;
     @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
@@ -62,7 +62,7 @@ public class Moratoire implements Serializable {
     @Column(name = "reponse", length = 65535)
     private String reponse;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "etat", nullable = false)
     private int etat;
     @Column(name = "created")
@@ -72,7 +72,7 @@ public class Moratoire implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "deleted", nullable = false)
     private short deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)

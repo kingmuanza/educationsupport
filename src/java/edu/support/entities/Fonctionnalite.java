@@ -52,12 +52,12 @@ public class Fonctionnalite implements Serializable {
     @Column(name = "idfonctionnalite", nullable = false)
     private Integer idfonctionnalite;
     @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
     @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 254)
     @Column(name = "libelle", nullable = false, length = 254)
     private String libelle;
@@ -68,7 +68,7 @@ public class Fonctionnalite implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fonctionnaliteIdfonctionnalite")

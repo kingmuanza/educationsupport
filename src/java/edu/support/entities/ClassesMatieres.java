@@ -50,7 +50,7 @@ public class ClassesMatieres implements Serializable {
     @Column(name = "idclasses_matieres", nullable = false)
     private Integer idclassesMatieres;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "coefficient", nullable = false)
     private int coefficient;
     @Column(name = "created")
@@ -60,7 +60,7 @@ public class ClassesMatieres implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classesMatieresIdclassesMatieres")

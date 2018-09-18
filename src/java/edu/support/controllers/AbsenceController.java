@@ -99,9 +99,8 @@ public class AbsenceController {
         for(String s: eleves){
             absence.setJourAbsence(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("jourAbsence")));
             absence.setEleveIdeleve(efl.find(Integer.parseInt(s)));
-            absence.setCreated(new Date());
             absence.setModified(new Date());
-            afl.create(absence);
+            afl.edit(absence);
         }
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

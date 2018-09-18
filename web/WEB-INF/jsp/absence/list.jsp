@@ -54,7 +54,15 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${absence.justifiee}</div>
+                                <c:choose>
+                                    <c:when test="${absence.justifiee}">
+                                        OUI
+                                    </c:when>
+                                    <c:otherwise>
+                                        NON
+                                    </c:otherwise>
+                                </c:choose>
+                                </div>
                             </div>
                         </h4>
                     </td>

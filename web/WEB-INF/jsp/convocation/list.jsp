@@ -53,7 +53,7 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${convocation.dateJour}</div>
+                                <fmt:formatDate value="${convocation.dateJour}" pattern="yyyy-MM-dd"/></div>
                             </div>
                         </h4>
                     </td>

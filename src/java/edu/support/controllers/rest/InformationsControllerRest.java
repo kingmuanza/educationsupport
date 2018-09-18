@@ -5,7 +5,9 @@
  */
 package edu.support.controllers.rest;
 
+import edu.support.dao.EvaluationFacadeLocal;
 import edu.support.dao.ReunionFacadeLocal;
+import edu.support.entities.Evaluation;
 import edu.support.entities.Reunion;
 import java.util.List;
 import javax.ejb.EJB;
@@ -23,8 +25,16 @@ public class InformationsControllerRest {
     @EJB(mappedName="java:app/edusupport/ReunionFacade")
     private ReunionFacadeLocal refl;
     
+    @EJB(mappedName="java:app/edusupport/EvaluationFacade")
+    private EvaluationFacadeLocal efl;
+    
     @RequestMapping(value="/reunions/list", produces="application/json")
     public List<Reunion> getListReunion(){
         return refl.findAll();
+    }
+    
+    @RequestMapping(value="/evaluations/list", produces="application/json")
+    public List<Evaluation> getListEvaluation(){
+        return efl.findAll();
     }
 }

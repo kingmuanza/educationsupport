@@ -54,7 +54,7 @@ public class SalleDeClasse implements Serializable {
     @Column(name = "idsalle_de_classe", nullable = false)
     private Integer idsalleDeClasse;
     @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
@@ -68,7 +68,7 @@ public class SalleDeClasse implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "salleDeClasseIdsalleDeClasse")

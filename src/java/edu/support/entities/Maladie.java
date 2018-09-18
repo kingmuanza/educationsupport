@@ -43,23 +43,23 @@ public class Maladie implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "idmaladie", nullable = false)
     private Integer idmaladie;
     @Basic(optional = false)
-    @NotNull
+    
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "nom", nullable = false, length = 65535)
     private String nom;
     @Basic(optional = false)
-    @NotNull
+    
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "description", nullable = false, length = 65535)
     private String description;
     @Basic(optional = false)
-    @NotNull
+    
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "type_maladie", nullable = false, length = 65535)
@@ -71,7 +71,7 @@ public class Maladie implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "maladieIdmaladie")

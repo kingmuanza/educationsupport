@@ -50,7 +50,7 @@ public class AutorisationSortie implements Serializable {
     @Column(name = "idautorisation_sortie", nullable = false)
     private Integer idautorisationSortie;
     @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
@@ -67,7 +67,7 @@ public class AutorisationSortie implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)

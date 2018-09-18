@@ -48,25 +48,25 @@ public class Reunion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "idreunion", nullable = false)
     private Integer idreunion;
     @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
     @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 45)
     @Column(name = "libelle", nullable = false, length = 45)
     private String libelle;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "etat", nullable = false)
     private int etat;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "date_jour", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateJour;
@@ -77,7 +77,7 @@ public class Reunion implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reunionIdreunion")

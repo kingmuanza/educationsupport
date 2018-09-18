@@ -6,10 +6,15 @@
 package edu.support.controllers;
 
 import edu.support.dao.ConseilDisciplineFacadeLocal;
+import edu.support.dao.EleveFacadeLocal;
+import edu.support.dao.ElevesTraduitsFacadeLocal;
 import edu.support.entities.ConseilDiscipline;
+import edu.support.entities.Eleve;
+import edu.support.entities.ElevesTraduits;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +42,12 @@ public class ConseilDisciplineController {
     @EJB(mappedName="java:app/edusupport/ConseilDisciplineFacade")
     private ConseilDisciplineFacadeLocal cfl;
     
+    @EJB(mappedName="java:app/edusupport/EleveFacade")
+    private EleveFacadeLocal efl;
+    
+    @EJB(mappedName="java:app/edusupport/ElevesTraduitsFacade")
+    private ElevesTraduitsFacadeLocal etfl;
+    
     private final static String VUE_CREATE = "jsp/conseildiscipline/create";
     private final static String VUE_EDIT = "jsp/conseildiscipline/edit";
     private final static String VUE_LIST = "jsp/conseildiscipline/list";
@@ -45,7 +56,7 @@ public class ConseilDisciplineController {
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified","dateDebut","dateFin"});
+        binder.setDisallowedFields(new String[]{"created","modified","dateDebut","dateFin","eleves"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -72,9 +83,12 @@ public class ConseilDisciplineController {
     }
     
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
-    public ModelAndView getEdit(@PathVariable("id")int id){
+    public ModelAndView getEdit(@PathVariable("id")int id) throws ParseException{
         ModelAndView mv = new ModelAndView(VUE_EDIT);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        mv.addObject("date", sdf.parse(sdf.format(new Date())));
         mv.addObject("conseildiscipline", cfl.find(id));
+        mv.addObject("eleves", efl.findAll());
         return mv;
     }
     
@@ -85,6 +99,18 @@ public class ConseilDisciplineController {
         conseildiscipline.setModified(new Date());
         conseildiscipline.setCreated(cfl.find(Integer.parseInt(params.get("idconseilDiscipline"))).getCreated());
         cfl.edit(conseildiscipline);
+        String[] eleves = request.getParameterValues("eleves");
+        for(String s: eleves){
+            Eleve e = efl.find(Integer.parseInt(s));
+            ElevesTraduits et = new ElevesTraduits();
+            et.setConseilDisciplineIdconseilDiscipline(conseildiscipline);
+            et.setCreated(new Date());
+            et.setModified(new Date());
+            et.setDeleted(false);
+            et.setMotif("Motif par defaut");
+            et.setEleveIdeleve(e);
+            etfl.create(et);
+        }
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

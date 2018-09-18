@@ -34,7 +34,7 @@
                     <input type="number" name="marge" required="true"/>
                 </div>
                 <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <button type="submit">Enregistrer</button>
+                <button class="ui button" type="submit">Enregistrer</button>
         </form>
         <script>
             $(document).ready(function () {

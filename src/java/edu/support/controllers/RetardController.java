@@ -91,11 +91,10 @@ public class RetardController {
     public RedirectView postEdit(@Valid @ModelAttribute("retard")Retard retard ,@RequestParam("eleveIdeleve")String[]eleveIdeleve,@RequestParam Map<String,String> params,HttpServletRequest request) throws ParseException{
         String eleves[] = eleveIdeleve;
         for(String s: eleves){
-            retard.setCreated(new Date());
             retard.setModified(new Date());
             retard.setJourRetard(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("jourRetard")));
             retard.setEleveIdeleve(ifl.find(Integer.parseInt(params.get("eleveIdeleve"))));
-            rfl.create(retard);
+            rfl.edit(retard);
         }
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

@@ -45,11 +45,11 @@ public class Classe implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "idclasse", nullable = false)
     private Integer idclasse;
     @Basic(optional = false)
-    @NotNull
+    
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
@@ -57,7 +57,7 @@ public class Classe implements Serializable {
     @Column(name = "libelle", length = 45)
     private String libelle;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "frais_scolarite", nullable = false)
     private double fraisScolarite;
     @Column(name = "created")
@@ -67,7 +67,7 @@ public class Classe implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classeIdclasse")

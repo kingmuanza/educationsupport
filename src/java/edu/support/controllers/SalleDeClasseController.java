@@ -78,8 +78,8 @@ public class SalleDeClasseController {
         return rv;
     }
     
-    @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
-    public ModelAndView getEdit(@PathVariable("id")int id){
+    @RequestMapping(value="/edit", method={RequestMethod.GET, RequestMethod.HEAD})
+    public ModelAndView getEdit(@RequestParam("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
         mv.addObject("salleDeClasse", cfl.find(id));
         return mv;

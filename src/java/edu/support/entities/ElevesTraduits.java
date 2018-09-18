@@ -47,7 +47,7 @@ public class ElevesTraduits implements Serializable {
     @Column(name = "ideleves_traduits", nullable = false)
     private Integer idelevesTraduits;
     @Basic(optional = false)
-    @NotNull
+    
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "motif", nullable = false, length = 65535)
@@ -59,7 +59,7 @@ public class ElevesTraduits implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date modified;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)

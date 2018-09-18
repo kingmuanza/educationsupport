@@ -1,45 +1,55 @@
 <%-- 
-    Document   : edit
-    Created on : 13 juil. 2018, 13:04:25
+    Document   : create
+    Created on : 13 juil. 2018, 13:04:11
     Author     : N9-T
 --%>
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>CONSEIL DE DISCIPLINE | edit</title>
+        <title>CONSEIL DE DISCIPLINE | Edit</title>
     </head>
     <body>
-        <form method="post" action="/edusupport/conseildiscipline/edit">
-            <input type="hidden" name="idconseildiscipline" value="${conseildiscipline.idconseilDiscipline}"/>
-            <table>
-                <tr>
-                    <td><label>Code</label></td>
-                    <td><input type="text" name="code" value="${conseildiscipline.code}" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Date Debut</label></td>
-                    <td><input type="text" name="code" value="${conseildiscipline.dateDebut}" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><label>Date Fin</label></td>
-                    <td><input type="text" name="code" value="${conseildiscipline.dateFin}" required="true"/></td>
-                </tr>
-                <tr>
-                    <td><input type="hidden" name="created" value="${conseildiscipline.created}"/></td>
-                    <td><input type="hidden" name="modified" value="${conseildiscipline.modified}"/></td>
-                    <td><input type="hidden" name="deleted" value="${conseildiscipline.deleted}"/></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Enregistrer"/></td>
-                </tr>
-            </table>
+        <h1 class="titre">
+            Enregistrement des conseils de discipline
+        </h1>
+        <form:errors path="conseildiscipline.*"/>
+        <form method="post" class="ui form" action="<c:url value="/conseildiscipline/edit"/>">
+            <input type="hidden" name="idconseilDiscipline" value="${conseildiscipline.idconseilDiscipline}"/>
+            <div class="field">
+                <label>Code</label>
+                <input type="text" name="code" value="${conseildiscipline.code}" required="true"/>
+            </div>
+            <div class="field">
+                <label>Libelle</label>
+                <input type="text" name="libelle" value="${conseildiscipline.libelle}" required="true"/>
+            </div>
+            <div class="field">
+                <label>Date de Début</label>
+                <input type="date" value="<fmt:formatDate value="${conseildiscipline.dateDebut}" pattern="yyyy-MM-dd"/>" name="dateDebut" required="true"/>
+            </div>
+            <div class="field">
+                <label>Date de Fin</label>
+                <input type="date" value="<fmt:formatDate value="${conseildiscipline.dateFin}" pattern="yyyy-MM-dd"/>" name="dateFin" required="true"/>
+            </div>
+            <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
+            <label>Les élèves traduits</label>
+            <select id="multi-select" multiple="true" type="text" name="eleves" required="true">
+                <c:forEach items="${eleves}" var="eleve">
+                    <option value="${eleve.ideleve}">${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms}</option>
+                </c:forEach>
+            </select><br>
+            <button class="ui button" type="submit">Enregistrer</button>
         </form>
-
+        <script>
+            $(document).ready(function () {
+                $("#multi-select").dropdown("get value");
+            });
+        </script>
     </body>
 </html>
