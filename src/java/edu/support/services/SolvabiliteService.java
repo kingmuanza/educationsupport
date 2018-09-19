@@ -10,11 +10,13 @@ import edu.support.entities.Moratoire;
 import edu.support.entities.Paiement;
 import edu.support.entities.Relance;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
  *
  * @author N9-T
  */
+@Local
 public interface SolvabiliteService {
     /*
     retourne un booléen selon que l'élève est solvable ou non
@@ -36,4 +38,8 @@ public interface SolvabiliteService {
     */
     public List<Relance> getRelances(Eleve e);
 
+    
+    public double getMontantPaye(Eleve e);
+    
+    public double getMontantRestant(Eleve e);
 }

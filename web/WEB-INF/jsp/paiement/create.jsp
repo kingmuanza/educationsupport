@@ -37,7 +37,7 @@
             </div>
             <div class="field">
                 <label>Montant </label>
-                <input type="number"  name="reponse" required="true"/>
+                <input type="number"  name="montant" required="true"/>
             </div>
             <div class="field">
                 <label>Date du jour du paiement</label>

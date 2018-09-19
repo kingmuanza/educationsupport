@@ -61,6 +61,8 @@ public class ConseilDiscipline implements Serializable {
     @Size(max = 45)
     @Column(name = "libelle", length = 45)
     private String libelle;
+    @Column(name = "rapport", length = 254)
+    private String rapport;
     @Column(name = "date_debut")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateDebut;
@@ -117,6 +119,16 @@ public class ConseilDiscipline implements Serializable {
         this.libelle = libelle;
     }
 
+    public String getRapport() {
+        return rapport;
+    }
+
+    public void setRapport(String rapport) {
+        this.rapport = rapport;
+    }
+
+    
+    
     public Date getDateDebut() {
         return dateDebut;
     }

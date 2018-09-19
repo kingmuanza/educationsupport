@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -93,11 +94,12 @@ public class ConseilDisciplineController {
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("conseildiscipline")ConseilDiscipline conseildiscipline ,@RequestParam Map<String,String>params,HttpServletRequest request) throws ParseException{
+    public RedirectView postEdit(@Valid @ModelAttribute("conseildiscipline")ConseilDiscipline conseildiscipline ,@RequestParam Map<String,String>params,HttpServletRequest request, MultipartFile multipart) throws ParseException{
         conseildiscipline.setDateDebut(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateDebut")));
         conseildiscipline.setDateFin(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateFin")));
         conseildiscipline.setModified(new Date());
         conseildiscipline.setCreated(cfl.find(Integer.parseInt(params.get("idconseilDiscipline"))).getCreated());
+        //ici le code pour ecrire le fichier sur le serveur et enregistrer son chemin
         cfl.edit(conseildiscipline);
         String[] eleves = request.getParameterValues("eleves");
         for(String s: eleves){

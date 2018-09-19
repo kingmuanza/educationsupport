@@ -19,7 +19,7 @@
             Enregistrement des conseils de discipline
         </h1>
         <form:errors path="conseildiscipline.*"/>
-        <form method="post" class="ui form" action="<c:url value="/conseildiscipline/edit"/>">
+        <form method="post" class="ui form" action="<c:url value="/conseildiscipline/edit"/>" enctype="multipart/form-data">
             <input type="hidden" name="idconseilDiscipline" value="${conseildiscipline.idconseilDiscipline}"/>
             <div class="field">
                 <label>Code</label>
@@ -44,6 +44,8 @@
                     <option value="${eleve.ideleve}">${eleve.individuIdindividu.prenoms} ${eleve.individuIdindividu.noms}</option>
                 </c:forEach>
             </select><br>
+            <label>Ajouter le rapport</label>
+            <input type="file" name="rapport"/>
             <button class="ui button" type="submit">Enregistrer</button>
         </form>
         <script>

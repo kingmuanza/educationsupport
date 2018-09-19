@@ -12,11 +12,13 @@ import edu.support.entities.Relance;
 import edu.support.services.SolvabiliteService;
 import edu.support.utils.StaticVars;
 import java.util.List;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author N9-T
  */
+@Stateless
 public class SolvabiliteServiceImpl implements SolvabiliteService{
 
     @Override
@@ -42,5 +44,20 @@ public class SolvabiliteServiceImpl implements SolvabiliteService{
         return (List)e.getRelanceCollection();
     }
     
+    @Override
+    public double getMontantPaye(Eleve e){
+        double montant = 0.0;
+        for(Paiement p: e.getPaiementCollection())
+            montant += p.getMontant();
+        return montant;
+    }
     
+    @Override
+    public double getMontantRestant(Eleve e){
+        double montant = 0.0;
+        for(Paiement p: e.getPaiementCollection())
+            montant += p.getMontant();
+        System.out.println(e.getSalleDeClasseIdsalleDeClasse().getClasseIdclasse().getFraisScolarite());
+        return e.getSalleDeClasseIdsalleDeClasse().getClasseIdclasse().getFraisScolarite() - montant;
+    }
 }

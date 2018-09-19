@@ -9,7 +9,7 @@ import edu.support.dao.EleveFacadeLocal;
 import edu.support.dao.PaiementFacadeLocal;
 import edu.support.entities.Eleve;
 import edu.support.entities.Paiement;
-import edu.support.utils.StaticVars;
+import edu.support.services.SolvabiliteService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,6 +44,9 @@ public class PaiementController {
     
     @EJB(mappedName="java:app/edusupport/EleveFacade")
     private EleveFacadeLocal efl;
+    
+    @EJB(mappedName="java:app/edusupport/SolvabiliteServiceImpl")
+    private SolvabiliteService solser;
     
     private final static String VUE_CREATE = "jsp/paiement/create";
     private final static String VUE_EDIT = "jsp/paiement/edit";
@@ -125,7 +128,8 @@ public class PaiementController {
     @RequestMapping(value="/insolvables/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getInsolvables() throws ParseException{
         ModelAndView mv = new ModelAndView("jsp/paiement/insolvables");
-        mv.addObject("insolvables", efl.findAll().removeAll(getInsolvablesList()));
+        mv.addObject("eleves", getInsolvablesList());
+        mv.addObject("solvabiliteService", solser);
         return mv;
     }
     
@@ -135,7 +139,7 @@ public class PaiementController {
         double som = 0.0;
         for(Paiement p: e.getPaiementCollection())
             som += p.getMontant();
-        return StaticVars.FRAIS_EXIGIBLES <= som;
+        return e.getSalleDeClasseIdsalleDeClasse().getClasseIdclasse().getFraisScolarite() <= som;
     }
     
     private List<Eleve> getInsolvablesList(){
@@ -145,5 +149,19 @@ public class PaiementController {
                 le.add(e);
         }
         return le;
+    }
+    
+    public double getMontantPaye(Eleve e){
+        double montant = 0.0;
+        for(Paiement p: e.getPaiementCollection())
+            montant += p.getMontant();
+        return montant;
+    }
+    
+    public double getMontantRestant(Eleve e){
+        double montant = 0.0;
+        for(Paiement p: e.getPaiementCollection())
+            montant += p.getMontant();
+        return e.getSalleDeClasseIdsalleDeClasse().getClasseIdclasse().getFraisScolarite() - montant;
     }
 }
