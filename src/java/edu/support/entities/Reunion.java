@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,6 +26,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -48,7 +51,7 @@ public class Reunion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
     @Column(name = "idreunion", nullable = false)
     private Integer idreunion;
     @Basic(optional = false)
@@ -66,7 +69,7 @@ public class Reunion implements Serializable {
     @Column(name = "etat", nullable = false)
     private int etat;
     @Basic(optional = false)
-    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "date_jour", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateJour;

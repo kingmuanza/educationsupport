@@ -45,7 +45,7 @@ public class MoratoireController {
     private final static String VUE_EDIT = "jsp/moratoire/edit";
     private final static String VUE_LIST = "jsp/moratoire/list";
     private final static String VUE_VIEW = "jsp/moratoire/view";
-    private final static String PATH_LIST = "/moratoire/list";
+    private final static String PATH_LIST = "/start#!/moratoires";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){

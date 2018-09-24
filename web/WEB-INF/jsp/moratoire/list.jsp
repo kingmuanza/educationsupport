@@ -55,7 +55,7 @@
                     <td>
                         <h4 class="ui image header">
                             <div class="content">
-                                ${moratoire.dateFinValidite}</div>
+                                <fmt:formatDate value="${moratoire.dateFinValidite}" pattern="yyyy-MM-dd"/></div>
                             </div>
                         </h4>
                     </td>

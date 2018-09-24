@@ -30,7 +30,9 @@
             </div>
             <div class="field">
                 <label>Etat</label>
-                <input type="text" name="etat" required="true"/>
+                <select name="etat" required="true">
+                    <option value="1">Programmée</option>
+                </select>
             </div>
             <div class="field">
                 <label>Date du jour du de la reunion</label>
