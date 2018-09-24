@@ -208,14 +208,7 @@
                 <div style="padding-left: 10px;" id="section_params"  class="section_muanza">
                     <h1>Paramètres</h1>
                     <div class="ui accordion vertical fluid following text menu">
-                        <div class="item">
-                            <a class="title">
-                                <i class="dropdown icon"></i> <b>Gestions des utilisateurs</b>
-                            </a>
-                            <div class="content menu">
-                                <a class="item" href="#!/utilisateurs">Utilisateurs</a>
-                            </div>
-                        </div>
+                        
                         <div class="item">
                             <a class="title">
                                 <i class="dropdown icon"></i> 
@@ -226,6 +219,14 @@
                                 <a class="item" href="#!/employes">Employés</a>
                                 <a class="item" href="#!/enseignants">Enseignants</a>
                                 <a class="item" href="#!/eleves">Elèves</a>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <a class="title">
+                                <i class="dropdown icon"></i> <b>Gestions des utilisateurs</b>
+                            </a>
+                            <div class="content menu">
+                                <a class="item" href="#!/utilisateurs">Utilisateurs</a>
                             </div>
                         </div>
                         <div class="item">

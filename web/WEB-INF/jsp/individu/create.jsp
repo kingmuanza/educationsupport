@@ -14,52 +14,68 @@
         <title>INDIVIDU | Create</title>
     </head>
     <body>
-        <h1 class="titre">
-            Enregistrement des individus
-        </h1>
-        <form:errors path="individu.*"/>
-        <form method="post" class="ui form" action="<c:url value="/individu/create"/>">
-            
-                <div class="field">
-                    <label>Matricule</label>
-                    <input type="text" name="matricule" required="true"/>
+
+        <div class="ui container">
+            <div class="ui grid">
+                <div class="ten wide column">
+                    <h1 class="titre">
+                        Enregistrement des individus
+                    </h1>
+                    <form:errors path="individu.*"/>
+                    <form method="post" class="ui form" action="<c:url value="/individu/create"/>">
+                        <div class="two fields">
+                            <div class="field required">
+                                <label>Matricule</label>
+                                <input type="text" name="matricule"/>
+                            </div>
+                            <div class="field required">
+                                <label>Sexe</label>
+                                <input type="text" name="sexe"/>
+                            </div>
+                        </div>
+                        <div class="two fields">
+                            <div class="required field">
+                                <label>Noms</label>
+                                <input type="text" name="noms"/>
+                            </div>
+                            <div class="field">
+                                <label>Prénoms</label>
+                                <input type="text" name="prenoms"/>
+                            </div>
+                        </div>
+                        <div class="two fields">
+                            <div class="required field">
+                                <label>Date Naissance</label>
+                                <input type="date" name="dateNaissance"/>
+                            </div>
+                            <div class="field required">
+                                <label>Lieu Naissance</label>
+                                <input type="text" name="lieuNaissance"/>
+                            </div>
+                        </div>
+                        <div class="two fields">
+                            <div class="field">
+                                <label>E-mail</label>
+                                <input type="email" name="numero"/>
+                            </div>
+
+                            <div class="field required">
+                                <label>Telephone</label>
+                                <input type="number" name="telephone"/>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Residence</label>
+                            <input type="text" name="residence"/>
+                        </div>
+
+                        <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
+                        <button class="ui button" type="submit">Enregistrer</button>
+                    </form>
                 </div>
-                <div class="field">
-                    <label>Nom</label>
-                    <input type="text" name="noms" required="true"/>
-                </div>
-                <div class="field">
-                    <label>Prenom</label>
-                    <input type="text" name="prenoms" required="true"/>
-                </div>
-                <div class="field">
-                    <label>Date Naissance</label>
-                    <input type="date" name="dateNaissance" required="true"/>
-                </div>
-                <div class="field">
-                    <label>Lieu Naissance</label>
-                    <input type="text" name="lieuNaissance" required="true"/>
-                </div>
-                <div class="field">
-                    <label>E-mail</label>
-                    <input type="email" name="numero" required="true"/>
-                </div>
-                <div class="field">
-                    <label>Sexe</label>
-                    <input type="text" name="sexe" required="true"/>
-                </div>
-                <div class="field">
-                    <label>Telephone</label>
-                    <input type="number" name="telephone" required="true"/>
-                </div>
-                <div class="field">
-                    <label>Residence</label>
-                    <input type="text" name="residence" required="true"/>
-                </div>
-                
-                <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
-                <button class="ui button" type="submit">Enregistrer</button>
-        </form>
+            </div>
+        </div>
+
         <script>
             $(document).ready(function () {
                 $("#multi-select").dropdown("get value");

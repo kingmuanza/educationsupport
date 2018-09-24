@@ -23,8 +23,8 @@
             <thead>
                 <tr>
                     <th>Matricule</th>
-                    <th>Nom</th>
-                    <th>Prenom</th>
+                    <th>Noms</th>
+                    <th>Prénoms</th>
                     <th>Naissance</th>
                     <th>Adresse</th>
                     <th>Sexe</th>

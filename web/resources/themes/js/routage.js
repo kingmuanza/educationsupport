@@ -28,7 +28,7 @@ app.config(function ($routeProvider) {
             })
             .when("/absence/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("absence/edit")+"?id=" + params.id
+                    return UrlExists("absence/edit/"+  params.id);
                 }
             })
             .when("/anneescolaires", {
@@ -39,7 +39,7 @@ app.config(function ($routeProvider) {
             })
             .when("/anneescolaire/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("anneescolaire/edit")+"?id=" + params.id
+                    return UrlExists("anneescolaire/edit/"+  params.id);
                 }
             })
             .when("/autorisationsorties", {
@@ -50,7 +50,7 @@ app.config(function ($routeProvider) {
             })
             .when("/autorisationsortie/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("autorisationsortie/edit")+"?id=" + params.id
+                    return UrlExists("autorisationsortie/edit/"+  params.id);
                 }
             })
             .when("/classes", {
@@ -61,7 +61,7 @@ app.config(function ($routeProvider) {
             })
             .when("/classe/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("classe/edit")+"?id=" + params.id
+                    return UrlExists("classe/edit/"+  params.id);
                 }
             })
             .when("/classesmatieres", {
@@ -72,7 +72,7 @@ app.config(function ($routeProvider) {
             })
             .when("/classematiere/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("classematiere/edit")+"?id=" + params.id
+                    return UrlExists("classematiere/edit/"+  params.id);
                 }
             })
             .when("/conseildisciplines", {
@@ -83,7 +83,7 @@ app.config(function ($routeProvider) {
             })
             .when("/conseildiscipline/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("conseildiscipline/edit")+"?id=" + params.id
+                    return UrlExists("conseildiscipline/edit/"+  params.id);
                 }
             })
             .when("/convocations", {
@@ -94,7 +94,7 @@ app.config(function ($routeProvider) {
             })
             .when("/convocation/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("convocation/edit")+"?id=" + params.id
+                    return UrlExists("convocation/edit/"+  params.id);
                 }
             })
             .when("/droitsacces", {
@@ -105,7 +105,7 @@ app.config(function ($routeProvider) {
             })
             .when("/droitsacce/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("droitsacce/edit")+"?id=" + params.id
+                    return UrlExists("droitsacce/edit/"+  params.id);
                 }
             })
             .when("/eleves", {
@@ -116,7 +116,7 @@ app.config(function ($routeProvider) {
             })
             .when("/eleve/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("eleve/edit")+"?id=" + params.id
+                    return UrlExists("eleve/edit/"+  params.id);
                 }
             })
             .when("/elevesmaladies", {
@@ -127,7 +127,7 @@ app.config(function ($routeProvider) {
             })
             .when("/elevesmaladie/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("elevesmaladie/edit")+"?id=" + params.id
+                    return UrlExists("elevesmaladie/edit/"+  params.id);
                 }
             })
             .when("/elevestraduits", {
@@ -138,7 +138,7 @@ app.config(function ($routeProvider) {
             })
             .when("/elevestraduit/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("elevestraduit/edit")+"?id=" + params.id
+                    return UrlExists("elevestraduit/edit/"+  params.id);
                 }
             })
             .when("/employes", {
@@ -149,7 +149,7 @@ app.config(function ($routeProvider) {
             })
             .when("/employe/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("employe/edit")+"?id=" + params.id
+                    return UrlExists("employe/edit/"+  params.id);
                 }
             })
             .when("/enseignants", {
@@ -161,7 +161,7 @@ app.config(function ($routeProvider) {
             
             .when("/enseignant/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("enseignant/edit")+"?id=" + params.id
+                    return UrlExists("enseignant/edit/"+  params.id);
                 }
             })
             .when("/enseignantsclassesmatieres", {
@@ -172,7 +172,7 @@ app.config(function ($routeProvider) {
             })
             .when("/enseignantclassematiere/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("enseignantclassematiere/edit")+"?id=" + params.id
+                    return UrlExists("enseignantclassematiere/edit/"+  params.id);
                 }
             })
             .when("/evaluations", {
@@ -183,7 +183,7 @@ app.config(function ($routeProvider) {
             })
             .when("/evaluation/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("evaluation/edit")+"?id=" + params.id
+                    return UrlExists("evaluation/edit/"+  params.id);
                 }
             })
             .when("/individus", {
@@ -194,7 +194,7 @@ app.config(function ($routeProvider) {
             })
             .when("/individu/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("individu/edit")+"?id=" + params.id
+                    return UrlExists("individu/edit/" + params.id)
                 }
             })
             .when("/maladies", {
@@ -205,7 +205,7 @@ app.config(function ($routeProvider) {
             })
             .when("/maladie/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("maladie/edit")+"?id=" + params.id
+                    return UrlExists("maladie/edit/"+  params.id);
                 }
             })
             .when("/matieres", {
@@ -217,7 +217,7 @@ app.config(function ($routeProvider) {
             
             .when("/matiere/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("matiere/edit")+"?id=" + params.id
+                    return UrlExists("matiere/edit/"+  params.id);
                 }
             })
             .when("/moratoires", {
@@ -228,7 +228,7 @@ app.config(function ($routeProvider) {
             })
             .when("/moratoire/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("moratoire/edit")+"?id=" + params.id
+                    return UrlExists("moratoire/edit/"+  params.id);
                 }
             })
             .when("/notes", {
@@ -239,7 +239,7 @@ app.config(function ($routeProvider) {
             })
             .when("/note/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("note/edit")+"?id=" + params.id
+                    return UrlExists("note/edit/"+  params.id);
                 }
             })
             .when("/paiements", {
@@ -250,7 +250,7 @@ app.config(function ($routeProvider) {
             })
             .when("/paiement/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("paiement/edit")+"?id=" + params.id
+                    return UrlExists("paiement/edit/"+  params.id);
                 }
             })
             .when("/passageinfirmeries", {
@@ -261,7 +261,7 @@ app.config(function ($routeProvider) {
             })
             .when("/passageinfirmerie/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("passageinfirmerie/edit")+"?id=" + params.id
+                    return UrlExists("passageinfirmerie/edit/"+  params.id);
                 }
             })
             .when("/rapports", {
@@ -273,7 +273,7 @@ app.config(function ($routeProvider) {
             
             .when("/rapport/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("rapport/edit")+"?id=" + params.id
+                    return UrlExists("rapport/edit/"+  params.id);
                 }
             })
             .when("/relances", {
@@ -284,7 +284,7 @@ app.config(function ($routeProvider) {
             })
             .when("/relance/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("relance/edit")+"?id=" + params.id
+                    return UrlExists("relance/edit/"+  params.id);
                 }
             })
             .when("/retards", {
@@ -296,7 +296,7 @@ app.config(function ($routeProvider) {
             
             .when("/retard/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("retard/edit")+"?id=" + params.id
+                    return UrlExists("retard/edit/"+  params.id);
                 }
             })
             .when("/reunions", {
@@ -307,7 +307,7 @@ app.config(function ($routeProvider) {
             })
             .when("/reunion/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("reunion/edit")+"?id=" + params.id
+                    return UrlExists("reunion/edit/"+  params.id);
                 }
             })
             .when("/sanctions", {
@@ -318,7 +318,7 @@ app.config(function ($routeProvider) {
             })
             .when("/sanction/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("sanction/edit")+"?id=" + params.id
+                    return UrlExists("sanction/edit/"+  params.id);
                 }
             })
             .when("/sallesdeclasses", {
@@ -329,7 +329,7 @@ app.config(function ($routeProvider) {
             })
             .when("/salledeclasse/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("salledeclasse/edit")+"?id=" + params.id
+                    return UrlExists("salledeclasse/edit/"+  params.id);
                 }
             })
             .when("/sequences", {
@@ -340,7 +340,7 @@ app.config(function ($routeProvider) {
             })
             .when("/sequence/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("sequence/edit")+"?id=" + params.id
+                    return UrlExists("sequence/edit/"+  params.id);
                 }
             })
             .when("/trimestres", {
@@ -351,7 +351,7 @@ app.config(function ($routeProvider) {
             })
             .when("/trimestre/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("trimestre/edit")+"?id=" + params.id
+                    return UrlExists("trimestre/edit/"+  params.id);
                 }
             })
             .when("/utilisateurs", {
@@ -362,7 +362,7 @@ app.config(function ($routeProvider) {
             })
             .when("/utilisateur/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("utilisateur/edit")+"?id=" + params.id
+                    return UrlExists("utilisateur/edit/"+  params.id);
                 }
             })
             .when("/insolvables", {
@@ -373,7 +373,7 @@ app.config(function ($routeProvider) {
             })
             .when("/insolvable/:id", {
                 templateUrl: function (params) {
-                    return UrlExists("paiement/insolvable/edit")+"?id=" + params.id
+                    return UrlExists("paiement/insolvable/edit/"+  params.id);
                 }
             })
             .otherwise({
