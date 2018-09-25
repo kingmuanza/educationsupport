@@ -31,6 +31,11 @@
             <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
             <button class="ui button" type="submit">Enregistrer</button>
         </form>
-
+        <script>
+            $(document).ready(function () {
+                $("#multi-select").dropdown("get value");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "utilisateurs");
+            });
+        </script>
     </body>
 </html>

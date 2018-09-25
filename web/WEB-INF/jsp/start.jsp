@@ -217,9 +217,10 @@
                                 <a class="item" href="#!/anneescolaires">Années scolaires</a>
                                 <a class="item" href="#!/trimestres">Trimestre</a>
                                 <a class="item" href="#!/sequences">Séquences</a>
-                                <a class="item" href="#!/matieres">Matières</a>
+                                <a class="item" href="#!/series">Séries</a>
                                 <a class="item" href="#!/classes">Classes</a>
                                 <a class="item" href="#!/sallesdeclasses">Salles de classe</a>
+                                <a class="item" href="#!/matieres">Matières</a>
                             </div>
                         </div>
                         <div class="item">
@@ -244,15 +245,7 @@
                             </div>
                         </div>
                         
-                        <div class="item">
-                            <a class="title">
-                                <i class="dropdown icon"></i> 
-                                <b>Accueil</b>
-                            </a>
-                            <div class="content menu">
-                                <a class="item" href="#!/badges">Bagdes pour visiteur</a>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
 

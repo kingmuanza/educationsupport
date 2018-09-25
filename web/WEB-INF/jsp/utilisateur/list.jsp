@@ -23,7 +23,6 @@
             <thead>
                 <tr>
                     <th>Login</th>
-                    <th>Mot de passe</th>
                     <th>Edition</th>
                 </tr>
             </thead>
@@ -36,13 +35,6 @@
                         <h4 class="ui image header">
                             <div class="content">
                                 ${utilisateur.login}</div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${utilisateur.motDePasse}</div>
                             </div>
                         </h4>
                     </td>
@@ -78,7 +70,7 @@
             var titre = 'Utilisateur';
             $(document).ready(function () {
                 
-                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "utilisateur");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "utilisateurs");
                 
                 $('#dataTableUtilisateur').DataTable({
                     
