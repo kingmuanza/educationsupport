@@ -23,7 +23,7 @@
             <thead>
                 <tr>
                     <th>Code</th>
-                    <th>Libelle</th>     
+                    <th>Libellé</th>     
                     <th>Frais scolarité</th>     
                     <th>Edition</th>     
                 </tr>
@@ -86,7 +86,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "classe");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "classes");
                 
                 $('#dataTableUtilisateur').DataTable({
                     

@@ -16,7 +16,7 @@
     </head>
     <body>
         <h1 class="titre">
-            Enregistrement des sequences
+            Enregistrement des séquences
         </h1>
         <form:errors path="sequence.*"/>
         <form method="post" class="ui form" class="ui form" action="<c:url value="/sequence/create"/>">
@@ -26,7 +26,7 @@
                     <input type="text" name="code" required="true"/>
                 </div>
                 <div class="field">
-                    <label>Numero </label>
+                    <label>Numéro </label>
                     <input type="number" name="numero" required="true"/>
                 </div>
                 <div class="field">
@@ -53,6 +53,7 @@
         <script>
             $(document).ready(function () {
                 $(".multi-select").dropdown("get value");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "sequence");
             });
         </script>
     </body>

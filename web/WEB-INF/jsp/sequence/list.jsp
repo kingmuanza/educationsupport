@@ -17,14 +17,14 @@
 
     </head>
     <body>
-        <h1 class="titre">Liste des sequences</h1>
+        <h1 class="titre">Liste des séquences</h1>
 
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
                     <th>Année Scolaire</th>
                     <th>Trimestre</th>
-                    <th>Numero</th>
+                    <th>Numéro</th>
                     <th>Edition</th>
                 </tr>
             </thead>
@@ -89,7 +89,7 @@
             var titre = 'Séquences';
             $(document).ready(function () {
                 
-                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "sequence");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "sequence");
                 
                 $('#dataTableUtilisateur').DataTable({
                     

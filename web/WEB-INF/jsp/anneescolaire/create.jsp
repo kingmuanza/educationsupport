@@ -19,26 +19,33 @@
         </h1>
         <form:errors path="anneescolaire.*"/>
         <form method="post" class="ui form" action="<c:url value="/anneescolaire/create"/>">
-            <div class="fiel">
+            <div class="required field">
                 <label>Date de début</label>
-                <input type="date" name="dateDebut" required="true"/>
+                <input type="date" name="dateDebut"/>
             </div>
-            <div class="field">
+            <div class="required field">
                 <label>Date de fin</label>
-                <input type="date" name="dateFin" required="true"/>
+                <input type="date" name="dateFin"/>
             </div>
-            <div class="field">
+            <div class="required field">
                 <label>Est-ce l'année en cours</label>
                 <div class="ui dropdown selection">
                     <i class="dropdown icon"></i>
-                    <select name="enCours" required="true">
-                        <option value="0">  NON </option>
-                        <option value="1">  OUI </option>
+                    <div class="default text">Sélectionnez une réponse</div>
+                    <select id="multi-select" name="enCours">
+                        <option value="0" >  NON </option>
+                        <option value="1" selected>  OUI </option>
                     </select>
                 </div>
             </div>
             <c:import url="/WEB-INF/jsp/fieldsNotNull.jsp"/>
             <button class="ui button" type="submit">Enregistrer</button>
         </form>
+        <script>
+            $(document).ready(function () {
+                $("#multi-select").dropdown("get value");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "anneescolaire");
+            });
+        </script>
     </body>
 </html>

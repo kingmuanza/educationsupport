@@ -100,7 +100,7 @@
             var titre = 'Salle de classes';
             $(document).ready(function () {
                 
-                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "salledeclasse");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "sallesdeclasses");
                 
                 $('#dataTableUtilisateur').DataTable({
                     

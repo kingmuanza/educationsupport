@@ -21,7 +21,7 @@
         <form method="post" class="ui form" action="<c:url value="/trimestre/create"/>">
             
                 <div class="field">
-                    <label>Numero</label>
+                    <label>Numéro</label>
                     <input type="number" name="numero" required="true"/>
                 </div>
                 
@@ -31,6 +31,7 @@
         <script>
             $(document).ready(function () {
                 $("#multi-select").dropdown("get value");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "trimestre");
             });
         </script>
     </body>

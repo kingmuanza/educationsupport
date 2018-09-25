@@ -53,6 +53,7 @@
         <script>
             $(document).ready(function () {
                 $(".multi-select").dropdown("get value");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "sallesdeclasses");
             });
         </script>
     </body>

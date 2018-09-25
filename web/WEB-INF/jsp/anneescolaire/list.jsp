@@ -17,7 +17,7 @@
 
     </head>
     <body>
-        <h1 class="titre">Liste des annees scolaires</h1>
+        <h1 class="titre">Liste des années scolaires</h1>
 
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
@@ -87,7 +87,7 @@
             var titre = 'Bonjour';
             $(document).ready(function () {
                 
-                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "anneescolaire");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "anneescolaire");
                 
                 $('#dataTableUtilisateur').DataTable({
                     

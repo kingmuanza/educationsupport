@@ -22,7 +22,7 @@
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
-                    <th>Numero</th>
+                    <th>Numéro</th>
                     <th>Edition</th>
                 </tr>
             </thead>
@@ -71,7 +71,7 @@
             var titre = 'Trimestres';
             $(document).ready(function () {
                 
-                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "trimestre");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "trimestre");
                 
                 $('#dataTableUtilisateur').DataTable({
                     

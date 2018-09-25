@@ -17,14 +17,14 @@
 
     </head>
     <body>
-        <h1 class="titre">Liste des employes</h1>
+        <h1 class="titre">Liste des employés</h1>
 
         <table id="dataTableUtilisateur" class="ui celled table responsive nowrap" style="width:100%">
             <thead>
                 <tr>
                     <th>Matricule</th>
-                    <th>Nom</th>
-                    <th>Prenom</th>     
+                    <th>Noms</th>
+                    <th>Prénoms</th>     
                     <th>Telephone</th>     
                     <th>Edition</th>     
                 </tr>
@@ -95,7 +95,7 @@
             var titre = 'Employé';
             $(document).ready(function () {
                 
-                //ouvrirMenuCorrespondant("#section_params", "bouton_params", "employe");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "employe");
                 
                 $('#dataTableUtilisateur').DataTable({
                     

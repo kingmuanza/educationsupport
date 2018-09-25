@@ -208,27 +208,6 @@
                 <div style="padding-left: 10px;" id="section_params"  class="section_muanza">
                     <h1>Paramètres</h1>
                     <div class="ui accordion vertical fluid following text menu">
-                        
-                        <div class="item">
-                            <a class="title">
-                                <i class="dropdown icon"></i> 
-                                <b>Personnes et qualités</b>
-                            </a>
-                            <div class="content menu">
-                                <a class="item" href="#!/individus">Individus</a>
-                                <a class="item" href="#!/employes">Employés</a>
-                                <a class="item" href="#!/enseignants">Enseignants</a>
-                                <a class="item" href="#!/eleves">Elèves</a>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <a class="title">
-                                <i class="dropdown icon"></i> <b>Gestions des utilisateurs</b>
-                            </a>
-                            <div class="content menu">
-                                <a class="item" href="#!/utilisateurs">Utilisateurs</a>
-                            </div>
-                        </div>
                         <div class="item">
                             <a class="title">
                                 <i class="dropdown icon"></i> 
@@ -240,8 +219,31 @@
                                 <a class="item" href="#!/sequences">Séquences</a>
                                 <a class="item" href="#!/matieres">Matières</a>
                                 <a class="item" href="#!/classes">Classes</a>
+                                <a class="item" href="#!/sallesdeclasses">Salles de classe</a>
                             </div>
                         </div>
+                        <div class="item">
+                            <a class="title">
+                                <i class="dropdown icon"></i> 
+                                <b>Personnes et qualités</b>
+                            </a>
+                            <div class="content menu">
+                                <a class="item" href="#!/individus">Individus</a>
+                                <a class="item" href="#!/employes">Employés</a>
+                                <a class="item" href="#!/enseignants">Enseignants</a>
+                                <a class="item" href="#!/enseignantsclassesmatieres">Enseignants et cours</a>
+                                <a class="item" href="#!/eleves">Elèves</a>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <a class="title">
+                                <i class="dropdown icon"></i> <b>Gestions des utilisateurs</b>
+                            </a>
+                            <div class="content menu">
+                                <a class="item" href="#!/utilisateurs">Utilisateurs</a>
+                            </div>
+                        </div>
+                        
                         <div class="item">
                             <a class="title">
                                 <i class="dropdown icon"></i> 

@@ -36,6 +36,11 @@
                 </tr>
             </table>
         </form>
-
+        <script>
+            $(document).ready(function () {
+                $("#multi-select").dropdown("get value");
+                ouvrirMenuCorrespondant("#section_params", "bouton_params", "anneescolaire");
+            });
+        </script>
     </body>
 </html>
