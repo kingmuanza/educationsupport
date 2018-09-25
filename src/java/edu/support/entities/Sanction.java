@@ -44,12 +44,6 @@ import org.springframework.format.annotation.DateTimeFormat;
     , @NamedQuery(name = "Sanction.findByDeleted", query = "SELECT s FROM Sanction s WHERE s.deleted = :deleted")})
 public class Sanction implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idsanction", nullable = false)
-    private Integer idsanction;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -57,29 +51,36 @@ public class Sanction implements Serializable {
     private String code;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1)
-    @Column(name = "description", nullable = false)
+    @Lob
+    @Size(min = 1, max = 65535)
+    @Column(name = "description", nullable = false, length = 65535)
     private String description;
-    @Column(name = "date_jour")
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateJour;
     @Basic(optional = false)
     @NotNull
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "motif", nullable = false, length = 65535)
     private String motif;
-    @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
-    @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idsanction", nullable = false)
+    private Integer idsanction;
+    @Column(name = "date_jour")
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date dateJour;
+    @Column(name = "created")
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date created;
+    @Column(name = "modified")
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date modified;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -107,21 +108,6 @@ public class Sanction implements Serializable {
         this.idsanction = idsanction;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public Date getDateJour() {
         return dateJour;
@@ -131,13 +117,6 @@ public class Sanction implements Serializable {
         this.dateJour = dateJour;
     }
 
-    public String getMotif() {
-        return motif;
-    }
-
-    public void setMotif(String motif) {
-        this.motif = motif;
-    }
 
     public Date getCreated() {
         return created;
@@ -155,13 +134,6 @@ public class Sanction implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     public Eleve getEleveIdeleve() {
         return eleveIdeleve;
@@ -194,6 +166,38 @@ public class Sanction implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Sanction[ idsanction=" + idsanction + " ]";
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getMotif() {
+        return motif;
+    }
+
+    public void setMotif(String motif) {
+        this.motif = motif;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

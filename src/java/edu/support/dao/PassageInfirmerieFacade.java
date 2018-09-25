@@ -6,7 +6,6 @@
 package edu.support.dao;
 
 import edu.support.entities.PassageInfirmerie;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,11 +27,6 @@ public class PassageInfirmerieFacade extends AbstractFacade<PassageInfirmerie> i
 
     public PassageInfirmerieFacade() {
         super(PassageInfirmerie.class);
-    }
-
-    @Override
-    public List<PassageInfirmerie> findByDates(String date1, String date2) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

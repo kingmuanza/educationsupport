@@ -22,6 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -38,6 +39,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Employe.findByDeleted", query = "SELECT e FROM Employe e WHERE e.deleted = :deleted")})
 public class Employe implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,15 +51,11 @@ public class Employe implements Serializable {
     @Column(name = "idemploye", nullable = false)
     private Integer idemploye;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
     @ManyToOne(optional = false)
     private Individu individuIdindividu;
@@ -94,13 +96,6 @@ public class Employe implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     public Individu getIndividuIdindividu() {
         return individuIdindividu;
@@ -133,6 +128,14 @@ public class Employe implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Employe[ idemploye=" + idemploye + " ]";
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

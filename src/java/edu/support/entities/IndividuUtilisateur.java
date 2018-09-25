@@ -22,6 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -38,6 +39,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "IndividuUtilisateur.findByDeleted", query = "SELECT i FROM IndividuUtilisateur i WHERE i.deleted = :deleted")})
 public class IndividuUtilisateur implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,15 +51,11 @@ public class IndividuUtilisateur implements Serializable {
     @Column(name = "idindividu_utilisateur", nullable = false)
     private Integer idindividuUtilisateur;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @JoinColumn(name = "utilisateur_idutilisateur", referencedColumnName = "idutilisateur", nullable = false)
     @ManyToOne(optional = false)
     private Utilisateur utilisateurIdutilisateur;
@@ -97,13 +99,6 @@ public class IndividuUtilisateur implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     public Utilisateur getUtilisateurIdutilisateur() {
         return utilisateurIdutilisateur;
@@ -144,6 +139,14 @@ public class IndividuUtilisateur implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.IndividuUtilisateur[ idindividuUtilisateur=" + idindividuUtilisateur + " ]";
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

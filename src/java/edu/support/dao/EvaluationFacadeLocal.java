@@ -30,12 +30,4 @@ public interface EvaluationFacadeLocal {
 
     int count();
     
-    //
-    
-    /**
-     * retourne la liste des évaluation de l'année en cours
-     * @return 
-     */
-    List<Evaluation> findAllAnneeEnCours();
-    
 }

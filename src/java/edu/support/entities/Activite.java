@@ -22,6 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -39,26 +40,27 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Activite.findByDeleted", query = "SELECT a FROM Activite a WHERE a.deleted = :deleted")})
 public class Activite implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "action", nullable = false)
+    private int action;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idactivite", nullable = false)
     private Integer idactivite;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "action", nullable = false)
-    private int action;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @JoinColumn(name = "utilisateur_idutilisateur", referencedColumnName = "idutilisateur", nullable = false)
     @ManyToOne(optional = false)
     private Utilisateur utilisateurIdutilisateur;
@@ -84,13 +86,6 @@ public class Activite implements Serializable {
         this.idactivite = idactivite;
     }
 
-    public int getAction() {
-        return action;
-    }
-
-    public void setAction(int action) {
-        this.action = action;
-    }
 
     public Date getCreated() {
         return created;
@@ -108,13 +103,6 @@ public class Activite implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     public Utilisateur getUtilisateurIdutilisateur() {
         return utilisateurIdutilisateur;
@@ -147,6 +135,22 @@ public class Activite implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Activite[ idactivite=" + idactivite + " ]";
+    }
+
+    public int getAction() {
+        return action;
+    }
+
+    public void setAction(int action) {
+        this.action = action;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

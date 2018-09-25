@@ -22,6 +22,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -40,12 +41,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Relance.findByDeleted", query = "SELECT r FROM Relance r WHERE r.deleted = :deleted")})
 public class Relance implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idrelance", nullable = false)
-    private Integer idrelance;
     @Basic(optional = false)
     @NotNull
     @Lob
@@ -59,18 +54,25 @@ public class Relance implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "echeance", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date echeance;
-    @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
-    @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idrelance", nullable = false)
+    private Integer idrelance;
+    @Column(name = "created")
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date created;
+    @Column(name = "modified")
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date modified;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -98,29 +100,6 @@ public class Relance implements Serializable {
         this.idrelance = idrelance;
     }
 
-    public String getMotif() {
-        return motif;
-    }
-
-    public void setMotif(String motif) {
-        this.motif = motif;
-    }
-
-    public double getMontant() {
-        return montant;
-    }
-
-    public void setMontant(double montant) {
-        this.montant = montant;
-    }
-
-    public Date getEcheance() {
-        return echeance;
-    }
-
-    public void setEcheance(Date echeance) {
-        this.echeance = echeance;
-    }
 
     public Date getCreated() {
         return created;
@@ -138,13 +117,6 @@ public class Relance implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     public Eleve getEleveIdeleve() {
         return eleveIdeleve;
@@ -177,6 +149,38 @@ public class Relance implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Relance[ idrelance=" + idrelance + " ]";
+    }
+
+    public String getMotif() {
+        return motif;
+    }
+
+    public void setMotif(String motif) {
+        this.motif = motif;
+    }
+
+    public double getMontant() {
+        return montant;
+    }
+
+    public void setMontant(double montant) {
+        this.montant = montant;
+    }
+
+    public Date getEcheance() {
+        return echeance;
+    }
+
+    public void setEcheance(Date echeance) {
+        this.echeance = echeance;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

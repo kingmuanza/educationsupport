@@ -12,7 +12,10 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -23,6 +26,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -42,6 +46,18 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Classe.findByDeleted", query = "SELECT c FROM Classe c WHERE c.deleted = :deleted")})
 public class Classe implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "code", nullable = false, length = 45)
+    private String code;
+    @Size(max = 45)
+    @Column(name = "libelle", length = 45)
+    private String libelle;
+    @JoinColumn(name = "serie", referencedColumnName = "idserie")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Serie serie;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -50,21 +66,13 @@ public class Classe implements Serializable {
     private Integer idclasse;
     @Basic(optional = false)
     
-    @Size(min = 1, max = 45)
-    @Column(name = "code", nullable = false, length = 45)
-    private String code;
-    @Size(max = 45)
-    @Column(name = "libelle", length = 45)
-    private String libelle;
-    @Basic(optional = false)
-    
     @Column(name = "frais_scolarite", nullable = false)
     private double fraisScolarite;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
     @Basic(optional = false)
     
@@ -95,21 +103,6 @@ public class Classe implements Serializable {
         this.idclasse = idclasse;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
 
     public double getFraisScolarite() {
         return fraisScolarite;
@@ -175,6 +168,30 @@ public class Classe implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Classe[ idclasse=" + idclasse + " ]";
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public Serie getSerie() {
+        return serie;
+    }
+
+    public void setSerie(Serie serie) {
+        this.serie = serie;
     }
     
 }

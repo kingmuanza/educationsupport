@@ -24,6 +24,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -42,16 +43,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Absence.findByDeleted", query = "SELECT a FROM Absence a WHERE a.deleted = :deleted")})
 public class Absence implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idabsence", nullable = false)
-    private Integer idabsence;
-    @Basic(optional = false)
-    @Column(name = "jour_absence", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date jourAbsence;
     @Basic(optional = false)
     @NotNull
     @Column(name = "justifiee", nullable = false)
@@ -61,16 +52,28 @@ public class Absence implements Serializable {
     @Column(name = "motif", length = 65535)
     private String motif;
     @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idabsence", nullable = false)
+    private Integer idabsence;
+    @Basic(optional = false)
+    @Column(name = "jour_absence", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date jourAbsence;
+    @Basic(optional = false)
     @Column(name = "created", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Basic(optional = false)
     @Column(name = "modified", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -107,21 +110,6 @@ public class Absence implements Serializable {
         this.jourAbsence = jourAbsence;
     }
 
-    public boolean getJustifiee() {
-        return justifiee;
-    }
-
-    public void setJustifiee(boolean justifiee) {
-        this.justifiee = justifiee;
-    }
-
-    public String getMotif() {
-        return motif;
-    }
-
-    public void setMotif(String motif) {
-        this.motif = motif;
-    }
 
     public Date getCreated() {
         return created;
@@ -139,13 +127,6 @@ public class Absence implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     public Eleve getEleveIdeleve() {
         return eleveIdeleve;
@@ -178,6 +159,30 @@ public class Absence implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Absence[ idabsence=" + idabsence + " ]";
+    }
+
+    public boolean getJustifiee() {
+        return justifiee;
+    }
+
+    public void setJustifiee(boolean justifiee) {
+        this.justifiee = justifiee;
+    }
+
+    public String getMotif() {
+        return motif;
+    }
+
+    public void setMotif(String motif) {
+        this.motif = motif;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

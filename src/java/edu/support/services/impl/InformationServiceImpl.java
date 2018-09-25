@@ -22,7 +22,8 @@ public class InformationServiceImpl implements InformationService{
 
     @Override
     public List<Evaluation> getExamens() {
-        return efl.findAllAnneeEnCours();
+        //return efl.findAllAnneeEnCours();
+        return efl.findAll();
     }
     
 }

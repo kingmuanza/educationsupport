@@ -26,6 +26,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -43,6 +44,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Evaluation.findByDeleted", query = "SELECT e FROM Evaluation e WHERE e.deleted = :deleted")})
 public class Evaluation implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,18 +56,14 @@ public class Evaluation implements Serializable {
     @Column(name = "idevaluation", nullable = false)
     private Integer idevaluation;
     @Column(name = "date_jour")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dateJour;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evaluationIdevaluation")
     private Collection<Note> noteCollection;
     @JoinColumn(name = "sequence_idsequence", referencedColumnName = "idsequence", nullable = false)
@@ -115,13 +117,6 @@ public class Evaluation implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     @XmlTransient
     public Collection<Note> getNoteCollection() {
@@ -171,6 +166,14 @@ public class Evaluation implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Evaluation[ idevaluation=" + idevaluation + " ]";
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

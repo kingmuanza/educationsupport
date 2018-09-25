@@ -21,8 +21,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -41,26 +43,33 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Trimestre.findByDeleted", query = "SELECT t FROM Trimestre t WHERE t.deleted = :deleted")})
 public class Trimestre implements Serializable {
 
+    @Size(max = 45)
+    @Column(name = "code", length = 45)
+    private String code;
+    @Size(max = 45)
+    @Column(name = "libelle", length = 45)
+    private String libelle;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "numero", nullable = false)
+    private int numero;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "idtrimestre", nullable = false)
     private Integer idtrimestre;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "numero", nullable = false)
-    private int numero;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trimestreIdtrimestre")
     private Collection<Sequence> sequenceCollection;
 
@@ -85,13 +94,6 @@ public class Trimestre implements Serializable {
         this.idtrimestre = idtrimestre;
     }
 
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
 
     public Date getCreated() {
         return created;
@@ -109,13 +111,6 @@ public class Trimestre implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     @XmlTransient
     public Collection<Sequence> getSequenceCollection() {
@@ -149,6 +144,38 @@ public class Trimestre implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Trimestre[ idtrimestre=" + idtrimestre + " ]";
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

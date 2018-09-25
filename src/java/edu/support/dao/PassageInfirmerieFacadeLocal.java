@@ -29,7 +29,5 @@ public interface PassageInfirmerieFacadeLocal {
     List<PassageInfirmerie> findRange(int[] range);
 
     int count();
-
-    public List<PassageInfirmerie> findByDates(String date1, String date2);
     
 }

@@ -21,9 +21,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -44,32 +44,33 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "AnneeScolaire.findByDeleted", query = "SELECT a FROM AnneeScolaire a WHERE a.deleted = :deleted")})
 public class AnneeScolaire implements Serializable {
 
+    @Column(name = "date_debut")
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date dateDebut;
+    @Column(name = "date_fin")
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date dateFin;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "idannee_scolaire", nullable = false)
     private Integer idanneeScolaire;
-    @Size(max = 45)
-    @Column(name = "date_debut", length = 45)
-    private String dateDebut;
-    @Size(max = 45)
-    @Column(name = "date_fin", length = 45)
-    private String dateFin;
     @Basic(optional = false)
     @NotNull
     @Column(name = "en_cours", nullable = false)
     private boolean enCours;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "anneeScolaireIdanneeScolaire")
     private Collection<Sequence> sequenceCollection;
 
@@ -94,19 +95,19 @@ public class AnneeScolaire implements Serializable {
         this.idanneeScolaire = idanneeScolaire;
     }
 
-    public String getDateDebut() {
+    public Date getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(String dateDebut) {
+    public void setDateDebut(Date dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public String getDateFin() {
+    public Date getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(String dateFin) {
+    public void setDateFin(Date dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -134,13 +135,6 @@ public class AnneeScolaire implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     @XmlTransient
     public Collection<Sequence> getSequenceCollection() {
@@ -174,6 +168,14 @@ public class AnneeScolaire implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.AnneeScolaire[ idanneeScolaire=" + idanneeScolaire + " ]";
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

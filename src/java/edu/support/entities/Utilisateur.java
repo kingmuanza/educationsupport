@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +27,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -43,12 +45,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Utilisateur.findByDeleted", query = "SELECT u FROM Utilisateur u WHERE u.deleted = :deleted")})
 public class Utilisateur implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idutilisateur", nullable = false)
-    private Integer idutilisateur;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 254)
@@ -60,16 +56,25 @@ public class Utilisateur implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "mot_de_passe", nullable = false, length = 65535)
     private String motDePasse;
-    @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
-    @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur", fetch = FetchType.EAGER)
+    private Collection<UtilisateurFonctionnalite> utilisateurFonctionnaliteCollection;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idutilisateur", nullable = false)
+    private Integer idutilisateur;
+    @Column(name = "created")
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date created;
+    @Column(name = "modified")
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date modified;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur")
     private Collection<UtilisateursFonctionnalites> utilisateursFonctionnalitesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur")
@@ -99,13 +104,6 @@ public class Utilisateur implements Serializable {
         this.idutilisateur = idutilisateur;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
 
     public String getMotDePasse() {
         return motDePasse;
@@ -131,13 +129,6 @@ public class Utilisateur implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     @XmlTransient
     public Collection<UtilisateursFonctionnalites> getUtilisateursFonctionnalitesCollection() {
@@ -189,6 +180,31 @@ public class Utilisateur implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Utilisateur[ idutilisateur=" + idutilisateur + " ]";
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    @XmlTransient
+    public Collection<UtilisateurFonctionnalite> getUtilisateurFonctionnaliteCollection() {
+        return utilisateurFonctionnaliteCollection;
+    }
+
+    public void setUtilisateurFonctionnaliteCollection(Collection<UtilisateurFonctionnalite> utilisateurFonctionnaliteCollection) {
+        this.utilisateurFonctionnaliteCollection = utilisateurFonctionnaliteCollection;
     }
     
 }

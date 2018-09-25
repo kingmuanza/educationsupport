@@ -83,7 +83,8 @@ public class SanteController {
     @RequestMapping(value = "passages-infirmeries/{date1}/{date2}")
     public List<PassageInfirmerie> getPassageInfirmeries(@PathVariable("date1")String date1,@PathVariable("date2")String date2) throws ParseException{
         
-        return pifl.findByDates(date1, date2);
+        //return pifl.findByDates(date1, date2);
+        return null;
     }
     @RequestMapping(value = "passages-infirmeries", produces={"application/json"})
     public List<PassageInfirmerie> getPassageInfirmeries(){

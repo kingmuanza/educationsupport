@@ -22,6 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -39,26 +40,27 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Note.findByDeleted", query = "SELECT n FROM Note n WHERE n.deleted = :deleted")})
 public class Note implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "valeur", nullable = false)
+    private double valeur;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idnote", nullable = false)
     private Integer idnote;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "valeur", nullable = false)
-    private double valeur;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -87,13 +89,6 @@ public class Note implements Serializable {
         this.idnote = idnote;
     }
 
-    public double getValeur() {
-        return valeur;
-    }
-
-    public void setValeur(double valeur) {
-        this.valeur = valeur;
-    }
 
     public Date getCreated() {
         return created;
@@ -111,13 +106,6 @@ public class Note implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     public Eleve getEleveIdeleve() {
         return eleveIdeleve;
@@ -158,6 +146,22 @@ public class Note implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Note[ idnote=" + idnote + " ]";
+    }
+
+    public double getValeur() {
+        return valeur;
+    }
+
+    public void setValeur(double valeur) {
+        this.valeur = valeur;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

@@ -26,6 +26,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -42,40 +43,41 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Maladie.findByDeleted", query = "SELECT m FROM Maladie m WHERE m.deleted = :deleted")})
 public class Maladie implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Size(min = 1, max = 65535)
+    @Column(name = "nom", nullable = false, length = 65535)
+    private String nom;
+    @Basic(optional = false)
+    @NotNull    
+    @Lob
+    @Size(min = 1, max = 65535)
+    @Column(name = "description", nullable = false, length = 65535)
+    private String description;
+    @Basic(optional = false)
+    @NotNull    
+    @Lob
+    @Size(min = 1, max = 65535)
+    @Column(name = "type_maladie", nullable = false, length = 65535)
+    private String typeMaladie;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idmaladie", nullable = false)
     private Integer idmaladie;
-    @Basic(optional = false)
-    
-    @Lob
-    @Size(min = 1, max = 65535)
-    @Column(name = "nom", nullable = false, length = 65535)
-    private String nom;
-    @Basic(optional = false)
-    
-    @Lob
-    @Size(min = 1, max = 65535)
-    @Column(name = "description", nullable = false, length = 65535)
-    private String description;
-    @Basic(optional = false)
-    
-    @Lob
-    @Size(min = 1, max = 65535)
-    @Column(name = "type_maladie", nullable = false, length = 65535)
-    private String typeMaladie;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "maladieIdmaladie")
     private Collection<EleveMaladie> eleveMaladieCollection;
     @OneToMany(mappedBy = "maladieIdmaladie")
@@ -106,21 +108,6 @@ public class Maladie implements Serializable {
         this.idmaladie = idmaladie;
     }
 
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public String getTypeMaladie() {
         return typeMaladie;
@@ -146,13 +133,6 @@ public class Maladie implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     @XmlTransient
     public Collection<EleveMaladie> getEleveMaladieCollection() {
@@ -204,6 +184,31 @@ public class Maladie implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Maladie[ idmaladie=" + idmaladie + " ]";
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

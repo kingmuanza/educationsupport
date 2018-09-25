@@ -23,6 +23,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -42,12 +43,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Rapport.findByDeleted", query = "SELECT r FROM Rapport r WHERE r.deleted = :deleted")})
 public class Rapport implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idrapport", nullable = false)
-    private Integer idrapport;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -62,16 +57,23 @@ public class Rapport implements Serializable {
     @Size(max = 65535)
     @Column(name = "url", length = 65535)
     private String url;
-    @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
-    @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modified;
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
+    
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idrapport", nullable = false)
+    private Integer idrapport;
+    @Column(name = "created")
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date created;
+    @Column(name = "modified")
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date modified;
     @JoinColumn(name = "reunion_idreunion", referencedColumnName = "idreunion", nullable = false)
     @ManyToOne(optional = false)
     private Reunion reunionIdreunion;
@@ -98,13 +100,6 @@ public class Rapport implements Serializable {
         this.idrapport = idrapport;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public String getNomFichier() {
         return nomFichier;
@@ -114,13 +109,6 @@ public class Rapport implements Serializable {
         this.nomFichier = nomFichier;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 
     public Date getCreated() {
         return created;
@@ -138,13 +126,6 @@ public class Rapport implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     public Reunion getReunionIdreunion() {
         return reunionIdreunion;
@@ -177,6 +158,30 @@ public class Rapport implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Rapport[ idrapport=" + idrapport + " ]";
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

@@ -27,6 +27,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -53,19 +54,13 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Individu.findByDeleted", query = "SELECT i FROM Individu i WHERE i.deleted = :deleted")})
 public class Individu implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idindividu", nullable = false)
-    private Integer idindividu;
-    @Basic(optional = false)
-    
+    @NotNull
     @Size(min = 1, max = 254)
     @Column(name = "matricule", nullable = false, length = 254)
     private String matricule;
     @Basic(optional = false)
-    
+    @NotNull    
     @Size(min = 1, max = 45)
     @Column(name = "noms", nullable = false, length = 45)
     private String noms;
@@ -73,12 +68,7 @@ public class Individu implements Serializable {
     @Column(name = "prenoms", length = 45)
     private String prenoms;
     @Basic(optional = false)
-    
-    @Column(name = "date_naissance", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateNaissance;
-    @Basic(optional = false)
-    
+    @NotNull
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "lieu_naissance", nullable = false, length = 65535)
@@ -88,7 +78,7 @@ public class Individu implements Serializable {
     @Column(name = "email", length = 254)
     private String email;
     @Basic(optional = false)
-    
+    @NotNull    
     @Size(min = 1, max = 1)
     @Column(name = "sexe", nullable = false, length = 1)
     private String sexe;
@@ -96,21 +86,33 @@ public class Individu implements Serializable {
     @Column(name = "telephone", length = 45)
     private String telephone;
     @Basic(optional = false)
-    
+    @NotNull    
     @Lob
     @Size(min = 1, max = 65535)
     @Column(name = "residence", nullable = false, length = 65535)
     private String residence;
-    @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created;
-    @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date modified;
     @Basic(optional = false)
-    
+    @NotNull
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idindividu", nullable = false)
+    private Integer idindividu;
+    @Basic(optional = false)
+    
+    @Column(name = "date_naissance", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date dateNaissance;
+    @Column(name = "created")
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date created;
+    @Column(name = "modified")
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date modified;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
     private Collection<Eleve> eleveCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "individuIdindividu")
@@ -146,29 +148,6 @@ public class Individu implements Serializable {
         this.idindividu = idindividu;
     }
 
-    public String getMatricule() {
-        return matricule;
-    }
-
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
-    }
-
-    public String getNoms() {
-        return noms;
-    }
-
-    public void setNoms(String noms) {
-        this.noms = noms;
-    }
-
-    public String getPrenoms() {
-        return prenoms;
-    }
-
-    public void setPrenoms(String prenoms) {
-        this.prenoms = prenoms;
-    }
 
     public Date getDateNaissance() {
         return dateNaissance;
@@ -186,37 +165,6 @@ public class Individu implements Serializable {
         this.lieuNaissance = lieuNaissance;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSexe() {
-        return sexe;
-    }
-
-    public void setSexe(String sexe) {
-        this.sexe = sexe;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public String getResidence() {
-        return residence;
-    }
-
-    public void setResidence(String residence) {
-        this.residence = residence;
-    }
 
     public Date getCreated() {
         return created;
@@ -234,13 +182,6 @@ public class Individu implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     @XmlTransient
     public Collection<Eleve> getEleveCollection() {
@@ -301,6 +242,71 @@ public class Individu implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Individu[ idindividu=" + idindividu + " ]";
+    }
+
+    public String getMatricule() {
+        return matricule;
+    }
+
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
+    }
+
+    public String getNoms() {
+        return noms;
+    }
+
+    public void setNoms(String noms) {
+        this.noms = noms;
+    }
+
+    public String getPrenoms() {
+        return prenoms;
+    }
+
+    public void setPrenoms(String prenoms) {
+        this.prenoms = prenoms;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSexe() {
+        return sexe;
+    }
+
+    public void setSexe(String sexe) {
+        this.sexe = sexe;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getResidence() {
+        return residence;
+    }
+
+    public void setResidence(String residence) {
+        this.residence = residence;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

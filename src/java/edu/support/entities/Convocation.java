@@ -43,37 +43,37 @@ import org.springframework.format.annotation.DateTimeFormat;
     , @NamedQuery(name = "Convocation.findByDeleted", query = "SELECT c FROM Convocation c WHERE c.deleted = :deleted")})
 public class Convocation implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "code", nullable = false, length = 45)
+    private String code;
+    @Basic(optional = false)
+    @NotNull    
+    @Lob
+    @Size(min = 1, max = 65535)
+    @Column(name = "motif", nullable = false, length = 65535)
+    private String motif;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idconvocation", nullable = false)
     private Integer idconvocation;
-    @Basic(optional = false)
-    
-    @Size(min = 1, max = 45)
-    @Column(name = "code", nullable = false, length = 45)
-    private String code;
-    @Basic(optional = false)
-    
-    @Lob
-    @Size(min = 1, max = 65535)
-    @Column(name = "motif", nullable = false, length = 65535)
-    private String motif;
     @Column(name = "date_jour")
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dateJour;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -100,21 +100,6 @@ public class Convocation implements Serializable {
         this.idconvocation = idconvocation;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getMotif() {
-        return motif;
-    }
-
-    public void setMotif(String motif) {
-        this.motif = motif;
-    }
 
     public Date getDateJour() {
         return dateJour;
@@ -140,13 +125,6 @@ public class Convocation implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     public Eleve getEleveIdeleve() {
         return eleveIdeleve;
@@ -179,6 +157,30 @@ public class Convocation implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Convocation[ idconvocation=" + idconvocation + " ]";
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMotif() {
+        return motif;
+    }
+
+    public void setMotif(String motif) {
+        this.motif = motif;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

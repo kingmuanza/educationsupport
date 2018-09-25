@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +27,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -45,32 +47,35 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Fonctionnalite.findByDeleted", query = "SELECT f FROM Fonctionnalite f WHERE f.deleted = :deleted")})
 public class Fonctionnalite implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "code", nullable = false, length = 45)
+    private String code;
+    @Basic(optional = false)
+    @NotNull    
+    @Size(min = 1, max = 254)
+    @Column(name = "libelle", nullable = false, length = 254)
+    private String libelle;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fonctionnaliteIdfonctionnalite", fetch = FetchType.EAGER)
+    private Collection<UtilisateurFonctionnalite> utilisateurFonctionnaliteCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idfonctionnalite", nullable = false)
     private Integer idfonctionnalite;
-    @Basic(optional = false)
-    
-    @Size(min = 1, max = 45)
-    @Column(name = "code", nullable = false, length = 45)
-    private String code;
-    @Basic(optional = false)
-    
-    @Size(min = 1, max = 254)
-    @Column(name = "libelle", nullable = false, length = 254)
-    private String libelle;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fonctionnaliteIdfonctionnalite")
     private Collection<UtilisateursFonctionnalites> utilisateursFonctionnalitesCollection;
 
@@ -96,21 +101,6 @@ public class Fonctionnalite implements Serializable {
         this.idfonctionnalite = idfonctionnalite;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
 
     public Date getCreated() {
         return created;
@@ -128,13 +118,6 @@ public class Fonctionnalite implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     @XmlTransient
     public Collection<UtilisateursFonctionnalites> getUtilisateursFonctionnalitesCollection() {
@@ -168,6 +151,39 @@ public class Fonctionnalite implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Fonctionnalite[ idfonctionnalite=" + idfonctionnalite + " ]";
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    @XmlTransient
+    public Collection<UtilisateurFonctionnalite> getUtilisateurFonctionnaliteCollection() {
+        return utilisateurFonctionnaliteCollection;
+    }
+
+    public void setUtilisateurFonctionnaliteCollection(Collection<UtilisateurFonctionnalite> utilisateurFonctionnaliteCollection) {
+        this.utilisateurFonctionnaliteCollection = utilisateurFonctionnaliteCollection;
     }
     
 }

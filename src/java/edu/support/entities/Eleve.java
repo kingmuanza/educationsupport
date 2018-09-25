@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +27,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -42,6 +44,15 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Eleve.findByDeleted", query = "SELECT e FROM Eleve e WHERE e.deleted = :deleted")})
 public class Eleve implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve", fetch = FetchType.EAGER)
+    private Collection<EleveTraduit> eleveTraduitCollection;
+    @OneToMany(mappedBy = "eleve", fetch = FetchType.EAGER)
+    private Collection<CompteParentEleve> compteParentEleveCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,15 +60,11 @@ public class Eleve implements Serializable {
     @Column(name = "ideleve", nullable = false)
     private Integer ideleve;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
     private Collection<Note> noteCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "eleveIdeleve")
@@ -125,13 +132,6 @@ public class Eleve implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     @XmlTransient
     public Collection<Note> getNoteCollection() {
@@ -280,6 +280,32 @@ public class Eleve implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Eleve[ ideleve=" + ideleve + " ]";
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    @XmlTransient
+    public Collection<EleveTraduit> getEleveTraduitCollection() {
+        return eleveTraduitCollection;
+    }
+
+    public void setEleveTraduitCollection(Collection<EleveTraduit> eleveTraduitCollection) {
+        this.eleveTraduitCollection = eleveTraduitCollection;
+    }
+
+    @XmlTransient
+    public Collection<CompteParentEleve> getCompteParentEleveCollection() {
+        return compteParentEleveCollection;
+    }
+
+    public void setCompteParentEleveCollection(Collection<CompteParentEleve> compteParentEleveCollection) {
+        this.compteParentEleveCollection = compteParentEleveCollection;
     }
     
 }

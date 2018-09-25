@@ -6,11 +6,9 @@
 package edu.support.dao;
 
 import edu.support.entities.Evaluation;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
@@ -31,16 +29,4 @@ public class EvaluationFacade extends AbstractFacade<Evaluation> implements Eval
         super(Evaluation.class);
     }
     
-    @Override
-    public List<Evaluation> findAllAnneeEnCours(){
-        EntityManager entityManager = getEntityManager();
-        Query q;
-        try{
-            q = entityManager.createQuery("from Evaluation e where e.sequenceIdsequence.anneeScolaireIdanneeScolaire.enCours=true");
-            return q.getResultList();
-        }catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
 }

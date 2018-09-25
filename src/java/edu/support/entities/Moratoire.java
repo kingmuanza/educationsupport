@@ -24,6 +24,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -43,38 +44,39 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Moratoire.findByDeleted", query = "SELECT m FROM Moratoire m WHERE m.deleted = :deleted")})
 public class Moratoire implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "code", nullable = false, length = 45)
+    private String code;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "reponse", length = 65535)
+    private String reponse;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idmoratoire", nullable = false)
     private Integer idmoratoire;
-    @Basic(optional = false)
-    
-    @Size(min = 1, max = 45)
-    @Column(name = "code", nullable = false, length = 45)
-    private String code;
     @Column(name = "date_fin_validite")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dateFinValidite;
-    @Lob
-    @Size(max = 65535)
-    @Column(name = "reponse", length = 65535)
-    private String reponse;
     @Basic(optional = false)
     
     @Column(name = "etat", nullable = false)
     private int etat;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -101,13 +103,6 @@ public class Moratoire implements Serializable {
         this.idmoratoire = idmoratoire;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public Date getDateFinValidite() {
         return dateFinValidite;
@@ -117,13 +112,6 @@ public class Moratoire implements Serializable {
         this.dateFinValidite = dateFinValidite;
     }
 
-    public String getReponse() {
-        return reponse;
-    }
-
-    public void setReponse(String reponse) {
-        this.reponse = reponse;
-    }
 
     public int getEtat() {
         return etat;
@@ -149,13 +137,6 @@ public class Moratoire implements Serializable {
         this.modified = modified;
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     public Eleve getEleveIdeleve() {
         return eleveIdeleve;
@@ -188,6 +169,30 @@ public class Moratoire implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Moratoire[ idmoratoire=" + idmoratoire + " ]";
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getReponse() {
+        return reponse;
+    }
+
+    public void setReponse(String reponse) {
+        this.reponse = reponse;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

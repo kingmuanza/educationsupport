@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +27,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -42,6 +44,13 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Enseignant.findByDeleted", query = "SELECT e FROM Enseignant e WHERE e.deleted = :deleted")})
 public class Enseignant implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "enseignantIdenseignant", fetch = FetchType.EAGER)
+    private Collection<EnseignantClasseMatiere> enseignantClasseMatiereCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,15 +58,11 @@ public class Enseignant implements Serializable {
     @Column(name = "idenseignant", nullable = false)
     private Integer idenseignant;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "enseignantIdenseignant")
     private Collection<EnseignantsClassesMatieres> enseignantsClassesMatieresCollection;
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
@@ -100,13 +105,6 @@ public class Enseignant implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     @XmlTransient
     public Collection<EnseignantsClassesMatieres> getEnseignantsClassesMatieresCollection() {
@@ -148,6 +146,23 @@ public class Enseignant implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Enseignant[ idenseignant=" + idenseignant + " ]";
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    @XmlTransient
+    public Collection<EnseignantClasseMatiere> getEnseignantClasseMatiereCollection() {
+        return enseignantClasseMatiereCollection;
+    }
+
+    public void setEnseignantClasseMatiereCollection(Collection<EnseignantClasseMatiere> enseignantClasseMatiereCollection) {
+        this.enseignantClasseMatiereCollection = enseignantClasseMatiereCollection;
     }
     
 }

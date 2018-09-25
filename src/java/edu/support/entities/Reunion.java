@@ -48,6 +48,21 @@ import org.springframework.format.annotation.DateTimeFormat;
     , @NamedQuery(name = "Reunion.findByDeleted", query = "SELECT r FROM Reunion r WHERE r.deleted = :deleted")})
 public class Reunion implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "code", nullable = false, length = 45)
+    private String code;
+    @Basic(optional = false)
+    @NotNull    
+    @Size(min = 1, max = 45)
+    @Column(name = "libelle", nullable = false, length = 45)
+    private String libelle;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -56,33 +71,18 @@ public class Reunion implements Serializable {
     private Integer idreunion;
     @Basic(optional = false)
     
-    @Size(min = 1, max = 45)
-    @Column(name = "code", nullable = false, length = 45)
-    private String code;
-    @Basic(optional = false)
-    
-    @Size(min = 1, max = 45)
-    @Column(name = "libelle", nullable = false, length = 45)
-    private String libelle;
-    @Basic(optional = false)
-    
     @Column(name = "etat", nullable = false)
     private int etat;
     @Basic(optional = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "date_jour", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dateJour;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reunionIdreunion")
     private Collection<Rapport> rapportCollection;
 
@@ -110,21 +110,6 @@ public class Reunion implements Serializable {
         this.idreunion = idreunion;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
 
     public int getEtat() {
         return etat;
@@ -158,13 +143,6 @@ public class Reunion implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     @XmlTransient
     public Collection<Rapport> getRapportCollection() {
@@ -198,6 +176,30 @@ public class Reunion implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Reunion[ idreunion=" + idreunion + " ]";
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

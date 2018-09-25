@@ -22,6 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -40,29 +41,30 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Retard.findByDeleted", query = "SELECT r FROM Retard r WHERE r.deleted = :deleted")})
 public class Retard implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "marge", nullable = false)
+    private int marge;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idretard", nullable = false)
     private Integer idretard;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "marge", nullable = false)
-    private int marge;
     @Column(name = "jour_retard")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date jourRetard;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
     @JoinColumn(name = "eleve_ideleve", referencedColumnName = "ideleve", nullable = false)
     @ManyToOne(optional = false)
     private Eleve eleveIdeleve;
@@ -88,13 +90,6 @@ public class Retard implements Serializable {
         this.idretard = idretard;
     }
 
-    public int getMarge() {
-        return marge;
-    }
-
-    public void setMarge(int marge) {
-        this.marge = marge;
-    }
 
     public Date getJourRetard() {
         return jourRetard;
@@ -120,13 +115,6 @@ public class Retard implements Serializable {
         this.modified = modified;
     }
 
-    public boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 
     public Eleve getEleveIdeleve() {
         return eleveIdeleve;
@@ -159,6 +147,22 @@ public class Retard implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.Retard[ idretard=" + idretard + " ]";
+    }
+
+    public int getMarge() {
+        return marge;
+    }
+
+    public void setMarge(int marge) {
+        this.marge = marge;
+    }
+
+    public boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
     
 }

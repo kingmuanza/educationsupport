@@ -32,12 +32,11 @@ public class UtilisateurFacade extends AbstractFacade<Utilisateur> implements Ut
 
     @Override
     public Utilisateur findByCredentials(String login, String pwd) {
-        EntityManager entityManager = getEntityManager();
         Query q;
         try{
-            q = entityManager.createQuery("from Utilisateur u where u.login =:login and u.motDePasse=:motDePasse");
+            q = getEntityManager().createQuery("from Utilisateur u where u.login=:login and u.password=:pawd");
             q.setParameter("login", login);
-            q.setParameter("motDePasse", pwd);
+            q.setParameter("pwd", pwd);
             return (Utilisateur) q.getSingleResult();
         }catch(Exception e){
             e.printStackTrace();

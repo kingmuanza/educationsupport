@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +27,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -47,33 +49,36 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "ConseilDiscipline.findByDeleted", query = "SELECT c FROM ConseilDiscipline c WHERE c.deleted = :deleted")})
 public class ConseilDiscipline implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idconseil_discipline", nullable = false)
-    private Integer idconseilDiscipline;
-    @Basic(optional = false)
-    
+    @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "code", nullable = false, length = 45)
     private String code;
     @Size(max = 45)
     @Column(name = "libelle", length = 45)
     private String libelle;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "conseilDisciplineIdconseilDiscipline", fetch = FetchType.EAGER)
+    private Collection<EleveTraduit> eleveTraduitCollection;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idconseil_discipline", nullable = false)
+    private Integer idconseilDiscipline;
     @Column(name = "rapport", length = 254)
     private String rapport;
     @Column(name = "date_debut")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dateDebut;
     @Column(name = "date_fin")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date dateFin;
     @Column(name = "created")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
     @Column(name = "modified")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
     @Basic(optional = false)
     
@@ -103,21 +108,6 @@ public class ConseilDiscipline implements Serializable {
         this.idconseilDiscipline = idconseilDiscipline;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
 
     public String getRapport() {
         return rapport;
@@ -201,6 +191,31 @@ public class ConseilDiscipline implements Serializable {
     @Override
     public String toString() {
         return "edu.support.entities.ConseilDiscipline[ idconseilDiscipline=" + idconseilDiscipline + " ]";
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
+    @XmlTransient
+    public Collection<EleveTraduit> getEleveTraduitCollection() {
+        return eleveTraduitCollection;
+    }
+
+    public void setEleveTraduitCollection(Collection<EleveTraduit> eleveTraduitCollection) {
+        this.eleveTraduitCollection = eleveTraduitCollection;
     }
     
 }
