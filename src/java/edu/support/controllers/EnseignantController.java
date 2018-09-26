@@ -7,6 +7,7 @@ package edu.support.controllers;
 
 import edu.support.dao.EnseignantFacadeLocal;
 import edu.support.dao.IndividuFacadeLocal;
+import edu.support.dto.Notification;
 import edu.support.entities.Enseignant;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,16 +15,20 @@ import java.util.Date;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -52,6 +57,16 @@ public class EnseignantController {
         binder.setDisallowedFields(new String[]{"created","modified","individuIdindividu"});
     }
     
+    @ExceptionHandler(value=Exception.class)
+    @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
+    public RedirectView ExceptionHandler(HttpServletRequest request){
+        Notification n = Notification.getExceptionNotification();
+        HttpSession session = request.getSession();
+        session.setAttribute("notification", n);
+        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
+        return rv;
+    }
+    
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getCreate() throws ParseException{
         ModelAndView mv = new ModelAndView(VUE_CREATE);
@@ -71,6 +86,7 @@ public class EnseignantController {
         enseignant.setModified(new Date());
         enseignant.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
         cfl.create(enseignant);
+        Notification.enregistrementNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -89,6 +105,7 @@ public class EnseignantController {
         enseignant.setIndividuIdindividu(ifl.find(Integer.parseInt(params.get("individuIdindividu"))));
         enseignant.setCreated(cfl.find(Integer.parseInt(params.get("idenseignant"))).getCreated());
         cfl.edit(enseignant);
+        Notification.modificationNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -112,6 +129,7 @@ public class EnseignantController {
     public RedirectView delete(@RequestParam("idenseignant")int id,HttpServletRequest request){
         Enseignant c = cfl.find(id);
         cfl.remove(c);
+        Notification.suppressionNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

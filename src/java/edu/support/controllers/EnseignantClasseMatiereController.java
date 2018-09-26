@@ -8,22 +8,27 @@ package edu.support.controllers;
 import edu.support.dao.ClasseMatiereFacadeLocal;
 import edu.support.dao.EnseignantClasseMatiereFacadeLocal;
 import edu.support.dao.EnseignantFacadeLocal;
+import edu.support.dto.Notification;
 import edu.support.entities.EnseignantClasseMatiere;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -55,6 +60,16 @@ public class EnseignantClasseMatiereController {
         binder.setDisallowedFields(new String[]{"created","modified","classesMatieresIdclassesMatieres","enseignantIdenseignant"});
     }
     
+    @ExceptionHandler(value=Exception.class)
+    @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
+    public RedirectView ExceptionHandler(HttpServletRequest request){
+        Notification n = Notification.getExceptionNotification();
+        HttpSession session = request.getSession();
+        session.setAttribute("notification", n);
+        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
+        return rv;
+    }
+    
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getCreate() throws ParseException{
         ModelAndView mv = new ModelAndView(VUE_CREATE);
@@ -78,6 +93,7 @@ public class EnseignantClasseMatiereController {
             ecm.setModified(new Date());
             ecmfl.create(ecm);
         }
+        Notification.enregistrementNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -95,6 +111,7 @@ public class EnseignantClasseMatiereController {
         ecm.setCreated(ecmfl.find(id).getCreated());
         ecm.setClassesMatieresIdclassesMatieres(cmfl.find(Integer.parseInt(request.getParameter("classesMatieresIdclassesMatieres"))));
         ecmfl.edit(ecm);
+        Notification.modificationNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -117,6 +134,7 @@ public class EnseignantClasseMatiereController {
     public RedirectView delete(@RequestParam("idenseignantsClassesMatieres")int id,HttpServletRequest request){
         EnseignantClasseMatiere ecm = ecmfl.find(id);
         ecmfl.remove(ecm);
+        Notification.suppressionNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

@@ -23,7 +23,6 @@
             <thead>
                 <tr>
                     <th>Classe</th>
-                    <th>Série</th>
                     <th>Code</th>
                     <th>Libelle</th>
                     <th>Edition</th>
@@ -40,16 +39,6 @@
                                 ${salledeclasse.classeIdclasse.code}
                                 <div class="sub header">
                                     ${salledeclasse.classeIdclasse.libelle}
-                                </div>
-                            </div>
-                        </h4>
-                    </td>
-                    <td>
-                        <h4 class="ui image header">
-                            <div class="content">
-                                ${salledeclasse.serieIdserie.code}
-                                <div class="sub header">
-                                    ${salledeclasse.serieIdserie.libelle}
                                 </div>
                             </div>
                         </h4>
