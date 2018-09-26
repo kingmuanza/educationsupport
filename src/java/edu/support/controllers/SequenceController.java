@@ -53,7 +53,7 @@ public class SequenceController {
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified","anneeScolaireIdanneeScolaire","trmestreIdtrimestre"});
+        binder.setDisallowedFields(new String[]{"created","modified","anneeScolaireIdanneeScolaire","trimestreIdtrimestre"});
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -61,7 +61,7 @@ public class SequenceController {
         ModelAndView mv = new ModelAndView(VUE_CREATE);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         mv.addObject("date", sdf.parse(sdf.format(new Date())));
-        mv.addObject("trimestre", tfl.findAll());
+        mv.addObject("trimestres", tfl.findAll());
         mv.addObject("anneescolaires", asfl.findAll());
         return mv;
     }
@@ -85,6 +85,8 @@ public class SequenceController {
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
         mv.addObject("sequence", cfl.find(id));
+        mv.addObject("trimestres", tfl.findAll());
+        mv.addObject("anneescolaires", asfl.findAll());
         return mv;
     }
     

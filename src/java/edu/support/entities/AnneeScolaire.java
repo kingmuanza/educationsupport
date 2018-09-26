@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -38,7 +40,6 @@ import org.springframework.format.annotation.DateTimeFormat;
     , @NamedQuery(name = "AnneeScolaire.findByIdanneeScolaire", query = "SELECT a FROM AnneeScolaire a WHERE a.idanneeScolaire = :idanneeScolaire")
     , @NamedQuery(name = "AnneeScolaire.findByDateDebut", query = "SELECT a FROM AnneeScolaire a WHERE a.dateDebut = :dateDebut")
     , @NamedQuery(name = "AnneeScolaire.findByDateFin", query = "SELECT a FROM AnneeScolaire a WHERE a.dateFin = :dateFin")
-    , @NamedQuery(name = "AnneeScolaire.findByEnCours", query = "SELECT a FROM AnneeScolaire a WHERE a.enCours = :enCours")
     , @NamedQuery(name = "AnneeScolaire.findByCreated", query = "SELECT a FROM AnneeScolaire a WHERE a.created = :created")
     , @NamedQuery(name = "AnneeScolaire.findByModified", query = "SELECT a FROM AnneeScolaire a WHERE a.modified = :modified")
     , @NamedQuery(name = "AnneeScolaire.findByDeleted", query = "SELECT a FROM AnneeScolaire a WHERE a.deleted = :deleted")})
@@ -58,13 +59,10 @@ public class AnneeScolaire implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idannee_scolaire", nullable = false)
     private Integer idanneeScolaire;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "en_cours", nullable = false)
-    private boolean enCours;
+    
     @Column(name = "created")
     @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date created;
@@ -81,9 +79,8 @@ public class AnneeScolaire implements Serializable {
         this.idanneeScolaire = idanneeScolaire;
     }
 
-    public AnneeScolaire(Integer idanneeScolaire, boolean enCours, boolean deleted) {
+    public AnneeScolaire(Integer idanneeScolaire, boolean deleted) {
         this.idanneeScolaire = idanneeScolaire;
-        this.enCours = enCours;
         this.deleted = deleted;
     }
 
@@ -109,14 +106,6 @@ public class AnneeScolaire implements Serializable {
 
     public void setDateFin(Date dateFin) {
         this.dateFin = dateFin;
-    }
-
-    public boolean getEnCours() {
-        return enCours;
-    }
-
-    public void setEnCours(boolean enCours) {
-        this.enCours = enCours;
     }
 
     public Date getCreated() {

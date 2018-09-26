@@ -40,7 +40,7 @@ public class IndividuController {
     private final static String VUE_EDIT = "jsp/individu/edit";
     private final static String VUE_LIST = "jsp/individu/list";
     private final static String VUE_VIEW = "jsp/individu/view";
-    private final static String PATH_LIST = "/individu/list";
+    private final static String PATH_LIST = "/start#!/individus";
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -88,7 +88,7 @@ public class IndividuController {
         ind.setCreated(new Date());
         ind.setModified(new Date());
         cfl.create(ind);
-        RedirectView rv = new RedirectView("/start");
+        RedirectView rv = new RedirectView(request.getContextPath() + "/view/"+ind.getIdindividu());
         return rv;
     }
 

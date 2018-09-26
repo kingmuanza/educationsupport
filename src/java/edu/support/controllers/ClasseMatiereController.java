@@ -5,10 +5,10 @@
  */
 package edu.support.controllers;
 
-import edu.support.dao.ClassesMatieresFacadeLocal;
+import edu.support.dao.ClasseMatiereFacadeLocal;
 import edu.support.dao.MatiereFacadeLocal;
 import edu.support.dao.SalleDeClasseFacadeLocal;
-import edu.support.entities.ClassesMatieres;
+import edu.support.entities.ClasseMatiere;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,8 +35,8 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/classematiere")
 public class ClasseMatiereController {
     
-    @EJB(mappedName="java:app/edusupport/ClassesMatieresFacade")
-    private ClassesMatieresFacadeLocal cmfl;
+    @EJB(mappedName="java:app/edusupport/ClasseMatiereFacade")
+    private ClasseMatiereFacadeLocal cmfl;
     
     @EJB(mappedName="java:app/edusupport/SalleDeClasseFacade")
     private SalleDeClasseFacadeLocal scfl;
@@ -66,7 +66,7 @@ public class ClasseMatiereController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("classeMatiere")ClassesMatieres classeMatiere,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("classeMatiere")ClasseMatiere classeMatiere,BindingResult result ,HttpServletRequest request){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
@@ -92,7 +92,7 @@ public class ClasseMatiereController {
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("classeMatiere")ClassesMatieres classeMatiere ,@RequestParam("idclassesMatieres")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("classeMatiere")ClasseMatiere classeMatiere ,@RequestParam("idclassesMatieres")int id,HttpServletRequest request){
         classeMatiere.setModified(new Date());
         classeMatiere.setCreated(cmfl.find(id).getCreated());
         classeMatiere.setMatiereIdmatiere(mfl.find(Integer.parseInt(request.getParameter("matiereIdmatiere"))));
@@ -117,7 +117,7 @@ public class ClasseMatiereController {
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
     public RedirectView delete(@RequestParam("idclassesMatieres")int id,HttpServletRequest request){
-        ClassesMatieres cm = cmfl.find(id);
+        ClasseMatiere cm = cmfl.find(id);
         cmfl.remove(cm);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

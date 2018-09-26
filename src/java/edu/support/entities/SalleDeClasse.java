@@ -78,11 +78,7 @@ public class SalleDeClasse implements Serializable {
     private Date modified;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "salleDeClasseIdsalleDeClasse")
     private Collection<Eleve> eleveCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salleDeClasseIdsalleDeClasse")
-    private Collection<ClassesMatieres> classesMatieresCollection;
-    @JoinColumn(name = "serie_idserie", referencedColumnName = "idserie")
-    @ManyToOne
-    private Serie serieIdserie;
+    
     @JoinColumn(name = "classe_idclasse", referencedColumnName = "idclasse", nullable = false)
     @ManyToOne(optional = false)
     private Classe classeIdclasse;
@@ -134,24 +130,7 @@ public class SalleDeClasse implements Serializable {
     public void setEleveCollection(Collection<Eleve> eleveCollection) {
         this.eleveCollection = eleveCollection;
     }
-
-    @XmlTransient
-    public Collection<ClassesMatieres> getClassesMatieresCollection() {
-        return classesMatieresCollection;
-    }
-
-    public void setClassesMatieresCollection(Collection<ClassesMatieres> classesMatieresCollection) {
-        this.classesMatieresCollection = classesMatieresCollection;
-    }
-
-    public Serie getSerieIdserie() {
-        return serieIdserie;
-    }
-
-    public void setSerieIdserie(Serie serieIdserie) {
-        this.serieIdserie = serieIdserie;
-    }
-
+    
     public Classe getClasseIdclasse() {
         return classeIdclasse;
     }

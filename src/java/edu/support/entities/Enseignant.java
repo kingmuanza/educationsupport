@@ -63,8 +63,7 @@ public class Enseignant implements Serializable {
     @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "enseignantIdenseignant")
-    private Collection<EnseignantsClassesMatieres> enseignantsClassesMatieresCollection;
+    
     @JoinColumn(name = "individu_idindividu", referencedColumnName = "idindividu", nullable = false)
     @ManyToOne(optional = false)
     private Individu individuIdindividu;
@@ -107,12 +106,12 @@ public class Enseignant implements Serializable {
 
 
     @XmlTransient
-    public Collection<EnseignantsClassesMatieres> getEnseignantsClassesMatieresCollection() {
-        return enseignantsClassesMatieresCollection;
+    public Collection<EnseignantClasseMatiere> getEnseignantClasseMatiereCollection() {
+        return enseignantClasseMatiereCollection;
     }
 
-    public void setEnseignantsClassesMatieresCollection(Collection<EnseignantsClassesMatieres> enseignantsClassesMatieresCollection) {
-        this.enseignantsClassesMatieresCollection = enseignantsClassesMatieresCollection;
+    public void setEnseignantClasseMatiereCollection(Collection<EnseignantClasseMatiere> enseignantClasseMatiereCollection) {
+        this.enseignantClasseMatiereCollection = enseignantClasseMatiereCollection;
     }
 
     public Individu getIndividuIdindividu() {
@@ -156,13 +155,5 @@ public class Enseignant implements Serializable {
         this.deleted = deleted;
     }
 
-    @XmlTransient
-    public Collection<EnseignantClasseMatiere> getEnseignantClasseMatiereCollection() {
-        return enseignantClasseMatiereCollection;
-    }
-
-    public void setEnseignantClasseMatiereCollection(Collection<EnseignantClasseMatiere> enseignantClasseMatiereCollection) {
-        this.enseignantClasseMatiereCollection = enseignantClasseMatiereCollection;
-    }
     
 }

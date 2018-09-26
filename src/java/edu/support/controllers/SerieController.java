@@ -5,8 +5,8 @@
  */
 package edu.support.controllers;
 
-import edu.support.dao.ClasseFacadeLocal;
-import edu.support.entities.Classe;
+import edu.support.dao.SerieFacadeLocal;
+import edu.support.entities.Serie;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,22 +28,16 @@ import org.springframework.web.servlet.view.RedirectView;
  * @author N9-T
  */
 @Controller
-@RequestMapping("/classe")
-public class ClasseController {
+@RequestMapping("/serie")
+public class SerieController {
+    @EJB(mappedName="java:app/edusupport/SerieFacade")
+    private SerieFacadeLocal sfl;
     
-    @EJB(mappedName="java:app/edusupport/ClasseFacade")
-    private ClasseFacadeLocal cfl;
-    
-    private final static String VUE_CREATE = "jsp/classe/create";
-    private final static String VUE_EDIT = "jsp/classe/edit";
-    private final static String VUE_LIST = "jsp/classe/list";
-    private final static String VUE_VIEW = "jsp/classe/view";
-    private final static String PATH_LIST = "/start#!/classes";
-    
-    @InitBinder
-    public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"created","modified"});
-    }
+    private final static String VUE_CREATE = "jsp/serie/create";
+    private final static String VUE_EDIT = "jsp/serie/edit";
+    private final static String VUE_LIST = "jsp/serie/list";
+    private final static String VUE_VIEW = "jsp/serie/view";
+    private final static String PATH_LIST = "/start#!/series";
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getCreate() throws ParseException{
@@ -56,14 +48,14 @@ public class ClasseController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("classe")Classe classe,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("serie")Serie serie,BindingResult result ,HttpServletRequest request){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-        classe.setCreated(new Date());
-        classe.setModified(new Date());
-        cfl.create(classe);
+        serie.setCreated(new Date());
+        serie.setModified(new Date());
+        sfl.create(serie);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -71,15 +63,15 @@ public class ClasseController {
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("classe", cfl.find(id));
+        mv.addObject("serie", sfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("classe")Classe classe ,@RequestParam("idclasse")int id,HttpServletRequest request){
-        classe.setModified(new Date());
-        classe.setCreated(cfl.find(id).getCreated());
-        cfl.edit(classe);
+    public RedirectView postEdit(@Valid @ModelAttribute("serie")Serie serie ,@RequestParam("idserie")int id,HttpServletRequest request){
+        serie.setModified(new Date());
+        serie.setCreated(sfl.find(id).getCreated());
+        sfl.edit(serie);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -87,22 +79,22 @@ public class ClasseController {
     @RequestMapping(value="/view/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("classe", cfl.find(id));
+        mv.addObject("serie", sfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("classes", cfl.findAll());
+        mv.addObject("series", sfl.findAll());
         return mv;
     }
     
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
-    public RedirectView delete(@RequestParam("idclasse")int id,HttpServletRequest request){
-        Classe c = cfl.find(id);
-        cfl.remove(c);
+    public RedirectView delete(@RequestParam("idserie")int id,HttpServletRequest request){
+        Serie c = sfl.find(id);
+        sfl.remove(c);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

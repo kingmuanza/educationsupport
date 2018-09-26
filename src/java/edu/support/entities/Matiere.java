@@ -76,9 +76,7 @@ public class Matiere implements Serializable {
     @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matiereIdmatiere")
-    private Collection<ClassesMatieres> classesMatieresCollection;
-
+    
     public Matiere() {
     }
 
@@ -116,16 +114,6 @@ public class Matiere implements Serializable {
 
     public void setModified(Date modified) {
         this.modified = modified;
-    }
-
-
-    @XmlTransient
-    public Collection<ClassesMatieres> getClassesMatieresCollection() {
-        return classesMatieresCollection;
-    }
-
-    public void setClassesMatieresCollection(Collection<ClassesMatieres> classesMatieresCollection) {
-        this.classesMatieresCollection = classesMatieresCollection;
     }
 
     @Override

@@ -69,9 +69,9 @@ public class Evaluation implements Serializable {
     @JoinColumn(name = "sequence_idsequence", referencedColumnName = "idsequence", nullable = false)
     @ManyToOne(optional = false)
     private Sequence sequenceIdsequence;
-    @JoinColumn(name = "classes_matieres_idclasses_matieres", referencedColumnName = "idclasses_matieres", nullable = false)
+    @JoinColumn(name = "classe_matiere_idclasse_matiere", referencedColumnName = "idclasse_matiere", nullable = false)
     @ManyToOne(optional = false)
-    private ClassesMatieres classesMatieresIdclassesMatieres;
+    private ClasseMatiere classeMatiereIdclasseMatiere;
 
     public Evaluation() {
     }
@@ -135,12 +135,12 @@ public class Evaluation implements Serializable {
         this.sequenceIdsequence = sequenceIdsequence;
     }
 
-    public ClassesMatieres getClassesMatieresIdclassesMatieres() {
-        return classesMatieresIdclassesMatieres;
+    public ClasseMatiere getClasseMatiereIdclassesMatieres() {
+        return classeMatiereIdclasseMatiere;
     }
 
-    public void setClassesMatieresIdclassesMatieres(ClassesMatieres classesMatieresIdclassesMatieres) {
-        this.classesMatieresIdclassesMatieres = classesMatieresIdclassesMatieres;
+    public void setClasseMatiereIdclassesMatieres(ClasseMatiere classesMatieresIdclassesMatieres) {
+        this.classeMatiereIdclasseMatiere = classesMatieresIdclassesMatieres;
     }
 
     @Override

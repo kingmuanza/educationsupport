@@ -5,10 +5,10 @@
  */
 package edu.support.controllers;
 
-import edu.support.dao.UtilisateursFonctionnalitesFacadeLocal;
+import edu.support.dao.UtilisateurFonctionnaliteFacadeLocal;
 import edu.support.dao.FonctionnaliteFacadeLocal;
 import edu.support.dao.UtilisateurFacadeLocal;
-import edu.support.entities.UtilisateursFonctionnalites;
+import edu.support.entities.UtilisateurFonctionnalite;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,8 +35,8 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/utilisateurfonctionnalite")
 public class UtilisateurFonctionnaliteController {
     
-    @EJB(mappedName="java:app/edusupport/UtilisateursFonctionnalitesFacade")
-    private UtilisateursFonctionnalitesFacadeLocal uffl;
+    @EJB(mappedName="java:app/edusupport/UtilisateurFonctionnaliteFacade")
+    private UtilisateurFonctionnaliteFacadeLocal uffl;
     
     @EJB(mappedName="java:app/edusupport/UtilisateurFacade")
     private UtilisateurFacadeLocal ufl;
@@ -64,7 +64,7 @@ public class UtilisateurFonctionnaliteController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("utilisateurFonctionnalite")UtilisateursFonctionnalites utilisateurFonctionnalite,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("utilisateurFonctionnalite")UtilisateurFonctionnalite utilisateurFonctionnalite,BindingResult result ,HttpServletRequest request){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
@@ -90,7 +90,7 @@ public class UtilisateurFonctionnaliteController {
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("utilisateurFonctionnalite")UtilisateursFonctionnalites utilisateurFonctionnalite ,@RequestParam("idutilisateursFonctionnalites")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("utilisateurFonctionnalite")UtilisateurFonctionnalite utilisateurFonctionnalite ,@RequestParam("idutilisateursFonctionnalites")int id,HttpServletRequest request){
         utilisateurFonctionnalite.setModified(new Date());
         utilisateurFonctionnalite.setCreated(uffl.find(id).getCreated());
         utilisateurFonctionnalite.setFonctionnaliteIdfonctionnalite(ffl.find(Integer.parseInt(request.getParameter("fonctionnaliteIdfonctionnalite"))));
@@ -115,7 +115,7 @@ public class UtilisateurFonctionnaliteController {
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
     public RedirectView delete(@RequestParam("idutilisateursFonctionnalites")int id,HttpServletRequest request){
-        UtilisateursFonctionnalites cm = uffl.find(id);
+        UtilisateurFonctionnalite cm = uffl.find(id);
         uffl.remove(cm);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

@@ -64,10 +64,10 @@ public class ClasseMatiere implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    private short deleted;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classesMatieresIdclassesMatieres", fetch = FetchType.EAGER)
+    private boolean deleted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classeMatiereIdclasseMatiere", fetch = FetchType.EAGER)
     private Collection<EnseignantClasseMatiere> enseignantClasseMatiereCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classesMatieresIdclassesMatieres", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "classeMatiereIdclasseMatiere", fetch = FetchType.EAGER)
     private Collection<Evaluation> evaluationCollection;
     @JoinColumn(name = "salle_de_classe_idsalle_de_classe", referencedColumnName = "idsalle_de_classe", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
@@ -83,7 +83,7 @@ public class ClasseMatiere implements Serializable {
         this.idclasseMatiere = idclasseMatiere;
     }
 
-    public ClasseMatiere(Integer idclasseMatiere, int coefficient, short deleted) {
+    public ClasseMatiere(Integer idclasseMatiere, int coefficient, boolean deleted) {
         this.idclasseMatiere = idclasseMatiere;
         this.coefficient = coefficient;
         this.deleted = deleted;
@@ -121,11 +121,11 @@ public class ClasseMatiere implements Serializable {
         this.modified = modified;
     }
 
-    public short getDeleted() {
+    public boolean getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(short deleted) {
+    public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
 

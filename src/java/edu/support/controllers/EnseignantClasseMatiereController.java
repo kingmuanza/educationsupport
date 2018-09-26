@@ -5,11 +5,10 @@
  */
 package edu.support.controllers;
 
-import edu.support.dao.ClassesMatieresFacadeLocal;
+import edu.support.dao.ClasseMatiereFacadeLocal;
+import edu.support.dao.EnseignantClasseMatiereFacadeLocal;
 import edu.support.dao.EnseignantFacadeLocal;
-import edu.support.dao.EnseignantsClassesMatieresFacadeLocal;
-import edu.support.entities.ClassesMatieres;
-import edu.support.entities.EnseignantsClassesMatieres;
+import edu.support.entities.EnseignantClasseMatiere;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,14 +35,14 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/enseignantclassematiere")
 public class EnseignantClasseMatiereController {
     
-    @EJB(mappedName="java:app/edusupport/ClassesMatieresFacade")
-    private ClassesMatieresFacadeLocal cmfl;
+    @EJB(mappedName="java:app/edusupport/ClasseMatiereFacade")
+    private ClasseMatiereFacadeLocal cmfl;
     
     @EJB(mappedName="java:app/edusupport/EnseignantFacade")
     private EnseignantFacadeLocal ensfl;
     
-    @EJB(mappedName="java:app/edusupport/EnseignantsClassesMatieresFacade")
-    private EnseignantsClassesMatieresFacadeLocal ecmfl;
+    @EJB(mappedName="java:app/edusupport/EnseignantClasseMatiereFacade")
+    private EnseignantClasseMatiereFacadeLocal ecmfl;
     
     private final static String VUE_CREATE = "jsp/enseignantclassematiere/create";
     private final static String VUE_EDIT = "jsp/enseignantclassematiere/edit";
@@ -67,7 +66,7 @@ public class EnseignantClasseMatiereController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("enseignantClasseMatiere")EnseignantsClassesMatieres ecm,BindingResult result ,HttpServletRequest request){
+    public Object postCreate(@Valid @ModelAttribute("enseignantClasseMatiere")EnseignantClasseMatiere ecm,BindingResult result ,HttpServletRequest request){
         if(result.hasErrors()){
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
@@ -91,7 +90,7 @@ public class EnseignantClasseMatiereController {
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("enseignantClasseMatiere")EnseignantsClassesMatieres ecm ,@RequestParam("idclassesMatieres")int id,HttpServletRequest request){
+    public RedirectView postEdit(@Valid @ModelAttribute("enseignantClasseMatiere")EnseignantClasseMatiere ecm ,@RequestParam("idclassesMatieres")int id,HttpServletRequest request){
         ecm.setModified(new Date());
         ecm.setCreated(ecmfl.find(id).getCreated());
         ecm.setClassesMatieresIdclassesMatieres(cmfl.find(Integer.parseInt(request.getParameter("classesMatieresIdclassesMatieres"))));
@@ -116,7 +115,7 @@ public class EnseignantClasseMatiereController {
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
     public RedirectView delete(@RequestParam("idenseignantsClassesMatieres")int id,HttpServletRequest request){
-        EnseignantsClassesMatieres ecm = ecmfl.find(id);
+        EnseignantClasseMatiere ecm = ecmfl.find(id);
         ecmfl.remove(ecm);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;

@@ -231,7 +231,7 @@ public class EleveControllerRest {
         int somCoef = 0;
         for(Note n: lesnotes){
             som += n.getValeur();
-            somCoef += n.getEvaluationIdevaluation().getClassesMatieresIdclassesMatieres().getCoefficient();
+            somCoef += n.getEvaluationIdevaluation().getClasseMatiereIdclassesMatieres().getCoefficient();
         }
         return som / somCoef;
     }

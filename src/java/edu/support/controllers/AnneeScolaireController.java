@@ -100,7 +100,7 @@ public class AnneeScolaireController {
     @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getList(){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("anneescolaires", cfl.findAll());
+        mv.addObject("anneesscolaires", cfl.findAll());
         return mv;
     }
     

@@ -76,9 +76,7 @@ public class Fonctionnalite implements Serializable {
     @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fonctionnaliteIdfonctionnalite")
-    private Collection<UtilisateursFonctionnalites> utilisateursFonctionnalitesCollection;
-
+    
     public Fonctionnalite() {
     }
 
@@ -120,12 +118,12 @@ public class Fonctionnalite implements Serializable {
 
 
     @XmlTransient
-    public Collection<UtilisateursFonctionnalites> getUtilisateursFonctionnalitesCollection() {
-        return utilisateursFonctionnalitesCollection;
+    public Collection<UtilisateurFonctionnalite> getUtilisateurFonctionnaliteCollection() {
+        return utilisateurFonctionnaliteCollection;
     }
 
-    public void setUtilisateursFonctionnalitesCollection(Collection<UtilisateursFonctionnalites> utilisateursFonctionnalitesCollection) {
-        this.utilisateursFonctionnalitesCollection = utilisateursFonctionnalitesCollection;
+    public void setUtilisateurFonctionnaliteCollection(Collection<UtilisateurFonctionnalite> utilisateurFonctionnaliteCollection) {
+        this.utilisateurFonctionnaliteCollection = utilisateurFonctionnaliteCollection;
     }
 
     @Override
@@ -177,13 +175,4 @@ public class Fonctionnalite implements Serializable {
         this.deleted = deleted;
     }
 
-    @XmlTransient
-    public Collection<UtilisateurFonctionnalite> getUtilisateurFonctionnaliteCollection() {
-        return utilisateurFonctionnaliteCollection;
-    }
-
-    public void setUtilisateurFonctionnaliteCollection(Collection<UtilisateurFonctionnalite> utilisateurFonctionnaliteCollection) {
-        this.utilisateurFonctionnaliteCollection = utilisateurFonctionnaliteCollection;
-    }
-    
 }

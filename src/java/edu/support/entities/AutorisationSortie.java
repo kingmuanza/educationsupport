@@ -52,7 +52,6 @@ public class AutorisationSortie implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "deleted", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private boolean deleted;
 
     private static final long serialVersionUID = 1L;

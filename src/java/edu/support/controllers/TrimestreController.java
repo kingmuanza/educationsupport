@@ -40,7 +40,7 @@ public class TrimestreController {
     private final static String VUE_EDIT = "jsp/trimestre/edit";
     private final static String VUE_LIST = "jsp/trimestre/list";
     private final static String VUE_VIEW = "jsp/trimestre/view";
-    private final static String PATH_LIST = "/trimestre/list";
+    private final static String PATH_LIST = "/start#!/trimestres";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){

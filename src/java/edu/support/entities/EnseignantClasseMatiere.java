@@ -56,9 +56,9 @@ public class EnseignantClasseMatiere implements Serializable {
     @NotNull
     @Column(name = "deleted", nullable = false)
     private short deleted;
-    @JoinColumn(name = "classes_matieres_idclasses_matieres", referencedColumnName = "idclasse_matiere", nullable = false)
+    @JoinColumn(name = "classe_matiere_idclasse_matiere", referencedColumnName = "idclasse_matiere", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private ClasseMatiere classesMatieresIdclassesMatieres;
+    private ClasseMatiere classeMatiereIdclasseMatiere;
     @JoinColumn(name = "enseignant_idenseignant", referencedColumnName = "idenseignant", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Enseignant enseignantIdenseignant;
@@ -108,11 +108,11 @@ public class EnseignantClasseMatiere implements Serializable {
     }
 
     public ClasseMatiere getClassesMatieresIdclassesMatieres() {
-        return classesMatieresIdclassesMatieres;
+        return classeMatiereIdclasseMatiere;
     }
 
     public void setClassesMatieresIdclassesMatieres(ClasseMatiere classesMatieresIdclassesMatieres) {
-        this.classesMatieresIdclassesMatieres = classesMatieresIdclassesMatieres;
+        this.classeMatiereIdclasseMatiere = classesMatieresIdclassesMatieres;
     }
 
     public Enseignant getEnseignantIdenseignant() {

@@ -76,8 +76,6 @@ public class Utilisateur implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur")
-    private Collection<UtilisateursFonctionnalites> utilisateursFonctionnalitesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur")
     private Collection<Activite> activiteCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateurIdutilisateur")
     private Collection<IndividuUtilisateur> individuUtilisateurCollection;
@@ -127,16 +125,6 @@ public class Utilisateur implements Serializable {
 
     public void setModified(Date modified) {
         this.modified = modified;
-    }
-
-
-    @XmlTransient
-    public Collection<UtilisateursFonctionnalites> getUtilisateursFonctionnalitesCollection() {
-        return utilisateursFonctionnalitesCollection;
-    }
-
-    public void setUtilisateursFonctionnalitesCollection(Collection<UtilisateursFonctionnalites> utilisateursFonctionnalitesCollection) {
-        this.utilisateursFonctionnalitesCollection = utilisateursFonctionnalitesCollection;
     }
 
     @XmlTransient

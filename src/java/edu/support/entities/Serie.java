@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -60,7 +62,7 @@ public class Serie implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idserie", nullable = false)
     private Integer idserie;
     @Column(name = "created")
@@ -69,8 +71,7 @@ public class Serie implements Serializable {
     @Column(name = "modified")
     @Temporal(TemporalType.TIMESTAMP)@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modified;
-    @OneToMany(mappedBy = "serieIdserie")
-    private Collection<SalleDeClasse> salleDeClasseCollection;
+    
 
     public Serie() {
     }
@@ -108,16 +109,6 @@ public class Serie implements Serializable {
 
     public void setModified(Date modified) {
         this.modified = modified;
-    }
-
-
-    @XmlTransient
-    public Collection<SalleDeClasse> getSalleDeClasseCollection() {
-        return salleDeClasseCollection;
-    }
-
-    public void setSalleDeClasseCollection(Collection<SalleDeClasse> salleDeClasseCollection) {
-        this.salleDeClasseCollection = salleDeClasseCollection;
     }
 
     @Override
