@@ -8,6 +8,7 @@ package edu.support.controllers;
 import edu.support.dao.AnneeScolaireFacadeLocal;
 import edu.support.dao.SequenceFacadeLocal;
 import edu.support.dao.TrimestreFacadeLocal;
+import edu.support.dto.Notification;
 import edu.support.entities.Sequence;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,8 @@ import java.util.Date;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -77,6 +80,8 @@ public class SequenceController {
         sequence.setCreated(new Date());
         sequence.setModified(new Date());
         cfl.create(sequence);
+        HttpSession session = request.getSession();
+        session.setAttribute("notification", Notification.getEnregistrementNotification(true));
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

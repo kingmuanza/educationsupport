@@ -8,6 +8,7 @@ package edu.support.controllers;
 import edu.support.dao.AutorisationSortieFacadeLocal;
 import edu.support.dao.EleveFacadeLocal;
 import edu.support.dao.MaladieFacadeLocal;
+import edu.support.dto.Notification;
 import edu.support.entities.AutorisationSortie;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,16 +16,20 @@ import java.util.Date;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -54,6 +59,16 @@ public class AutorisationSortieController {
     @InitBinder
     public void initBinder(WebDataBinder binder){
         binder.setDisallowedFields(new String[]{"created","modified","dateJour","dateRetour","eleveIdeleve","maladieIdmaladie"});
+    }
+    
+    @ExceptionHandler(value=Exception.class)
+    @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
+    public RedirectView ExceptionHandler(HttpServletRequest request){
+        Notification n = Notification.getExceptionNotification();
+        HttpSession session = request.getSession();
+        session.setAttribute("notification", n);
+        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
+        return rv;
     }
     
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
@@ -86,6 +101,7 @@ public class AutorisationSortieController {
                 autorisationsortie.setMaladieIdmaladie(mfl.find(Integer.parseInt(params.get("maladieIdmaladie"))));
             asfl.create(autorisationsortie);
         }
+        Notification.enregistrementNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -110,6 +126,7 @@ public class AutorisationSortieController {
             autorisationsortie.setEleveIdeleve(efl.find(Integer.parseInt(s)));
             asfl.edit(autorisationsortie);
         }
+        Notification.modificationNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -133,6 +150,7 @@ public class AutorisationSortieController {
     public RedirectView delete(@RequestParam("idautorisationsortie")int id,HttpServletRequest request){
         AutorisationSortie c = asfl.find(id);
         asfl.remove(c);
+        Notification.suppressionNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

@@ -5,13 +5,12 @@
  */
 package edu.support.controllers;
 
-import edu.support.dao.AnneeScolaireFacadeLocal;
+import edu.support.dao.CompteParentEleveFacadeLocal;
 import edu.support.dto.Notification;
-import edu.support.entities.AnneeScolaire;
+import edu.support.entities.CompteParentEleve;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,21 +35,21 @@ import org.springframework.web.servlet.view.RedirectView;
  * @author N9-T
  */
 @Controller
-@RequestMapping("/anneescolaire")
-public class AnneeScolaireController {
+@RequestMapping("/compteparenteleve")
+public class CompteParentEleveController {
     
-    @EJB(mappedName="java:app/edusupport/AnneeScolaireFacade")
-    private AnneeScolaireFacadeLocal cfl;
+    @EJB(mappedName="java:app/edusupport/CompteParentEleveFacade")
+    private CompteParentEleveFacadeLocal cfl;
     
-    private final static String VUE_CREATE = "jsp/anneescolaire/create";
-    private final static String VUE_EDIT = "jsp/anneescolaire/edit";
-    private final static String VUE_LIST = "jsp/anneescolaire/list";
-    private final static String VUE_VIEW = "jsp/anneescolaire/view";
-    private final static String PATH_LIST = "/start#!/anneescolaires";
+    private final static String VUE_CREATE = "jsp/compteparenteleve/create";
+    private final static String VUE_EDIT = "jsp/compteparenteleve/edit";
+    private final static String VUE_LIST = "jsp/compteparenteleve/list";
+    private final static String VUE_VIEW = "jsp/compteparenteleve/view";
+    private final static String PATH_LIST = "/start#!/compteparenteleves";
     
     @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setDisallowedFields(new String[]{"dateDebut","dateFin","created","modified"});
+        binder.setDisallowedFields(new String[]{"compteParent","eleve"});
     }
     
     @ExceptionHandler(value=Exception.class)
@@ -72,17 +71,12 @@ public class AnneeScolaireController {
     }
     
     @RequestMapping(value="/create", method=RequestMethod.POST)
-    public Object postCreate(@Valid @ModelAttribute("anneescolaire")AnneeScolaire anneescolaire,BindingResult result ,HttpServletRequest request, @RequestParam Map<String,String> params) throws ParseException{
+    public Object postCreate(@Valid @ModelAttribute("compteparenteleve")CompteParentEleve compteparenteleve,BindingResult result ,HttpServletRequest request){
         if(result.hasErrors()){
-            System.out.println(result.getFieldErrors().get(0).getRejectedValue() +" + "+result.getFieldErrors().get(0).getField());
             ModelAndView mv = new ModelAndView(VUE_CREATE);
             return mv;
         }
-        //anneescolaire.setDateDebut(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateDebut")));
-        //anneescolaire.setDateFin(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateFin")));
-        anneescolaire.setCreated(new Date());
-        anneescolaire.setModified(new Date());
-        cfl.create(anneescolaire);
+        cfl.create(compteparenteleve);
         Notification.enregistrementNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -91,17 +85,13 @@ public class AnneeScolaireController {
     @RequestMapping(value="/edit/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getEdit(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_EDIT);
-        mv.addObject("anneescolaire", cfl.find(id));
+        mv.addObject("compteparenteleve", cfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/edit", method=RequestMethod.POST)
-    public RedirectView postEdit(@Valid @ModelAttribute("anneescolaire")AnneeScolaire anneescolaire ,@RequestParam Map<String,String> params,HttpServletRequest request) throws ParseException{
-        //anneescolaire.setDateDebut(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateDebut")));
-        //anneescolaire.setDateFin(new SimpleDateFormat("yyyy-MM-dd").parse(params.get("dateFin")));
-        anneescolaire.setModified(new Date());
-        anneescolaire.setCreated(cfl.find(params.get("idanneescolaire")).getCreated());
-        cfl.edit(anneescolaire);
+    public RedirectView postEdit(@Valid @ModelAttribute("compteparenteleve")CompteParentEleve compteparenteleve ,@RequestParam("idcompteparenteleve")int id,HttpServletRequest request){
+        cfl.edit(compteparenteleve);
         Notification.modificationNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
@@ -110,21 +100,25 @@ public class AnneeScolaireController {
     @RequestMapping(value="/view/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getView(@PathVariable("id")int id){
         ModelAndView mv = new ModelAndView(VUE_VIEW);
-        mv.addObject("anneescolaire", cfl.find(id));
+        mv.addObject("compteparenteleve", cfl.find(id));
         return mv;
     }
     
     @RequestMapping(value="/list", method={RequestMethod.GET, RequestMethod.HEAD})
-    public ModelAndView getList(){
+    public ModelAndView getList(HttpServletRequest request){
         ModelAndView mv = new ModelAndView(VUE_LIST);
-        mv.addObject("anneesscolaires", cfl.findAll());
+        mv.addObject("compteparenteleves", cfl.findAll());
+        HttpSession session  = request.getSession();
+        Notification notification = (Notification) session.getAttribute("notification");
+        mv.addObject("notification", notification);
+        session.setAttribute("notification", null);
         return mv;
     }
     
     
     @RequestMapping(value="/delete", method=RequestMethod.POST)
-    public RedirectView delete(@RequestParam("idanneescolaire")int id,HttpServletRequest request){
-        AnneeScolaire c = cfl.find(id);
+    public RedirectView delete(@RequestParam("idcompteparenteleve")int id,HttpServletRequest request){
+        CompteParentEleve c = cfl.find(id);
         cfl.remove(c);
         Notification.suppressionNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
