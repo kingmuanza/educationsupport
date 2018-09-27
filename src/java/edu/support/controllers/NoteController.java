@@ -8,6 +8,7 @@ package edu.support.controllers;
 import edu.support.dao.EleveFacadeLocal;
 import edu.support.dao.EvaluationFacadeLocal;
 import edu.support.dao.NoteFacadeLocal;
+import edu.support.dto.Notification;
 import edu.support.entities.Note;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,17 +16,21 @@ import java.util.Date;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import static jdk.nashorn.internal.runtime.Debug.id;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -57,6 +62,16 @@ public class NoteController {
         binder.setDisallowedFields(new String[]{"created","modified"});
     }
     
+    @ExceptionHandler(value=Exception.class)
+    @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
+    public RedirectView ExceptionHandler(HttpServletRequest request){
+        Notification n = Notification.getExceptionNotification();
+        HttpSession session = request.getSession();
+        session.setAttribute("notification", n);
+        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
+        return rv;
+    }
+    
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getCreate() throws ParseException{
         ModelAndView mv = new ModelAndView(VUE_CREATE);
@@ -78,6 +93,7 @@ public class NoteController {
         note.setEleveIdeleve(elevfl.find(params.get("eleveIdeleve")));
         note.setEvaluationIdevaluation(evalfl.find(params.get("evaluationIdevaluation")));
         nfl.create(note);
+        Notification.enregistrementNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -98,6 +114,7 @@ public class NoteController {
         note.setEvaluationIdevaluation(evalfl.find(params.get("evaluationIdevaluation")));
         note.setCreated(nfl.find(params.get("idnote")).getCreated());
         nfl.edit(note);
+        Notification.modificationNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -121,6 +138,7 @@ public class NoteController {
     public RedirectView delete(@RequestParam("idnote")int id,HttpServletRequest request){
         Note c = nfl.find(id);
         nfl.remove(c);
+        Notification.suppressionNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

@@ -6,22 +6,27 @@
 package edu.support.controllers;
 
 import edu.support.dao.IndividuFacadeLocal;
+import edu.support.dto.Notification;
 import edu.support.entities.Individu;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -45,6 +50,16 @@ public class IndividuController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.setDisallowedFields(new String[]{"created", "modified"});
+    }
+    
+    @ExceptionHandler(value=Exception.class)
+    @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
+    public RedirectView ExceptionHandler(HttpServletRequest request){
+        Notification n = Notification.getExceptionNotification();
+        HttpSession session = request.getSession();
+        session.setAttribute("notification", n);
+        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
+        return rv;
     }
 
     @RequestMapping(value = "/create", method = {RequestMethod.GET, RequestMethod.HEAD})
@@ -88,6 +103,7 @@ public class IndividuController {
         ind.setCreated(new Date());
         ind.setModified(new Date());
         cfl.create(ind);
+        Notification.enregistrementNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath() + "/view/"+ind.getIdindividu());
         return rv;
     }
@@ -104,6 +120,7 @@ public class IndividuController {
         individu.setModified(new Date());
         individu.setCreated(cfl.find(id).getCreated());
         cfl.edit(individu);
+        Notification.modificationNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath() + PATH_LIST);
         return rv;
     }
@@ -126,6 +143,7 @@ public class IndividuController {
     public RedirectView delete(@RequestParam("idindividu") int id, HttpServletRequest request) {
         Individu c = cfl.find(id);
         cfl.remove(c);
+        Notification.suppressionNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath() + PATH_LIST);
         return rv;
     }

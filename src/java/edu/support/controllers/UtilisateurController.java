@@ -6,6 +6,7 @@
 package edu.support.controllers;
 
 import edu.support.dao.UtilisateurFacadeLocal;
+import edu.support.dto.Notification;
 import edu.support.entities.Utilisateur;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,16 +14,20 @@ import java.util.Date;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -49,6 +54,16 @@ public class UtilisateurController {
         binder.setDisallowedFields(new String[]{"created","modified"});
     }
     
+    @ExceptionHandler(value=Exception.class)
+    @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
+    public RedirectView ExceptionHandler(HttpServletRequest request){
+        Notification n = Notification.getExceptionNotification();
+        HttpSession session = request.getSession();
+        session.setAttribute("notification", n);
+        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
+        return rv;
+    }
+    
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getCreate() throws ParseException{
         ModelAndView mv = new ModelAndView(VUE_CREATE);
@@ -66,6 +81,7 @@ public class UtilisateurController {
         utilisateur.setCreated(new Date());
         utilisateur.setModified(new Date());
         cfl.create(utilisateur);
+        Notification.enregistrementNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -82,6 +98,7 @@ public class UtilisateurController {
         utilisateur.setModified(new Date());
         utilisateur.setCreated(cfl.find(Integer.parseInt(params.get("idutilisateur"))).getCreated());
         cfl.edit(utilisateur);
+        Notification.modificationNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -105,6 +122,7 @@ public class UtilisateurController {
     public RedirectView delete(@RequestParam("idutilisateur")int id,HttpServletRequest request){
         Utilisateur c = cfl.find(id);
         cfl.remove(c);
+        Notification.suppressionNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

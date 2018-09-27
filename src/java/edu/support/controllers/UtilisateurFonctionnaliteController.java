@@ -8,22 +8,27 @@ package edu.support.controllers;
 import edu.support.dao.UtilisateurFonctionnaliteFacadeLocal;
 import edu.support.dao.FonctionnaliteFacadeLocal;
 import edu.support.dao.UtilisateurFacadeLocal;
+import edu.support.dto.Notification;
 import edu.support.entities.UtilisateurFonctionnalite;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -55,6 +60,16 @@ public class UtilisateurFonctionnaliteController {
         binder.setDisallowedFields(new String[]{"created","modified","fonctionnaliteIdfonctionnalite","utilisateurIdutilisateur"});
     }
     
+    @ExceptionHandler(value=Exception.class)
+    @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
+    public RedirectView ExceptionHandler(HttpServletRequest request){
+        Notification n = Notification.getExceptionNotification();
+        HttpSession session = request.getSession();
+        session.setAttribute("notification", n);
+        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
+        return rv;
+    }
+    
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getCreate() throws ParseException{
         ModelAndView mv = new ModelAndView(VUE_CREATE);
@@ -78,6 +93,7 @@ public class UtilisateurFonctionnaliteController {
             utilisateurFonctionnalite.setModified(new Date());
             uffl.create(utilisateurFonctionnalite);
         }
+        Notification.enregistrementNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -95,6 +111,7 @@ public class UtilisateurFonctionnaliteController {
         utilisateurFonctionnalite.setCreated(uffl.find(id).getCreated());
         utilisateurFonctionnalite.setFonctionnaliteIdfonctionnalite(ffl.find(Integer.parseInt(request.getParameter("fonctionnaliteIdfonctionnalite"))));
         uffl.edit(utilisateurFonctionnalite);
+        Notification.modificationNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -117,6 +134,7 @@ public class UtilisateurFonctionnaliteController {
     public RedirectView delete(@RequestParam("idutilisateursFonctionnalites")int id,HttpServletRequest request){
         UtilisateurFonctionnalite cm = uffl.find(id);
         uffl.remove(cm);
+        Notification.suppressionNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }

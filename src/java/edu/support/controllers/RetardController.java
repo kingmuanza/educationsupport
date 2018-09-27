@@ -7,6 +7,7 @@ package edu.support.controllers;
 
 import edu.support.dao.EleveFacadeLocal;
 import edu.support.dao.RetardFacadeLocal;
+import edu.support.dto.Notification;
 import edu.support.entities.Retard;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,16 +15,20 @@ import java.util.Date;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -52,6 +57,16 @@ public class RetardController {
         binder.setDisallowedFields(new String[]{"created","modified","jourRetard","eleveIdeleve"});
     }
     
+    @ExceptionHandler(value=Exception.class)
+    @ResponseStatus(value=HttpStatus.INTERNAL_SERVER_ERROR)
+    public RedirectView ExceptionHandler(HttpServletRequest request){
+        Notification n = Notification.getExceptionNotification();
+        HttpSession session = request.getSession();
+        session.setAttribute("notification", n);
+        RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
+        return rv;
+    }
+    
     @RequestMapping(value="/create", method={RequestMethod.GET, RequestMethod.HEAD})
     public ModelAndView getCreate() throws ParseException{
         ModelAndView mv = new ModelAndView(VUE_CREATE);
@@ -75,6 +90,7 @@ public class RetardController {
             retard.setEleveIdeleve(ifl.find(Integer.parseInt(params.get("eleveIdeleve"))));
             rfl.create(retard);
         }
+        Notification.enregistrementNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -96,6 +112,7 @@ public class RetardController {
             retard.setEleveIdeleve(ifl.find(Integer.parseInt(params.get("eleveIdeleve"))));
             rfl.edit(retard);
         }
+        Notification.modificationNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
@@ -119,6 +136,7 @@ public class RetardController {
     public RedirectView delete(@RequestParam("idretard")int id,HttpServletRequest request){
         Retard c = rfl.find(id);
         rfl.remove(c);
+        Notification.suppressionNotification(request);
         RedirectView rv = new RedirectView(request.getContextPath()+PATH_LIST);
         return rv;
     }
